@@ -23,4 +23,3 @@ python -m ipykernel install \
     --display-name 'pandera-presentations'
 
 source activate pandera-presentations
-pip instal nbless

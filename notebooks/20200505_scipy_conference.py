@@ -144,7 +144,7 @@ def process_data(df):
 
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ### You sort of know what's going on, but you need to take a closer look!
+# ### You sort of know what's going on, but you want to take a closer look!
 
 # %%
 def process_data(df):
@@ -271,7 +271,7 @@ def process_data(df):
 # # Outline
 #
 # - Data validation in theory and practice.
-# - Introduction to `pandera`
+# - Brief introduction to `pandera`
 # - End-to-end example using the "Fatal Encounters" dataset
 # - Roadmap
 
@@ -320,9 +320,11 @@ def process_data(df):
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Types of Validation Rules
 #
+# [[van der Loo et al. 2019](https://arxiv.org/pdf/1912.09759.pdf)]
+#
 # ### Technical Checks
 #
-# Have to do with the meta-properties of the data structure:
+# Have to do with the properties of the data structure:
 #
 # - `income` is a numeric variable, `occupation` is a categorical variable.
 # - `email_address` should be unique.
@@ -362,7 +364,25 @@ def process_data(df):
 # > ```
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ## Data Validation Workflow
+# ## Statistical Type Safety
+#
+# Verifying the assumptions about the distributional properties of a dataset
+# to ensure that statistical operations on those data are valid.
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# - "the training samples are independently and identically distributed"
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# - "features `x1`, `x2`, and `x3` are not correlated"
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# - "the variance of feature `x` is greater than some threshold `t`"
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# - "the label distribution is consistent across the training and test set"
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ## Data Validation Workflow in Practice
 
 # %% tags=["hide_input"] language="html"
 # <img src="../figures/pandera_process.png", width=275
@@ -383,13 +403,15 @@ def process_data(df):
 #
 # # Introducing `pandera`
 #
-# A design-by-contract data validation package that exposes an intuitive
-# interface for expressing dataframe schemas.
+# A design-by-contract data validation library that exposes an intuitive
+# API for expressing dataframe schemas.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Refactoring the Validation Function
 
 # %% [markdown]
+# $v(x) \twoheadrightarrow \{ {True}, {False} \}$
+#
 # $s(v, x) \rightarrow \begin{cases} \mbox{x,} & \mbox{if } v(x) = true \\ \mbox{error,} & \mbox{otherwise} \end{cases}$
 #
 # Where $s$ is a *schema* function that takes two arguments: the validation function $v$
@@ -549,14 +571,32 @@ except pa.errors.SchemaError as exc:
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # Example 3:
-# > Perry Simmons died after he was tasered and maced as up to six officers attempted to restrain him and bring him into custody.
+# > Biddle and his brother, Drake Biddle, were fleeing from a Nashville Police Department officer at a high rate of speed when a second Nashville Police Department officer, James L. Steely, crashed into him head-on.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Caveats
-#
-# - As mentioned on the [website](https://fatalencounters.org), the records in this dataset are not comprehensive. Biases may be lurking everywhere!
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# - As mentioned on the [website](https://fatalencounters.org), the records in this dataset are the most comprehensive to date, but by no means is it a finished project. Biases may be lurking everywhere!
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
 # - I don't have any domain expertise in criminal justice!
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
 # - The purpose here is to showcase the capabilities of `pandera`, not provide earth-shattering or actionable insights.
+
+# %% tags=["hide_input"] slideshow={"slide_type": "slide"} language="html"
+# <img src="../figures/validate_all_the_things.png", width=700
+#  style="display: block; margin-left: auto; margin-right: auto;"/>
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ### Notebook is Available Here:
+#
+# **Jupyter notebook classic:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/pandera-dev/pandera-presentations/master?filepath=notebooks%2F20200505_scipy_conference.ipynb)
+# https://mybinder.org/v2/gh/pandera-dev/pandera-presentations/master?filepath=notebooks%2F20200505_scipy_conference.ipynb
+#
+# **Jupyter lab:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/pandera-dev/pandera-presentations/ee3639137c3fcd58757ba316529e567ba229f0f1?urlpath=lab%2Ftree%2Fnotebooks%2F20200505_scipy_conference.ipynb)
+# https://mybinder.org/v2/gh/pandera-dev/pandera-presentations/ee3639137c3fcd58757ba316529e567ba229f0f1?urlpath=lab%2Ftree%2Fnotebooks%2F20200505_scipy_conference.ipynb
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Read the Data
@@ -591,15 +631,15 @@ profile.to_notebook_iframe()
 # %% slideshow={"slide_type": "skip"}
 genders = ["female", "male", "transgender", "transexual"]
 races = [
-    "african-american/black", "asian/pacific islander",
-    "european-american/white", "hispanic/latino", "middle eastern",
-    "native american/alaskan", "race unspecified",
+    "african_american_black", "asian_pacific_islander",
+    "european_american_white", "hispanic_latino", "middle_eastern",
+    "native_american_alaskan", "race_unspecified",
 ]
 causes_of_death = [
-    'asphyxiated/restrained', 'beaten/bludgeoned with instrument',
-    'burned/smoke inhalation', 'chemical agent/pepper spray',
-    'drowned', 'drug overdose', 'fell from a height', 'gunshot',
-    'medical emergency', 'other', 'stabbed', 'tasered', 'undetermined',
+    'asphyxiated_restrained', 'beaten_bludgeoned_with_instrument',
+    'burned_smoke_inhalation', 'chemical_agent_pepper_spray',
+    'drowned', 'drug_overdose', 'fell_from_a_height', 'gunshot',
+    'medical_emergency', 'other', 'stabbed', 'tasered', 'undetermined',
     'unknown', 'vehicle'
 ]
 
@@ -609,11 +649,7 @@ schema = pa.DataFrameSchema(
         "age": Column(pa.Float, Check.in_range(0, 120), nullable=True),
         "gender": Column(pa.String, Check.isin(genders), nullable=True),
         "race": Column(pa.String, Check.isin(races), nullable=True),
-        "cause_of_death": Column(
-            pa.String,
-            Check.isin(causes_of_death),
-            nullable=True
-        ),
+        "cause_of_death": Column(pa.String, Check.isin(causes_of_death), nullable=True),
         "symptoms_of_mental_illness": Column(pa.Bool, nullable=True),
         "disposition_accidental": Column(pa.Bool),
     },
@@ -664,6 +700,9 @@ def binarize_mental_illness(symptoms_of_mental_illness: pd.Series):
         != "no"
     )
 
+def clean_string_values(str_series):
+    return str_series.str.lower().str.replace('-|/| ', '_')
+
 def normalize_age_range(age: pd.Series, pattern: str = "-|/| or "):
     to_normalize = age.str.contains(pattern) & age.notna()
     return age.mask(
@@ -706,7 +745,7 @@ def clean_data(df):
                 "gender", "race", "cause_of_death",
                 "symptoms_of_mental_illness", "dispositions_exclusions"
             ],
-            lambda s: s.str.lower(),
+            clean_string_values,
             elementwise=False
         )
         .transform_column(
@@ -736,8 +775,8 @@ def clean_data(df):
 # %%
 fatal_encounters_clean = fatal_encounters.pipe(clean_columns).pipe(clean_data)
 display(fatal_encounters_clean.filter(list(schema.columns)).head(3))
-nrows, ncols = fatal_encounters_clean.shape
-display(Markdown(f"**rows**: {nrows}, **cols**: {ncols}"))
+nrows, ncols = fatal_encounters_clean.filter(list(schema.columns)).shape
+display(Markdown(f"{nrows} **rows** x {ncols} **cols**"))
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Summarize the Data
@@ -745,7 +784,7 @@ display(Markdown(f"**rows**: {nrows}, **cols**: {ncols}"))
 # %% [markdown]
 # What percent of cases in the training data are "accidental"?
 
-# %% tags=["hide_input"]
+# %%
 percent_accidental = fatal_encounters_clean.disposition_accidental.mean()
 display(Markdown(f"{percent_accidental * 100:0.02f}%"))
 
@@ -806,9 +845,9 @@ fatal_encounters_clean.race.value_counts().sort_values().plot.barh();
 
 # %%
 most_common_races = [
-    "european-american/white",
-    "african-american/black",
-    "hispanic/latino",
+    "european_american_white",
+    "african_american_black",
+    "hispanic_latino",
 ]
 
 race_schema = Column(
@@ -816,7 +855,7 @@ race_schema = Column(
     name="race",
     checks=Check(
         lambda race: (
-            race.mask(race == "race unspecified")
+            race.mask(race == "race_unspecified")
             .dropna()
             .value_counts()
             .sort_values(ascending=False)
@@ -862,23 +901,28 @@ with sns.plotting_context(context="notebook", font_scale=1.1):
 # causes like drug overdose, being tasered, and falling from a height
 # have a greater than random chance of showing symptoms of mental illness."
 
-# %% [markdown]
-# **Deterministic Check:**
+# %% [markdown] slideshow={"slide_type": "subslide"}
+# **Deterministic Check**
+#
+# For each discrete value in `cause_of_death`, compute the proportion where
+# `symptoms_of_mental_illness` is `True` and assert that it's greater than 50%
 
 # %%
 causes_of_death_assoc_with_mental_illness = [
-    "drug overdose", "tasered", "burned/smoke inhalation",
-    "asphyxiated/restrained",  "medical emergency",
-    "beaten/bludgeoned with instrument",
+    "drug_overdose", "tasered", "burned_smoke_inhalation",
+    "asphyxiated_restrained",  "medical_emergency",
+    "beaten_bludgeoned_with_instrument",
 ]
 
 def check_gt_random_mental_illness(groups):
+    # for each cause_of_death group, check if proportion
+    # of sample with mental illness if greater than 50%
     return pd.Series({
         group: mental_illness.mean() > 0.5
-        for group, mental_illness in
-        groups.items()
+        for group, mental_illness in groups.items()
     })
 
+# you can use a Column object by itself
 deterministic_mental_illness_schema = Column(
     pa.Bool,
     name="symptoms_of_mental_illness",
@@ -891,15 +935,19 @@ deterministic_mental_illness_schema = Column(
 deterministic_mental_illness_schema(fatal_encounters_clean);
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
-# **Probabilistic Check:**
+# **Probabilistic Check**
+#
+# For each discrete value in `cause_of_death`, compute the proportion where
+# `symptoms_of_mental_illness` is `True` and assert that it's greater than 50%
+# using the `proportions_ztest` with an `alpha` value of `0.01`.
 
 # %%
 from statsmodels.stats.proportion import proportions_ztest
 
 def hypothesis_gt_random_mental_illness(sample):
     return proportions_ztest(
-        sample.sum(), sample.shape[0],
-        alternative="larger", value=0.5,
+        count=sample.sum(), nobs=sample.shape[0],
+        value=0.5, alternative="larger",
     )
 
 probabilistic_mental_illness_schema = Column(
@@ -934,7 +982,6 @@ target_schema = pa.SeriesSchema(
 )
 feature_schema = schema.remove_columns([target_schema.name])
 
-
 @pa.check_input(schema)
 @pa.check_output(feature_schema, 0)
 @pa.check_output(feature_schema, 1)
@@ -947,8 +994,28 @@ def split_training_data(fatal_encounters_clean):
         test_size=0.2
     )
 
-
 X_train, X_test, y_train, y_test = split_training_data(fatal_encounters_clean)
+
+
+# %% [markdown] slideshow={"slide_type": "subslide"}
+# **Sidebar:** Alternatively, if the function output is a `dict`-like object,
+# the second argument to `check_output` can be the key of the object to validate.
+
+# %%
+@pa.check_input(schema)
+@pa.check_output(feature_schema, "X_train")
+@pa.check_output(feature_schema, "X_test")
+@pa.check_output(target_schema, "y_train")
+@pa.check_output(target_schema, "y_test")
+def split_training_data(fatal_encounters_clean):
+    split_names = ["X_train", "X_test", "y_train", "y_test"]
+    splits = train_test_split(
+        fatal_encounters_clean[list(feature_schema.columns)],
+        fatal_encounters_clean[target_schema.name],
+        test_size=0.2
+    )
+    return {k: v for k, v in zip(split_names, splits)}
+
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Model the Data
@@ -967,6 +1034,8 @@ from sklearn.compose import ColumnTransformer
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
 # Create a transformer to numericalize the features using a `schema` object.
+# `Check`s have a `statistics` attribute that enables access to the properties
+# defined in the `schema`.
 
 # %%
 def column_transformer_from_schema(feature_schema):
@@ -1036,17 +1105,51 @@ pipeline.fit(X_train, y_train)
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Evaluate the Model
+#
+# Use the `check_input` and `check_output` decorators to validate
+# the `estimator.predict_proba` method.
 
 # %%
 from sklearn.metrics import roc_auc_score, roc_curve
 
+pred_schema = pa.SeriesSchema(pa.Float, Check.in_range(0, 1))
+
+# check that the feature array input to predict_proba method
+# adheres to the feature_schema
 predict_fn = pa.check_input(feature_schema)(pipeline.predict_proba)
+
+# check that the prediction array output is a probability.
+# Note that the output itself is preserved as a numpy array.
+predict_fn = pa.check_output(pred_schema, lambda x: pd.Series(x))(predict_fn)
 
 yhat_train = pipeline.predict_proba(X_train)[:, 1]
 print(f"train ROC AUC: {roc_auc_score(y_train, yhat_train):0.04f}")
 
 yhat_test = pipeline.predict_proba(X_test)[:, 1]
 print(f"test ROC AUC: {roc_auc_score(y_test, yhat_test):0.04f}")
+
+
+# %% [markdown] slideshow={"slide_type": "subslide"}
+# Plot the ROC curves using an in-line `schema`.
+
+# %%
+def plot_roc_auc(y_true, y_pred, label, ax=None):
+    fpr, tpr, _ = roc_curve(y_true, y_pred)
+    roc_curve_df = pd.DataFrame({"fpr": fpr, "tpr": tpr}).pipe(
+        pa.DataFrameSchema({
+            "fpr": Column(pa.Float, Check.in_range(0, 1)),
+            "tpr": Column(pa.Float, Check.in_range(0, 1)),
+        })
+    )
+    return roc_curve_df.plot.line(x="fpr", y="tpr", label=label, ax=ax)
+
+with sns.axes_style("whitegrid"):
+    _, ax = plt.subplots(figsize=(5, 4))
+    plot_roc_auc(y_train, yhat_train, "test AUC", ax)
+    plot_roc_auc(y_test, yhat_test, "train AUC", ax)
+    ax.set_ylabel("true_positive_rate")
+    ax.set_xlabel("false_positive_rate")
+    ax.plot([0, 1], [0, 1], color="k", linestyle=":")
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Audit the Model
@@ -1076,7 +1179,7 @@ feature_names = list(
 )
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
-# Create an `explainer` object
+# Create an `explainer` object. Here we want to check the inputs to the `transformer.transform` method.
 
 # %%
 import shap
@@ -1104,19 +1207,19 @@ shap.summary_plot(
     plot_type="dot",
     max_display=17,
     plot_size=(10, 6),
-    alpha=0.8
+    alpha=0.8,
 )
 
 # %% [markdown]
 # The probability of the case being ruled as `accidental` ⬆️ if the `cause_of_death` is `vehicle,` `tasered`, `asphyxiated_restrained`, `medical_emergency`, or `drug_overdose`, or `race` is unspecified.
 #
-# The probability of the case being ruled as `accidental` ⬇️ if the `cause_of_death` is `gunshot` or `race` is `european_american_white`, `hispanic_latino` or `asian_pacific_islander`.
+# The probability of the case being ruled as `accidental` ⬇️ if the `cause_of_death` is `gunshot` or `race` is `european_american_white`, or `asian_pacific_islander`.
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
 # ### Write the Model Audit Schema
 
 # %% [markdown]
-# Create a dataframe with `{var}` and `{var}_shap` as columns
+# Create a dataframe with `{variable}` and `{variable}_shap` as columns
 
 # %%
 audit_dataframe = (
@@ -1140,7 +1243,9 @@ audit_dataframe.head(3)
 def hypothesis_accident_probability(feature, increases=True):
     relationship = "greater_than" if increases else "less_than"
     return {
+        feature: Column(checks=Check.isin([1, 0])),
         f"{feature}_shap": Column(
+            pa.Float,
             checks=Hypothesis.two_sample_ttest(
                 sample1=1,
                 sample2=0,
@@ -1149,7 +1254,6 @@ def hypothesis_accident_probability(feature, increases=True):
                 alpha=0.01,
             )
         ),
-        feature: Column(checks=Check.isin([1, 0])),
     }
 
 
@@ -1173,7 +1277,6 @@ for column in [
 for column in [
     "cause_of_death_gunshot",
     "race_european_american_white",
-    "race_hispanic_latino",
     "race_asian_pacific_islander",
 ]:
     columns.update(hypothesis_accident_probability(column, increases=False))
@@ -1185,11 +1288,19 @@ if isinstance(model_audit_schema(audit_dataframe), pd.DataFrame):
 else:
     print("Model audit results fail ❌")
 
+# %% [markdown] slideshow={"slide_type": "subslide"}
+# ### More Questions 🤔
+#
+# - Why would `race_unspecified` be associated with a higher probability of `accidental` rulings?
+# - Are the interaction effects between different demographic variables, e.g. `race_african_american_black` and `symptoms_of_mental_illness`?
+# - Can we predict/impute the `disposition` of unreported, unknown, or pending cases? What would that get us?
+# - What's the generative process by which these data are being created and collected?
+
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # Takeaways
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# - Data validation is a means to a several ends: _reproducibility_, _readability_, and _maintainability_
+# - Data validation is a means to multiple ends: _statistical type safety_, _reproducibility_, _readability_, and _maintainability_
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # - It's an iterative process between exploring the data, acquiring domain knowledge, and writing validation code.
@@ -1197,6 +1308,9 @@ else:
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # - `pandera` schemas are executable contracts that enforce the statistical properties of a dataframe
 #   at runtime and can be flexibly interleaved with data processing logic.
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# - `pandera` doesn't automate data exploration or the data validation process. Like unit testing, the user is responsible for identifying which parts of the pipeline are critical to test and defining the contract under which data is considered valid for a specific purpose.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # Experimental Features
@@ -1255,7 +1369,7 @@ else:
 #
 # 1. Improving documentation
 # 1. Submit feature requests (e.g. additional built-in `Check` and `Hypothesis` methods)
-# 1. Submit new issues or pull requests on Github
+# 1. Submit bugs/issues or pull requests on Github
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # Thank you!
