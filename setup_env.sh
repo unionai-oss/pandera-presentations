@@ -2,8 +2,25 @@
 
 conda create -n pandera-presentations -c conda-forge \
     python=3.7 \
+    ipykernel \
     jupyter \
     jupyterlab \
+    jupytext \
+    matplotlib \
     pandas \
-    pandera==0.3.0 \
-    scikit-learn
+    pandas-profiling \
+    pandera==0.4.2 \
+    pyjanitor \
+    requests \
+    rise \
+    seaborn \
+    scikit-learn==0.23.0 \
+    shap \
+    statsmodels
+
+python -m ipykernel install \
+    --name 'pandera-presentations' \
+    --display-name 'pandera-presentations'
+
+source activate pandera-presentations
+pip instal nbless
