@@ -342,7 +342,7 @@ def process_data(df):
 #
 # ### Deterministic Checks
 #
-# Checks that express logical rules
+# Checks that express hard-coded logical rules
 #
 # > the mean `age` should be between `30` and `40` years old.
 # > ```python
@@ -376,7 +376,7 @@ def process_data(df):
 # I want a data validation tool that's intuitive, flexible,
 # customizable, and easy to integrate into my ETL pipelines
 # so that I can spend less time worrying about the correctness
-# of a dataframe's content and more time training models.
+# of a dataframe's contents and more time training models.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # <img src="https://raw.githubusercontent.com/pandera-dev/pandera/master/docs/source/_static/pandera-logo.png" width=150>
@@ -403,9 +403,14 @@ def process_data(df):
 # Consider a data processing function $f(x) \rightarrow x'$ that cleans the raw dataset $x$.
 #
 # We can use the schema to define any number of composite functions:
-#
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
 # - $f(s(x))$ first validates the raw data to catch invalid data before it's preprocessed.
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
 # - $s(f(x))$ validates the output of $f$ to check that the processing function is fulfilling the contract defined in $s$
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
 # - $s(f(s'(x))$: the "data validation sandwich"
 
 # %% [markdown] slideshow={"slide_type": "slide"}
@@ -523,7 +528,7 @@ except pa.errors.SchemaError as exc:
 # ### Bird's Eye View
 #
 # - 26,000+ records of law enforcement encounters leading to death
-# - Records date back to 2000
+# - Records date back to the year 2000
 # - Each record contains:
 #   - demographics of the decedent
 #   - cause and location of the death
@@ -549,7 +554,7 @@ except pa.errors.SchemaError as exc:
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Caveats
 #
-# - The records in this dataset are not comprehensive. Biases lurking everywhere!
+# - As mentioned on the [website](https://fatalencounters.org), the records in this dataset are not comprehensive. Biases may be lurking everywhere!
 # - I don't have any domain expertise in criminal justice!
 # - The purpose here is to showcase the capabilities of `pandera`, not provide earth-shattering or actionable insights.
 
@@ -571,13 +576,6 @@ fatal_encounters = pd.read_csv(dataset_url, skipfooter=1, engine="python")
 # %% tags=["hide_input"]
 with pd.option_context("display.max_columns", 500):
     display(fatal_encounters.head(3))
-
-# %% [markdown] slideshow={"slide_type": "slide"}
-# ## Data Validation Workflow
-
-# %% tags=["hide_input"] language="html"
-# <img src="../figures/pandera_process.png", width=275
-#  style="display: block; margin-left: auto; margin-right: auto;"/>
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Explore the Raw Data with [`pandas-profiling`](https://github.com/pandas-profiling/pandas-profiling)
@@ -723,7 +721,7 @@ def clean_data(df):
             "disposition_accidental",
             elementwise=False
         )
-        .query("gender != 'white'")
+        .query("gender != 'white'")  # probably a data entry error
         .filter_string(
             "dispositions_exclusions",
             "unreported|unknown|pending|suicide",
@@ -900,8 +898,8 @@ from statsmodels.stats.proportion import proportions_ztest
 
 def hypothesis_gt_random_mental_illness(sample):
     return proportions_ztest(
-        sample.sum(), sample.shape[0], value=0.5,
-        alternative="larger"
+        sample.sum(), sample.shape[0],
+        alternative="larger", value=0.5,
     )
 
 probabilistic_mental_illness_schema = Column(
@@ -1040,7 +1038,7 @@ pipeline.fit(X_train, y_train)
 # ### Evaluate the Model
 
 # %%
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, roc_curve
 
 predict_fn = pa.check_input(feature_schema)(pipeline.predict_proba)
 
@@ -1110,7 +1108,7 @@ shap.summary_plot(
 )
 
 # %% [markdown]
-# The probability of the case being ruled as `accidental` ⬆️ if the `cause_of_death` is `vehicle,` `tasered`, `asphyxiated_restrained`, `medical_emergency`, or `drug overdose`, or `race` is unspecified.
+# The probability of the case being ruled as `accidental` ⬆️ if the `cause_of_death` is `vehicle,` `tasered`, `asphyxiated_restrained`, `medical_emergency`, or `drug_overdose`, or `race` is unspecified.
 #
 # The probability of the case being ruled as `accidental` ⬇️ if the `cause_of_death` is `gunshot` or `race` is `european_american_white`, `hispanic_latino` or `asian_pacific_islander`.
 
@@ -1118,13 +1116,18 @@ shap.summary_plot(
 # ### Write the Model Audit Schema
 
 # %% [markdown]
-# Create a dataframe with `{var}` and `shap_{var}` as columns
+# Create a dataframe with `{var}` and `{var}_shap` as columns
 
 # %%
-audit_dataframe = pd.concat([
-    pd.DataFrame(X_test_array, columns=feature_names),
-    pd.DataFrame(shap_values[1], columns=[f"shap_{x}" for x in feature_names])
-], axis="columns")
+audit_dataframe = (
+    pd.concat(
+        [
+            pd.DataFrame(X_test_array, columns=feature_names),
+            pd.DataFrame(shap_values[1], columns=[f"{x}_shap" for x in feature_names])
+        ],
+        axis="columns"
+    ).sort_index(axis="columns")
+)
 
 audit_dataframe.head(3)
 
@@ -1137,7 +1140,7 @@ audit_dataframe.head(3)
 def hypothesis_accident_probability(feature, increases=True):
     relationship = "greater_than" if increases else "less_than"
     return {
-        f"shap_{feature}": Column(
+        f"{feature}_shap": Column(
             checks=Hypothesis.two_sample_ttest(
                 sample1=1,
                 sample2=0,
@@ -1176,6 +1179,7 @@ for column in [
     columns.update(hypothesis_accident_probability(column, increases=False))
 
 model_audit_schema = pa.DataFrameSchema(columns)
+
 if isinstance(model_audit_schema(audit_dataframe), pd.DataFrame):
     print("Model audit results pass! ✅")
 else:
@@ -1185,17 +1189,17 @@ else:
 # # Takeaways
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# Data validation is a means to an end: _reproducibility_, _readability_, and _maintainability_
+# - Data validation is a means to a several ends: _reproducibility_, _readability_, and _maintainability_
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# It's an iterative process between exploring the data, acquiring domain knowledge, and writing validation code.
+# - It's an iterative process between exploring the data, acquiring domain knowledge, and writing validation code.
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# `pandera` schemas are executable contracts that enforce the statistical properties
-# at runtime and can be flexibly interleaved with data processing logic.
+# - `pandera` schemas are executable contracts that enforce the statistical properties of a dataframe
+#   at runtime and can be flexibly interleaved with data processing logic.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# # Experimental Features (crazy ideas)
+# # Experimental Features
 #
 # **Schema Inference**
 #
@@ -1211,13 +1215,13 @@ else:
 # ```
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# # Roadmap: Feature Proposals (crazier ideas)
+# # Roadmap: Feature Proposals
 
 # %% [markdown]
 # **Express tolerance level for `Check` objects when they return a boolean `Series`**
 #
 # ```python
-# # check passes if 10% or fewer cases fail to meet constraint
+# # up to 10% of cases are allowed to fail
 # my_check = Check(lambda s: s < 1, tolerance=0.1)
 # ```
 #
@@ -1250,8 +1254,7 @@ else:
 # **Repo:** https://github.com/pandera-dev/pandera
 #
 # 1. Improving documentation
-# 1. Submit feature requests
-#    1. E.g. Additional built-in `Check` and `Hypothesis` methods
+# 1. Submit feature requests (e.g. additional built-in `Check` and `Hypothesis` methods)
 # 1. Submit new issues or pull requests on Github
 
 # %% [markdown] slideshow={"slide_type": "slide"}

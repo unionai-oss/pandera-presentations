@@ -13918,7 +13918,7 @@ working age should be <code>nan</code></li>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Types-of-Validation-Rules">Types of Validation Rules<a class="anchor-link" href="#Types-of-Validation-Rules">&#182;</a></h2><h3 id="Deterministic-Checks">Deterministic Checks<a class="anchor-link" href="#Deterministic-Checks">&#182;</a></h3><p>Checks that express logical rules</p>
+<h2 id="Types-of-Validation-Rules">Types of Validation Rules<a class="anchor-link" href="#Types-of-Validation-Rules">&#182;</a></h2><h3 id="Deterministic-Checks">Deterministic Checks<a class="anchor-link" href="#Deterministic-Checks">&#182;</a></h3><p>Checks that express hard-coded logical rules</p>
 <blockquote><p>the mean <code>age</code> should be between <code>30</code> and <code>40</code> years old.</p>
 <div class="highlight"><pre><span></span><span class="k">lambda</span> <span class="n">age</span><span class="p">:</span> <span class="mi">30</span> <span class="o">&lt;=</span> <span class="n">age</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">40</span>
 </pre></div>
@@ -13980,7 +13980,7 @@ working age should be <code>nan</code></li>
 I want a data validation tool that's intuitive, flexible,
 customizable, and easy to integrate into my ETL pipelines
 so that I can spend less time worrying about the correctness
-of a dataframe's content and more time training models.</p>
+of a dataframe's contents and more time training models.</p>
 </blockquote>
 
 </div>
@@ -14019,15 +14019,40 @@ and some data $x$.</p>
 <h3 id="Why?">Why?<a class="anchor-link" href="#Why?">&#182;</a></h3><p><strong>Compositionality</strong></p>
 <p>Consider a data processing function $f(x) \rightarrow x'$ that cleans the raw dataset $x$.</p>
 <p>We can use the schema to define any number of composite functions:</p>
+
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li>$f(s(x))$ first validates the raw data to catch invalid data before it's preprocessed.</li>
+</ul>
+
+</div>
+</div>
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
 <li>$s(f(x))$ validates the output of $f$ to check that the processing function is fulfilling the contract defined in $s$</li>
+</ul>
+
+</div>
+</div>
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
 <li>$s(f(s'(x))$: the "data validation sandwich"</li>
 </ul>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div></div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14424,7 +14449,7 @@ database of people killed during interactions with law enforcement."</em></p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Bird's-Eye-View">Bird's Eye View<a class="anchor-link" href="#Bird's-Eye-View">&#182;</a></h3><ul>
 <li>26,000+ records of law enforcement encounters leading to death</li>
-<li>Records date back to 2000</li>
+<li>Records date back to the year 2000</li>
 <li>Each record contains:<ul>
 <li>demographics of the decedent</li>
 <li>cause and location of the death</li>
@@ -14478,7 +14503,7 @@ database of people killed during interactions with law enforcement."</em></p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Caveats">Caveats<a class="anchor-link" href="#Caveats">&#182;</a></h3><ul>
-<li>The records in this dataset are not comprehensive. Biases lurking everywhere!</li>
+<li>As mentioned on the <a href="https://fatalencounters.org">website</a>, the records in this dataset are not comprehensive. Biases may be lurking everywhere!</li>
 <li>I don't have any domain expertise in criminal justice!</li>
 <li>The purpose here is to showcase the capabilities of <code>pandera</code>, not provide earth-shattering or actionable insights.</li>
 </ul>
@@ -14687,37 +14712,6 @@ database of people killed during interactions with law enforcement."</em></p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Data-Validation-Workflow">Data Validation Workflow<a class="anchor-link" href="#Data-Validation-Workflow">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_hide_input">
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<img src="../figures/pandera_process.png", width=275
- style="display: block; margin-left: auto; margin-right: auto;"/>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Explore-the-Raw-Data-with-pandas-profiling">Explore the Raw Data with <a href="https://github.com/pandas-profiling/pandas-profiling"><code>pandas-profiling</code></a><a class="anchor-link" href="#Explore-the-Raw-Data-with-pandas-profiling">&#182;</a></h3>
 </div>
 </div>
@@ -14738,10 +14732,10 @@ database of people killed during interactions with law enforcement."</em></p>
 
  
  
-<div id="bd7ef073-dbe0-4b2f-81db-b2f3f918b900"></div>
+<div id="73fead13-a1c9-44f5-82dc-79e297926c3b"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#bd7ef073-dbe0-4b2f-81db-b2f3f918b900');
+var element = $('#73fead13-a1c9-44f5-82dc-79e297926c3b');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "75b36aec296f49a189f88c79f76c1c00", "version_major": 2, "version_minor": 0}
@@ -14771,10 +14765,10 @@ var element = $('#bd7ef073-dbe0-4b2f-81db-b2f3f918b900');
 
  
  
-<div id="12fa6b05-7116-4aab-986e-9434f76c38ad"></div>
+<div id="d2f96ca1-ff3f-43bc-a853-c9a4a6d309b7"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#12fa6b05-7116-4aab-986e-9434f76c38ad');
+var element = $('#d2f96ca1-ff3f-43bc-a853-c9a4a6d309b7');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "8a89d8f62c294d7984ec3894d43b6211", "version_major": 2, "version_minor": 0}
@@ -14804,10 +14798,10 @@ var element = $('#12fa6b05-7116-4aab-986e-9434f76c38ad');
 
  
  
-<div id="ac795679-f119-4c1c-8373-5d034a98665e"></div>
+<div id="3a3c54c9-e098-460f-969e-b3bc2d2fa96b"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#ac795679-f119-4c1c-8373-5d034a98665e');
+var element = $('#3a3c54c9-e098-460f-969e-b3bc2d2fa96b');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "c833ed525bc94b00b3d8b357323e1edb", "version_major": 2, "version_minor": 0}
@@ -17804,7 +17798,7 @@ Causes of Death
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[744]:</div>
+<div class="prompt input_prompt">In&nbsp;[804]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pa</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
@@ -17831,7 +17825,7 @@ Causes of Death
             <span class="s2">&quot;disposition_accidental&quot;</span><span class="p">,</span>
             <span class="n">elementwise</span><span class="o">=</span><span class="kc">False</span>
         <span class="p">)</span>
-        <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;gender != &#39;white&#39;&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;gender != &#39;white&#39;&quot;</span><span class="p">)</span>  <span class="c1"># probably a data entry error</span>
         <span class="o">.</span><span class="n">filter_string</span><span class="p">(</span>
             <span class="s2">&quot;dispositions_exclusions&quot;</span><span class="p">,</span>
             <span class="s2">&quot;unreported|unknown|pending|suicide&quot;</span><span class="p">,</span>
@@ -18269,15 +18263,15 @@ have a greater than random chance of showing symptoms of mental illness."</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[754]:</div>
+<div class="prompt input_prompt">In&nbsp;[805]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.stats.proportion</span> <span class="kn">import</span> <span class="n">proportions_ztest</span>
 
 <span class="k">def</span> <span class="nf">hypothesis_gt_random_mental_illness</span><span class="p">(</span><span class="n">sample</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">proportions_ztest</span><span class="p">(</span>
-        <span class="n">sample</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">sample</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;larger&quot;</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">sample</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;larger&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
     <span class="p">)</span>
 
 <span class="n">probabilistic_mental_illness_schema</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span>
@@ -18695,10 +18689,10 @@ have a greater than random chance of showing symptoms of mental illness."</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[762]:</div>
+<div class="prompt input_prompt">In&nbsp;[808]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">roc_curve</span>
 
 <span class="n">predict_fn</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">check_input</span><span class="p">(</span><span class="n">feature_schema</span><span class="p">)(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">)</span>
 
@@ -18827,7 +18821,7 @@ test ROC AUC: 0.8614
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The probability of the case being ruled as <code>accidental</code> ⬆️ if the <code>cause_of_death</code> is <code>vehicle,</code> <code>tasered</code>, <code>asphyxiated_restrained</code>, <code>medical_emergency</code>, or <code>drug overdose</code>, or <code>race</code> is unspecified.</p>
+<p>The probability of the case being ruled as <code>accidental</code> ⬆️ if the <code>cause_of_death</code> is <code>vehicle,</code> <code>tasered</code>, <code>asphyxiated_restrained</code>, <code>medical_emergency</code>, or <code>drug_overdose</code>, or <code>race</code> is unspecified.</p>
 <p>The probability of the case being ruled as <code>accidental</code> ⬇️ if the <code>cause_of_death</code> is <code>gunshot</code> or <code>race</code> is <code>european_american_white</code>, <code>hispanic_latino</code> or <code>asian_pacific_islander</code>.</p>
 
 </div>
@@ -18843,20 +18837,25 @@ test ROC AUC: 0.8614
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Create a dataframe with <code>{var}</code> and <code>shap_{var}</code> as columns</p>
+<p>Create a dataframe with <code>{var}</code> and <code>{var}_shap</code> as columns</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[784]:</div>
+<div class="prompt input_prompt">In&nbsp;[814]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">audit_dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
-    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_test_array</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">),</span>
-    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">shap_values</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;shap_</span><span class="si">{x}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">feature_names</span><span class="p">])</span>
-<span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">audit_dataframe</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_test_array</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">),</span>
+            <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">shap_values</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{x}</span><span class="s2">_shap&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">feature_names</span><span class="p">])</span>
+        <span class="p">],</span>
+        <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+<span class="p">)</span>
 
 <span class="n">audit_dataframe</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
@@ -18871,7 +18870,7 @@ test ROC AUC: 0.8614
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[784]:</div>
+    <div class="prompt output_prompt">Out[814]:</div>
 
 
 
@@ -18895,99 +18894,99 @@ test ROC AUC: 0.8614
     <tr style="text-align: right;">
       <th></th>
       <th>age</th>
-      <th>gender_female</th>
-      <th>gender_male</th>
-      <th>gender_transgender</th>
-      <th>gender_transexual</th>
-      <th>race_african_american_black</th>
-      <th>race_asian_pacific_islander</th>
-      <th>race_european_american_white</th>
-      <th>race_hispanic_latino</th>
-      <th>race_middle_eastern</th>
+      <th>age_shap</th>
+      <th>cause_of_death_asphyxiated_restrained</th>
+      <th>cause_of_death_asphyxiated_restrained_shap</th>
+      <th>cause_of_death_beaten_bludgeoned_with_instrument</th>
+      <th>cause_of_death_beaten_bludgeoned_with_instrument_shap</th>
+      <th>cause_of_death_burned_smoke_inhalation</th>
+      <th>cause_of_death_burned_smoke_inhalation_shap</th>
+      <th>cause_of_death_chemical_agent_pepper_spray</th>
+      <th>cause_of_death_chemical_agent_pepper_spray_shap</th>
       <th>...</th>
-      <th>shap_cause_of_death_fell_from_a_height</th>
-      <th>shap_cause_of_death_gunshot</th>
-      <th>shap_cause_of_death_medical_emergency</th>
-      <th>shap_cause_of_death_other</th>
-      <th>shap_cause_of_death_stabbed</th>
-      <th>shap_cause_of_death_tasered</th>
-      <th>shap_cause_of_death_undetermined</th>
-      <th>shap_cause_of_death_unknown</th>
-      <th>shap_cause_of_death_vehicle</th>
-      <th>shap_symptoms_of_mental_illness</th>
+      <th>race_hispanic_latino</th>
+      <th>race_hispanic_latino_shap</th>
+      <th>race_middle_eastern</th>
+      <th>race_middle_eastern_shap</th>
+      <th>race_native_american_alaskan</th>
+      <th>race_native_american_alaskan_shap</th>
+      <th>race_race_unspecified</th>
+      <th>race_race_unspecified_shap</th>
+      <th>symptoms_of_mental_illness</th>
+      <th>symptoms_of_mental_illness_shap</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>2.325608</td>
+      <td>-0.065080</td>
       <td>0.0</td>
-      <td>1.0</td>
+      <td>-0.008549</td>
+      <td>0.0</td>
+      <td>-0.000399</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
-      <td>-0.204404</td>
-      <td>-0.004538</td>
-      <td>-0.000018</td>
-      <td>0.0</td>
-      <td>-0.011355</td>
+      <td>-0.003037</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>-0.031586</td>
+      <td>0.0</td>
+      <td>-0.000782</td>
+      <td>0.0</td>
+      <td>-0.010539</td>
+      <td>1.0</td>
       <td>-0.016144</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1.535637</td>
+      <td>-0.044963</td>
       <td>0.0</td>
-      <td>1.0</td>
+      <td>-0.005249</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>0.000119</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
-      <td>0.206491</td>
-      <td>-0.002794</td>
-      <td>0.000005</td>
-      <td>0.0</td>
-      <td>0.030571</td>
+      <td>-0.000890</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>-0.011863</td>
+      <td>0.0</td>
+      <td>-0.000253</td>
+      <td>1.0</td>
+      <td>-0.003891</td>
+      <td>1.0</td>
       <td>-0.004200</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.602035</td>
+      <td>-0.032465</td>
       <td>0.0</td>
-      <td>1.0</td>
+      <td>-0.008740</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>-0.000496</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
-      <td>-0.243873</td>
-      <td>-0.004697</td>
-      <td>-0.000005</td>
-      <td>0.0</td>
-      <td>-0.009892</td>
+      <td>-0.000606</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>-0.043502</td>
+      <td>0.0</td>
+      <td>-0.000698</td>
+      <td>1.0</td>
+      <td>0.015928</td>
+      <td>1.0</td>
       <td>-0.009826</td>
     </tr>
   </tbody>
@@ -19013,13 +19012,13 @@ variable on the output probability of the model</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[785]:</div>
+<div class="prompt input_prompt">In&nbsp;[811]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">hypothesis_accident_probability</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">increases</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="n">relationship</span> <span class="o">=</span> <span class="s2">&quot;greater_than&quot;</span> <span class="k">if</span> <span class="n">increases</span> <span class="k">else</span> <span class="s2">&quot;less_than&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="sa">f</span><span class="s2">&quot;shap_</span><span class="si">{feature}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">Column</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{feature}</span><span class="s2">_shap&quot;</span><span class="p">:</span> <span class="n">Column</span><span class="p">(</span>
             <span class="n">checks</span><span class="o">=</span><span class="n">Hypothesis</span><span class="o">.</span><span class="n">two_sample_ttest</span><span class="p">(</span>
                 <span class="n">sample1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                 <span class="n">sample2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
@@ -19047,7 +19046,7 @@ variable on the output probability of the model</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[790]:</div>
+<div class="prompt input_prompt">In&nbsp;[812]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">{}</span>
@@ -19072,6 +19071,7 @@ variable on the output probability of the model</p>
     <span class="n">columns</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">hypothesis_accident_probability</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">increases</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 
 <span class="n">model_audit_schema</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">DataFrameSchema</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+
 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_audit_schema</span><span class="p">(</span><span class="n">audit_dataframe</span><span class="p">),</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model audit results pass! ✅&quot;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
@@ -19111,7 +19111,9 @@ variable on the output probability of the model</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Data validation is a means to an end: <em>reproducibility</em>, <em>readability</em>, and <em>maintainability</em></p>
+<ul>
+<li>Data validation is a means to a several ends: <em>reproducibility</em>, <em>readability</em>, and <em>maintainability</em></li>
+</ul>
 
 </div>
 </div>
@@ -19119,7 +19121,9 @@ variable on the output probability of the model</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It's an iterative process between exploring the data, acquiring domain knowledge, and writing validation code.</p>
+<ul>
+<li>It's an iterative process between exploring the data, acquiring domain knowledge, and writing validation code.</li>
+</ul>
 
 </div>
 </div>
@@ -19127,8 +19131,10 @@ variable on the output probability of the model</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><code>pandera</code> schemas are executable contracts that enforce the statistical properties
-at runtime and can be flexibly interleaved with data processing logic.</p>
+<ul>
+<li><code>pandera</code> schemas are executable contracts that enforce the statistical properties of a dataframe
+at runtime and can be flexibly interleaved with data processing logic.</li>
+</ul>
 
 </div>
 </div>
@@ -19136,7 +19142,7 @@ at runtime and can be flexibly interleaved with data processing logic.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Experimental-Features-(crazy-ideas)">Experimental Features (crazy ideas)<a class="anchor-link" href="#Experimental-Features-(crazy-ideas)">&#182;</a></h1><p><strong>Schema Inference</strong></p>
+<h1 id="Experimental-Features">Experimental Features<a class="anchor-link" href="#Experimental-Features">&#182;</a></h1><p><strong>Schema Inference</strong></p>
 <div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">infer_schema</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
 </pre></div>
 <p><strong>Schema Serialization</strong></p>
@@ -19150,7 +19156,7 @@ at runtime and can be flexibly interleaved with data processing logic.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Roadmap:-Feature-Proposals-(crazier-ideas)">Roadmap: Feature Proposals (crazier ideas)<a class="anchor-link" href="#Roadmap:-Feature-Proposals-(crazier-ideas)">&#182;</a></h1>
+<h1 id="Roadmap:-Feature-Proposals">Roadmap: Feature Proposals<a class="anchor-link" href="#Roadmap:-Feature-Proposals">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -19158,7 +19164,7 @@ at runtime and can be flexibly interleaved with data processing logic.</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Express tolerance level for <code>Check</code> objects when they return a boolean <code>Series</code></strong></p>
-<div class="highlight"><pre><span></span><span class="c1"># check passes if 10% or fewer cases fail to meet constraint</span>
+<div class="highlight"><pre><span></span><span class="c1"># up to 10% of cases are allowed to fail</span>
 <span class="n">my_check</span> <span class="o">=</span> <span class="n">Check</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 <p><strong>Define domain-specific schemas, types, and checks, e.g. for machine learning</strong></p>
@@ -19194,10 +19200,7 @@ at runtime and can be flexibly interleaved with data processing logic.</p>
 <p><strong>Repo:</strong> <a href="https://github.com/pandera-dev/pandera">https://github.com/pandera-dev/pandera</a></p>
 <ol>
 <li>Improving documentation</li>
-<li>Submit feature requests<ol>
-<li>E.g. Additional built-in <code>Check</code> and <code>Hypothesis</code> methods</li>
-</ol>
-</li>
+<li>Submit feature requests (e.g. additional built-in <code>Check</code> and <code>Hypothesis</code> methods)</li>
 <li>Submit new issues or pull requests on Github</li>
 </ol>
 

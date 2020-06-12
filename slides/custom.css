@@ -31,7 +31,7 @@ div.output_stderr, div.output_stdout, div.output_text {
 }
 
 .rendered_html blockquote p:last-child {
-    margin-bottom: 20px;
+    margin: 5px
 }
 
 div.output_html th {
