@@ -1,4 +1,5 @@
 #!/bin/sh
+# sets up local conda environment
 
 conda create -n pandera-presentations -c conda-forge \
     python=3.7 \
@@ -7,16 +8,7 @@ conda create -n pandera-presentations -c conda-forge \
     jupyterlab \
     jupytext \
     matplotlib \
-    pandas \
-    pandas-profiling \
-    pandera==0.4.2 \
-    pyjanitor \
-    requests \
-    rise \
-    seaborn \
-    scikit-learn==0.23.0 \
-    shap \
-    statsmodels
+    nodejs
 
 python -m ipykernel install \
     --name 'pandera-presentations' \

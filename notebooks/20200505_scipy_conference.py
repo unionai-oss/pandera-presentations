@@ -593,10 +593,12 @@ except pa.errors.SchemaError as exc:
 # ### Notebook is Available Here:
 #
 # **Jupyter notebook classic:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/pandera-dev/pandera-presentations/master?filepath=notebooks%2F20200505_scipy_conference.ipynb)
-# https://mybinder.org/v2/gh/pandera-dev/pandera-presentations/master?filepath=notebooks%2F20200505_scipy_conference.ipynb
+#
+# https://bit.ly/scipy-2020-pandera
 #
 # **Jupyter lab:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/pandera-dev/pandera-presentations/ee3639137c3fcd58757ba316529e567ba229f0f1?urlpath=lab%2Ftree%2Fnotebooks%2F20200505_scipy_conference.ipynb)
-# https://mybinder.org/v2/gh/pandera-dev/pandera-presentations/ee3639137c3fcd58757ba316529e567ba229f0f1?urlpath=lab%2Ftree%2Fnotebooks%2F20200505_scipy_conference.ipynb
+#
+# https://bit.ly/scipy-2020-pandera-lab
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Read the Data
@@ -725,9 +727,6 @@ def normalize_age(age):
         .pipe(normalize_age_to_year, "day", 365)
         .astype(float)
     )
-
-def filter_out_suicide():
-    pass
 
 def compute_disposition_accidental(dispositions_exclusions):
     return (

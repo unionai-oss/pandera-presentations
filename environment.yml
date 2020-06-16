@@ -1,0 +1,14 @@
+name: pandera-presentations
+channels:
+  - conda-forge
+dependencies:
+  - matplotlib
+  - pandas
+  - pandas-profiling
+  - pandera==0.4.2
+  - pyjanitor
+  - requests
+  - seaborn
+  - scikit-learn==0.23.0
+  - shap
+  - statsmodels
