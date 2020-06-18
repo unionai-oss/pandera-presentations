@@ -22,6 +22,8 @@
 # Scipy 2020
 
 # %% slideshow={"slide_type": "skip"}
+import warnings
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pprint import pprint
@@ -38,6 +40,8 @@ sns.set_style(
         "axes.spines.top": False,
     }
 )
+
+warnings.simplefilter("ignore")
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## What's a `DataFrame`?
@@ -84,9 +88,9 @@ dataframe.head()
 # - It can be difficult to reason about and debug data processing pipelines.
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# - Ensuring data quality is critical in many contexts but the data
-#   validation process can incur considerable cognitive and software
-#   development overhead.
+# - It's critical to ensuring data quality in many contexts especially when
+#   the end product informs business decisions, supports scientific
+#   findings, or generates predictions in a production setting.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Everyone has a personal relationship with their dataframes
@@ -148,7 +152,7 @@ def process_data(df):
 
 # %%
 def process_data(df):
-    import pdb; pdb.set_trace()
+    import pdb; pdb.set_trace()  # <- insert breakpoint
     return (
         df.assign(
             weekly_income=lambda x: x.hours_worked * x.wage_per_hour
@@ -175,12 +179,9 @@ def process_data(df):
 def process_data(df):
     return (
         df
-        # make sure these columns are floats
-        .astype({"hours_worked": float, "wage_per_hour": float})
-        # replace negative values with nans, since nans
-        # are imputed downstream of this function.
+        .astype({"hours_worked": float, "wage_per_hour": float})  # <- make sure columns are floats
         .assign(
-            hours_worked=lambda x: x.hours_worked.where(
+            hours_worked=lambda x: x.hours_worked.where(  # <- replace negative values with nans
                 x.hours_worked >= 0, np.nan
             )
         )
@@ -221,10 +222,8 @@ out_schema = (
 @pa.check_output(out_schema)
 def process_data(df):
     return (
-        # replace negative values with nans, since nans
-        # are imputed downstream of this function.
         df.assign(
-            hours_worked=lambda x: x.hours_worked.where(
+            hours_worked=lambda x: x.hours_worked.where(  # <- replace negative values with nans
                 x.hours_worked >= 0, np.nan
             )
         )
@@ -235,7 +234,7 @@ def process_data(df):
 
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ### You look above and see what these `in_schema` and `out_schema` objects are about, finding a `NOTE` that a fellow traveler has left for you.
+# ### You look above and see what `in_schema` and `out_schema` are, finding a `NOTE` that a fellow traveler has left for you.
 
 # %%
 import pandera as pa
@@ -264,15 +263,17 @@ def process_data(df):
 # ## Moral of the Story
 #
 # The better you can reason about the contents of a dataframe,
-# the faster you can debug. The faster you can debug, the sooner
-# you can focus on downstream tasks that you care about.
+# the faster you can debug.
+#
+# The faster you can debug, the sooner you can focus on
+# downstream tasks that you care about.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # Outline
 #
 # - Data validation in theory and practice.
 # - Brief introduction to `pandera`
-# - End-to-end example using the "Fatal Encounters" dataset
+# - Case Study: **Fatal Encounters** dataset
 # - Roadmap
 
 # %% [markdown] slideshow={"slide_type": "slide"}
@@ -307,7 +308,7 @@ def process_data(df):
 # > lambda df: True
 # > ```
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown]
 # ### Case 2: Unverifiable
 #
 # $v(x) \rightarrow False$
@@ -433,7 +434,7 @@ def process_data(df):
 # - $s(f(x))$ validates the output of $f$ to check that the processing function is fulfilling the contract defined in $s$
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# - $s(f(s'(x))$: the "data validation sandwich"
+# - $s(f(s'(x))$: the data validation <span style="font-size: 30px; padding: 10px;">🥪</span>
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Architecture
@@ -442,12 +443,12 @@ def process_data(df):
 # <img src="../figures/pandera_architecture.png", width=275
 #  style="display: block; margin-left: auto; margin-right: auto;"/>
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # ## Pandera Basics
 #
 # ### Step 1: Define a `DataFrameSchema`
 
-# %%
+# %% slideshow={"slide_type": "skip"}
 import pandera as pa
 from pandera import Column, Check
 
@@ -467,10 +468,10 @@ schema = pa.DataFrameSchema(
     coerce=True,
 )
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # ### Step 2: Call the `schema` on some data
 
-# %%
+# %% slideshow={"slide_type": "skip"}
 import pandas as pd
 
 dataframe = pd.DataFrame(
@@ -483,12 +484,12 @@ dataframe = pd.DataFrame(
 
 schema(dataframe)
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # ### Useful Error Reporting
 #
 # Expected column not present
 
-# %%
+# %% slideshow={"slide_type": "skip"}
 no_column_df = dataframe.drop("hours_worked", axis="columns")
 
 try:
@@ -496,12 +497,12 @@ try:
 except pa.errors.SchemaError as exc:
     print(exc)
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # ### Useful Error Reporting
 #
 # Column type cannot be coerced to expected data type.
 
-# %%
+# %% slideshow={"slide_type": "skip"}
 incorrect_type_df = dataframe.assign(hours_worked="string")
 
 try:
@@ -509,12 +510,12 @@ try:
 except ValueError as exc:
     print(exc)
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # ### Useful Error Reporting
 #
 # Empirical column property is falsified
 
-# %%
+# %% slideshow={"slide_type": "skip"}
 falsified_column_check = dataframe.copy()
 falsified_column_check.loc[-2:, "wage_per_hour"] = -20
 
@@ -523,12 +524,12 @@ try:
 except pa.errors.SchemaError as exc:
     print(exc)
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # ### Debugging Support
 #
 # Inspect invalid data at runtime.
 
-# %%
+# %% slideshow={"slide_type": "skip"}
 falsified_column_check = dataframe.copy()
 falsified_column_check.loc[-2:, "wage_per_hour"] = -20
 
@@ -583,7 +584,7 @@ except pa.errors.SchemaError as exc:
 # - I don't have any domain expertise in criminal justice!
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# - The purpose here is to showcase the capabilities of `pandera`, not provide earth-shattering or actionable insights.
+# - The main purpose here is to showcase the capabilities of `pandera`.
 
 # %% tags=["hide_input"] slideshow={"slide_type": "slide"} language="html"
 # <img src="../figures/validate_all_the_things.png", width=700
@@ -619,11 +620,87 @@ fatal_encounters = pd.read_csv(dataset_url, skipfooter=1, engine="python")
 with pd.option_context("display.max_columns", 500):
     display(fatal_encounters.head(3))
 
+
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ### Explore the Raw Data with [`pandas-profiling`](https://github.com/pandas-profiling/pandas-profiling)
+# ### Clean up column names
+#
+# To make the analysis more readable
+
+# %%
+def clean_columns(df):
+    return (
+        df.clean_names()
+        .rename(
+            columns=lambda x: (
+                x.strip("_")
+                .replace("&", "_and_")
+                .replace("subjects_", "")
+                .replace("location_of_death_", "")
+                .replace("_resulting_in_death_month_day_year", "")
+                .replace("_internal_use_not_for_analysis", "")
+            )
+        )
+    )
+
+fatal_encounters_clean_columns = clean_columns(fatal_encounters)
+
+# %% [markdown] slideshow={"slide_type": "subslide"}
+# #### Minimal Schema Definition
+#
+# Just define columns that we need for creating the training set,
+# and specify which are `nullable`.
+
+# %%
+clean_column_schema = pa.DataFrameSchema(
+    {
+        "age": Column(nullable=True),
+        "gender": Column(nullable=True),
+        "race": Column(nullable=True),
+        "cause_of_death": Column(nullable=True),
+        "symptoms_of_mental_illness": Column(nullable=True),
+        "dispositions_exclusions": Column(nullable=False),
+    }
+)
+
+
+# %% [markdown] slideshow={"slide_type": "subslide"}
+# Validate the output of `clean_columns` using `pipe` at the end of the method chain
+
+# %%
+def clean_columns(df):
+    return (
+        df.clean_names()
+        .rename(
+            columns=lambda x: (
+                x.strip("_")
+                .replace("&", "_and_")
+                .replace("subjects_", "")
+                .replace("location_of_death_", "")
+                .replace("_resulting_in_death_month_day_year", "")
+                .replace("_internal_use_not_for_analysis", "")
+            )
+        )
+        .pipe(clean_column_schema)  # <- validate output with schema
+    )
+
+
+# %% [markdown] slideshow={"slide_type": "subslide"}
+# #### Sidebar
+#
+# If a column is not present as specified by the schema, a `SchemaError` is raised.
+
+# %%
+corrupted_data = fatal_encounters.drop("Subject's age", axis="columns")
+try:
+    clean_columns(corrupted_data)
+except pa.errors.SchemaError as exc:
+    print(exc)
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ### Explore the Data with [`pandas-profiling`](https://github.com/pandas-profiling/pandas-profiling)
 
 # %% tags=["hide_input"]
-profile = ProfileReport(fatal_encounters, minimal=True)
+profile = ProfileReport(fatal_encounters_clean_columns, minimal=True)
 profile.set_variable("html.navbar_show", False)
 profile.to_notebook_iframe()
 
@@ -646,53 +723,32 @@ causes_of_death = [
 ]
 
 # %%
-schema = pa.DataFrameSchema(
+training_data_schema = pa.DataFrameSchema(
     {
+        # feature columns
         "age": Column(pa.Float, Check.in_range(0, 120), nullable=True),
         "gender": Column(pa.String, Check.isin(genders), nullable=True),
         "race": Column(pa.String, Check.isin(races), nullable=True),
         "cause_of_death": Column(pa.String, Check.isin(causes_of_death), nullable=True),
         "symptoms_of_mental_illness": Column(pa.Bool, nullable=True),
+        # target column
         "disposition_accidental": Column(pa.Bool),
     },
-    coerce=True
+    coerce=True  # <- coerce columns to the specified type
 )
 
-# %% slideshow={"slide_type": "subslide"} tags=["hide_input"]
-display(HTML("Genders"))
-pprint(genders)
-display(HTML("Races"))
-pprint(races, compact=True, width=78)
-display(HTML("Causes of Death"))
-pprint(causes_of_death, compact=True, width=79)
-
-
-# %% [markdown] slideshow={"slide_type": "slide"}
-# ### Clean the Data
+# %% [markdown] slideshow={"slide_type": "subslide"}
+# #### Serialize schema to yaml format:
 
 # %%
-def clean_columns(df):
-    return (
-        df.clean_names()
-        .rename(
-            columns=lambda x: (
-                x.strip("_")
-                .replace("&", "_and_")
-                .replace("subjects_", "")
-                .replace("location_of_death_", "")
-                .replace("_resulting_in_death_month_day_year", "")
-                # logic below applies to the following fields:
-                # - "symptoms_of_mental_illness"
-                # - "dispositions_exclusions"
-                # gonna use them anyway 😬
-                .replace("_internal_use_not_for_analysis", "")
-            )
-        )
-    )
+print(training_data_schema.to_yaml())
 
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Clean the Data
+#
+# The cleaning function should normalize string values as specified
+# by `training_data_schema`.
 
 # %% slideshow={"slide_type": "skip"}
 def binarize_mental_illness(symptoms_of_mental_illness: pd.Series):
@@ -719,15 +775,6 @@ def normalize_age_to_year(age: pd.Series, pattern: str, denom: int):
         age[to_normalize].str.replace(pattern, "").astype(float) / denom
     )
 
-def normalize_age(age):
-    return (
-        age.str.replace("s|`", "")
-        .pipe(normalize_age_range)
-        .pipe(normalize_age_to_year, "month|mon", 12)
-        .pipe(normalize_age_to_year, "day", 365)
-        .astype(float)
-    )
-
 def compute_disposition_accidental(dispositions_exclusions):
     return (
         dispositions_exclusions.str.contains("accident", case=False)
@@ -735,7 +782,6 @@ def compute_disposition_accidental(dispositions_exclusions):
 
 
 # %%
-@pa.check_output(schema)
 def clean_data(df):
     return (
         df.dropna(subset=["dispositions_exclusions"])
@@ -744,38 +790,169 @@ def clean_data(df):
                 "gender", "race", "cause_of_death",
                 "symptoms_of_mental_illness", "dispositions_exclusions"
             ],
-            clean_string_values,
+            lambda x: x.str.lower().str.replace('-|/| ', '_'),  # clean string values
             elementwise=False
         )
         .transform_column(
             "symptoms_of_mental_illness",
-            binarize_mental_illness,
+            lambda x: x.mask(x.dropna().str.contains("unknown")) != "no",  # binarize mental illness
             elementwise=False
         )
-        .transform_column("age", normalize_age, elementwise=False)
         .transform_column(
             "dispositions_exclusions",
-            compute_disposition_accidental,
+            lambda x: x.str.contains("accident", case=False),  # derive target column
             "disposition_accidental",
             elementwise=False
         )
         .query("gender != 'white'")  # probably a data entry error
         .filter_string(
             "dispositions_exclusions",
-            "unreported|unknown|pending|suicide",
+            "unreported|unknown|pending|suicide",  # filter out unknown, unreported, or suicide cases
             complement=True
         )
     )
 
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ### Apply Cleaning Functions
+# #### Add the data validation 🥪
 
 # %%
-fatal_encounters_clean = fatal_encounters.pipe(clean_columns).pipe(clean_data)
-display(fatal_encounters_clean.filter(list(schema.columns)).head(3))
-nrows, ncols = fatal_encounters_clean.filter(list(schema.columns)).shape
-display(Markdown(f"{nrows} **rows** x {ncols} **cols**"))
+@pa.check_input(clean_column_schema)
+@pa.check_output(training_data_schema)
+def clean_data(df):
+    return (
+        df.dropna(subset=["dispositions_exclusions"])
+        .transform_columns(
+            [
+                "gender", "race", "cause_of_death",
+                "symptoms_of_mental_illness", "dispositions_exclusions"
+            ],
+            lambda x: x.str.lower().str.replace('-|/| ', '_'),  # clean string values
+            elementwise=False
+        )
+        .transform_column(
+            "symptoms_of_mental_illness",
+            lambda x: x.mask(x.dropna().str.contains("unknown")) != "no",  # binarize mental illness
+            elementwise=False
+        )
+        .transform_column(
+            "dispositions_exclusions",
+            lambda x: x.str.contains("accident", case=False),  # derive target column
+            "disposition_accidental",
+            elementwise=False
+        )
+        .query("gender != 'white'")  # probably a data entry error
+        .filter_string(
+            "dispositions_exclusions",
+            "unreported|unknown|pending|suicide",  # filter out unknown, unreported, or suicide cases
+            complement=True
+        )
+    )
+
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# #### `ValueError`: Unable to `coerce` column to schema data type
+
+# %%
+try:
+    clean_data(fatal_encounters_clean_columns)
+except ValueError as exc:
+    print(exc)
+
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# #### Normalize the age column
+# So that string values can be converted into `float`
+
+# %%
+def normalize_age(age):
+    return (
+        age.str.replace("s|`", "")
+        .pipe(normalize_age_range)
+        .pipe(normalize_age_to_year, "month|mon", 12)
+        .pipe(normalize_age_to_year, "day", 365)
+    )
+
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# #### Apply `normalize_age` inside the `clean_data` function.
+
+# %%
+# data validation 🥪
+@pa.check_input(clean_column_schema)
+@pa.check_output(training_data_schema)
+def clean_data(df):
+    return (
+        df.dropna(subset=["dispositions_exclusions"])
+        .transform_columns(
+            [
+                "gender", "race", "cause_of_death",
+                "symptoms_of_mental_illness", "dispositions_exclusions"
+            ],
+            lambda x: x.str.lower().str.replace('-|/| ', '_'),  # clean string values
+            elementwise=False
+        )
+        .transform_column(
+            "symptoms_of_mental_illness",
+            lambda x: x.mask(x.dropna().str.contains("unknown")) != "no",  # binarize mental illness
+            elementwise=False
+        )
+        .transform_column("age", normalize_age, elementwise=False)  # <- clean up age column
+        .transform_column(
+            "dispositions_exclusions",
+            lambda x: x.str.contains("accident", case=False),  # derive target column
+            "disposition_accidental",
+            elementwise=False
+        )
+        .query("gender != 'white'")  # probably a data entry error
+        .filter_string(
+            "dispositions_exclusions",
+            "unreported|unknown|pending|suicide",  # filter out unknown, unreported, or suicide cases
+            complement=True
+        )
+    )
+
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ### Create Training Set
+
+# %%
+fatal_encounters_clean = clean_data(fatal_encounters_clean_columns)
+with pd.option_context("display.max_rows", 5):
+    display(fatal_encounters_clean.filter(list(training_data_schema.columns)))
+
+# %% [markdown] slideshow={"slide_type": "subslide"}
+# #### Sidebar
+#
+# ##### Informative Error Messages
+#
+# If, for some reason, the data gets corrupted, `Check` failure cases
+# are reported as a dataframe indexed by failure case `value`.
+
+# %%
+corrupt_data = fatal_encounters_clean.copy()
+corrupt_data["gender"].iloc[:50] = "foo"
+corrupt_data["gender"].iloc[50:100] = "bar"
+try:
+    training_data_schema(corrupt_data)
+except pa.errors.SchemaError as exc:
+    print(exc)
+
+# %% [markdown] slideshow={"slide_type": "subslide"}
+# ##### Fine-grained debugging
+#
+# The `SchemaError` exception object contains the invalid dataframe and
+# the failure cases, which is also a dataframe.
+
+# %%
+with pd.option_context("display.max_rows", 5):
+    try:
+        training_data_schema(corrupt_data)
+    except pa.errors.SchemaError as exc:
+        print("Invalid Data:\n-------------")
+        print(exc.data.iloc[:, :5])
+        print("\nFailure Cases:\n--------------")
+        print(exc.failure_cases)
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Summarize the Data
@@ -794,6 +971,7 @@ display(Markdown(f"{percent_accidental * 100:0.02f}%"))
 # %%
 from pandera import Hypothesis
 
+# use the Column object as a stand-alone schema object
 target_schema = Column(
     pa.Bool,
     name="disposition_accidental",
@@ -804,16 +982,16 @@ target_schema = Column(
 
 target_schema(fatal_encounters_clean);
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # What's the age distribution in the dataset?
 
-# %% tags=["hide_input"]
+# %% tags=["hide_input"] slideshow={"slide_type": "skip"}
 fatal_encounters_clean.age.plot.hist(figsize=(8, 5)).set_xlabel("age");
 
-# %% [markdown] slideshow={"slide_type": "subslide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # **Hypothesis** check: "the `age` column is right-skewed"
 
-# %%
+# %% slideshow={"slide_type": "skip"}
 from scipy import stats
 
 stat, p = stats.skewtest(fatal_encounters_clean.age, nan_policy="omit")
@@ -832,17 +1010,17 @@ age_schema = Column(
 
 age_schema(fatal_encounters_clean);
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # What's the race distribution in the dataset?
 
-# %% tags=["hide_input"]
+# %% tags=["hide_input"] slideshow={"slide_type": "skip"}
 fatal_encounters_clean.race.value_counts().sort_values().plot.barh();
 
-# %% [markdown] slideshow={"slide_type": "subslide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # **Check**: "The top 3 most common races are `european-american/white`,
 # `african-american/black`, and `hispanic/latino` in that order"
 
-# %%
+# %% slideshow={"slide_type": "skip"}
 most_common_races = [
     "european_american_white",
     "african_american_black",
@@ -855,8 +1033,7 @@ race_schema = Column(
     checks=Check(
         lambda race: (
             race.mask(race == "race_unspecified")
-            .dropna()
-            .value_counts()
+            .dropna().value_counts()
             .sort_values(ascending=False)
             .head(len(most_common_races))
             .index.tolist() == most_common_races
@@ -867,10 +1044,10 @@ race_schema = Column(
 
 race_schema(fatal_encounters_clean);
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # Is there an association between `symptoms_of_mental_illness` and `cause_of_death`?
 
-# %% tags=["hide_input"]
+# %% tags=["hide_input"] slideshow={"slide_type": "skip"}
 with sns.plotting_context(context="notebook", font_scale=1.1):
     ax = (
         fatal_encounters_clean
@@ -895,18 +1072,18 @@ with sns.plotting_context(context="notebook", font_scale=1.1):
     ax.axvline(0.5, color="k", linewidth=1.5, linestyle=":")
     sns.despine(bottom=True, left=True)
 
-# %% [markdown] slideshow={"slide_type": "subslide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # **Validation Rule**: "the proportion of people who died of certain
 # causes like drug overdose, being tasered, and falling from a height
 # have a greater than random chance of showing symptoms of mental illness."
 
-# %% [markdown] slideshow={"slide_type": "subslide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # **Deterministic Check**
 #
 # For each discrete value in `cause_of_death`, compute the proportion where
 # `symptoms_of_mental_illness` is `True` and assert that it's greater than 50%
 
-# %%
+# %% slideshow={"slide_type": "skip"}
 causes_of_death_assoc_with_mental_illness = [
     "drug_overdose", "tasered", "burned_smoke_inhalation",
     "asphyxiated_restrained",  "medical_emergency",
@@ -933,14 +1110,14 @@ deterministic_mental_illness_schema = Column(
 )
 deterministic_mental_illness_schema(fatal_encounters_clean);
 
-# %% [markdown] slideshow={"slide_type": "subslide"}
+# %% [markdown] slideshow={"slide_type": "skip"}
 # **Probabilistic Check**
 #
 # For each discrete value in `cause_of_death`, compute the proportion where
 # `symptoms_of_mental_illness` is `True` and assert that it's greater than 50%
 # using the `proportions_ztest` with an `alpha` value of `0.01`.
 
-# %%
+# %% slideshow={"slide_type": "skip"}
 from statsmodels.stats.proportion import proportions_ztest
 
 def hypothesis_gt_random_mental_illness(sample):
@@ -959,15 +1136,21 @@ probabilistic_mental_illness_schema = Column(
             samples=cause_of_death,
             relationship=lambda stat, p: p < 0.01,
             error=f"failed > random test: '{cause_of_death}'",
-            raise_warning=True,
+            raise_warning=True,  # <- raise a warning instead of an exception
         )
         for cause_of_death in causes_of_death_assoc_with_mental_illness
     ]
 )
-probabilistic_mental_illness_schema(fatal_encounters_clean);
+with warnings.catch_warnings():
+    warnings.simplefilter("always")
+    probabilistic_mental_illness_schema(fatal_encounters_clean);
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Prepare Training and Test Sets
+#
+# For functions that have tuple/list-like output, specify an integer
+# index `pa.check_output(schema, <int>)` to apply the schema to a
+# specific element in the output.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -979,9 +1162,10 @@ target_schema = pa.SeriesSchema(
         popmean=0.0275, relationship="equal", alpha=0.01
     )
 )
-feature_schema = schema.remove_columns([target_schema.name])
+feature_schema = training_data_schema.remove_columns([target_schema.name])
 
-@pa.check_input(schema)
+
+@pa.check_input(training_data_schema)
 @pa.check_output(feature_schema, 0)
 @pa.check_output(feature_schema, 1)
 @pa.check_output(target_schema, 2)
@@ -990,31 +1174,11 @@ def split_training_data(fatal_encounters_clean):
     return train_test_split(
         fatal_encounters_clean[list(feature_schema.columns)],
         fatal_encounters_clean[target_schema.name],
-        test_size=0.2
+        test_size=0.2,
+        random_state=45,
     )
 
 X_train, X_test, y_train, y_test = split_training_data(fatal_encounters_clean)
-
-
-# %% [markdown] slideshow={"slide_type": "subslide"}
-# **Sidebar:** Alternatively, if the function output is a `dict`-like object,
-# the second argument to `check_output` can be the key of the object to validate.
-
-# %%
-@pa.check_input(schema)
-@pa.check_output(feature_schema, "X_train")
-@pa.check_output(feature_schema, "X_test")
-@pa.check_output(target_schema, "y_train")
-@pa.check_output(target_schema, "y_test")
-def split_training_data(fatal_encounters_clean):
-    split_names = ["X_train", "X_test", "y_train", "y_test"]
-    splits = train_test_split(
-        fatal_encounters_clean[list(feature_schema.columns)],
-        fatal_encounters_clean[target_schema.name],
-        test_size=0.2
-    )
-    return {k: v for k, v in zip(split_names, splits)}
-
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Model the Data
@@ -1032,6 +1196,8 @@ from sklearn.compose import ColumnTransformer
 
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
+# #### `DataFrameSchema -> ColumnTransformer` 🤯
+#
 # Create a transformer to numericalize the features using a `schema` object.
 # `Check`s have a `statistics` attribute that enables access to the properties
 # defined in the `schema`.
@@ -1073,7 +1239,7 @@ from sklearn import set_config
 set_config(display='diagram')
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
-# Define the transformer
+# ### Define the transformer
 
 # %%
 transformer = column_transformer_from_schema(feature_schema)
@@ -1082,7 +1248,10 @@ transformer = column_transformer_from_schema(feature_schema)
 transformer
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
-# Define and fit the modeling pipeline
+# ### Define and fit the modeling pipeline
+#
+# You can even decorate object methods, specifying the argument name that
+# you want to apply a schema to.
 
 # %%
 pipeline = Pipeline([
@@ -1100,7 +1269,9 @@ pipeline = Pipeline([
     )
 ])
 
-pipeline.fit(X_train, y_train)
+fit_fn = pa.check_input(feature_schema, "X")(pipeline.fit)
+fit_fn = pa.check_input(target_schema, "y")(fit_fn)
+fit_fn(X_train, y_train)
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Evaluate the Model
@@ -1113,12 +1284,10 @@ from sklearn.metrics import roc_auc_score, roc_curve
 
 pred_schema = pa.SeriesSchema(pa.Float, Check.in_range(0, 1))
 
-# check that the feature array input to predict_proba method
-# adheres to the feature_schema
+# check that the feature array input to predict_proba method adheres to the feature_schema
 predict_fn = pa.check_input(feature_schema)(pipeline.predict_proba)
 
 # check that the prediction array output is a probability.
-# Note that the output itself is preserved as a numpy array.
 predict_fn = pa.check_output(pred_schema, lambda x: pd.Series(x))(predict_fn)
 
 yhat_train = pipeline.predict_proba(X_train)[:, 1]
@@ -1159,11 +1328,9 @@ with sns.axes_style("whitegrid"):
 import itertools
 
 def feature_names_from_schema(column, schema):
-
     if schema.columns[column].pandas_dtype is pa.String:
         return [
-            f"{column}_{x.replace('-', '_').replace('/', '_').replace(' ', '_')}"
-            for x in get_categories(schema.columns[column])
+            f"{column}_{x}" for x in get_categories(schema.columns[column])
         ]
 
     # otherwise assume numeric feature
@@ -1183,16 +1350,17 @@ feature_names = list(
 # %%
 import shap
 
+explainer = shap.TreeExplainer(
+    pipeline.named_steps["estimator"],
+    feature_perturbation="tree_path_dependent",
+)
+
 transform_fn = pa.check_input(feature_schema)(
     pipeline.named_steps["transformer"].transform
 )
 
 X_test_array = transform_fn(X_test).toarray()
 
-explainer = shap.TreeExplainer(
-    pipeline.named_steps["estimator"],
-    feature_perturbation="tree_path_dependent",
-)
 shap_values = explainer.shap_values(X_test_array, check_additivity=False)
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
@@ -1210,7 +1378,7 @@ shap.summary_plot(
 )
 
 # %% [markdown]
-# The probability of the case being ruled as `accidental` ⬆️ if the `cause_of_death` is `vehicle,` `tasered`, `asphyxiated_restrained`, `medical_emergency`, or `drug_overdose`, or `race` is unspecified.
+# The probability of the case being ruled as `accidental` ⬆️ if the `cause_of_death` is `vehicle,` `tasered`, `asphyxiated_restrained`, `medical_emergency`, or `drug_overdose`, or `race` is `race_unspecified` or `native_american_alaskan`.
 #
 # The probability of the case being ruled as `accidental` ⬇️ if the `cause_of_death` is `gunshot` or `race` is `european_american_white`, or `asian_pacific_islander`.
 
@@ -1269,6 +1437,7 @@ for column in [
     "cause_of_death_medical_emergency",
     "cause_of_death_drug_overdose",
     "race_race_unspecified",
+    "race_native_american_alaskan",
 ]:
     columns.update(hypothesis_accident_probability(column, increases=True))
     
@@ -1282,34 +1451,45 @@ for column in [
 
 model_audit_schema = pa.DataFrameSchema(columns)
 
-if isinstance(model_audit_schema(audit_dataframe), pd.DataFrame):
+try:
+    model_audit_schema(audit_dataframe)
     print("Model audit results pass! ✅")
-else:
+except pa.errors.SchemaError as exc:
     print("Model audit results fail ❌")
+    print(exc)
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
 # ### More Questions 🤔
 #
 # - Why would `race_unspecified` be associated with a higher probability of `accidental` rulings?
-# - Are the interaction effects between different demographic variables, e.g. `race_african_american_black` and `symptoms_of_mental_illness`?
 # - Can we predict/impute the `disposition` of unreported, unknown, or pending cases? What would that get us?
 # - What's the generative process by which these data are being created and collected?
+# - Are the interaction effects between different demographic variables, e.g. `race_african_american_black` and other variables?
+
+# %% tags=["hide_input"]
+shap.dependence_plot(
+    "race_african_american_black",
+    shap_values[1],
+    X_test_array,
+    feature_names=feature_names,
+    x_jitter=0.3,
+)
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # Takeaways
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# - Data validation is a means to multiple ends: _statistical type safety_, _reproducibility_, _readability_, and _maintainability_
+# - Data validation is a means to multiple ends: _reproducibility_, _readability_, _maintainability_, and _statistical type safety_
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # - It's an iterative process between exploring the data, acquiring domain knowledge, and writing validation code.
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # - `pandera` schemas are executable contracts that enforce the statistical properties of a dataframe
-#   at runtime and can be flexibly interleaved with data processing logic.
+#   at runtime and can be flexibly interleaved with data processing and analysis logic.
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# - `pandera` doesn't automate data exploration or the data validation process. Like unit testing, the user is responsible for identifying which parts of the pipeline are critical to test and defining the contract under which data is considered valid for a specific purpose.
+# - `pandera` doesn't automate data exploration or the data validation process. The user is responsible for identifying which parts of the pipeline are critical to test and defining the contracts under which data are considered valid.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # Experimental Features
@@ -1331,20 +1511,13 @@ else:
 # # Roadmap: Feature Proposals
 
 # %% [markdown]
-# **Express tolerance level for `Check` objects when they return a boolean `Series`**
-#
-# ```python
-# # up to 10% of cases are allowed to fail
-# my_check = Check(lambda s: s < 1, tolerance=0.1)
-# ```
-#
 # **Define domain-specific schemas, types, and checks, e.g. for machine learning**
 #
 # ```python
 # # validate a regression model dataset
 # schema = pa.machine_learning.supervised.TabularSchema(
 #     targets={"regression": pa.TargetColumn(type=pa.ml_dtypes.Continuous)},
-#     features = {
+#     features={
 #         "continuous": pa.FeatureColumn(type=pa.ml_dtypes.Continuous),
 #         "categorical": pa.FeatureColumn(type=pa.ml_dtypes.Categorical),
 #         "ordinal": pa.FeatureColumn(type=pa.ml_dtypes.Ordinal),
