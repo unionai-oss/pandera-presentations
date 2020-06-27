@@ -9,6 +9,3 @@ Install [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/instal
 ```
 $ ./setup-dev-env.sh
 ```
-
-```
-```
