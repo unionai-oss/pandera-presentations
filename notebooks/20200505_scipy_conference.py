@@ -596,9 +596,9 @@ except pa.errors.SchemaError as exc:
 #
 # https://bit.ly/scipy-2020-pandera
 #
-# **Jupyter lab:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/pandera-dev/pandera-presentations/ee3639137c3fcd58757ba316529e567ba229f0f1?urlpath=lab%2Ftree%2Fnotebooks%2F20200505_scipy_conference.ipynb)
+# **Jupyter lab:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/pandera-dev/pandera-presentations/master?urlpath=lab%2Ftree%2Fnotebooks%2F20200505_scipy_conference.ipynb)
 #
-# https://bit.ly/scipy-2020-pandera-lab
+# https://bit.ly/scipy-2020-pandera-jlab
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Read the Data
