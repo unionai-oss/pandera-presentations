@@ -25,6 +25,8 @@
 import warnings
 
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import seaborn as sns
 from pprint import pprint
 
@@ -59,6 +61,7 @@ df = dataframe
 
 # %%
 dataframe.head()
+
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## What's Data Validation?
@@ -96,10 +99,6 @@ dataframe.head()
 # ## Everyone has a personal relationship with their dataframes
 
 # %% slideshow={"slide_type": "skip"}
-import numpy as np
-import pandas as pd
-
-
 def process_data(df):
     return (
         df.assign(
