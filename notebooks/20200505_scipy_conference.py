@@ -657,7 +657,7 @@ clean_column_schema = pa.DataFrameSchema(
         "race": Column(nullable=True),
         "cause_of_death": Column(nullable=True),
         "symptoms_of_mental_illness": Column(nullable=True),
-        "dispositions_exclusions": Column(nullable=False),
+        "dispositions_exclusions": Column(nullable=True),
     }
 )
 
@@ -731,7 +731,7 @@ training_data_schema = pa.DataFrameSchema(
         "cause_of_death": Column(pa.String, Check.isin(causes_of_death), nullable=True),
         "symptoms_of_mental_illness": Column(pa.Bool, nullable=True),
         # target column
-        "disposition_accidental": Column(pa.Bool),
+        "disposition_accidental": Column(pa.Bool, nullable=False),
     },
     coerce=True  # <- coerce columns to the specified type
 )
