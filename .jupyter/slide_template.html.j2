@@ -1,0 +1,12 @@
+{%- extends 'index.html.j2' -%}
+
+{%- block header -%}
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+{{ super() }}
+
+<link rel="stylesheet" href="custom.css">
+
+{%- endblock header -%}
