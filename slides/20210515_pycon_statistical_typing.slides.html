@@ -1,5 +1,6 @@
+<script src="https://use.fontawesome.com/cedd3d2b55.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-<script>mermaid.initialize({startOnLoad:true});</script>
+<script>mermaid.initialize({startOnLoad:false});</script>
 
 <!DOCTYPE html>
 <html>
@@ -13,8 +14,8 @@
 <title>20210515_pycon_statistical_typing slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 <!-- General and theme style sheets -->
-<link rel="stylesheet" href="https://unpkg.com/reveal.js@4.0.2/dist/reveal.css">
-<link rel="stylesheet" href="https://unpkg.com/reveal.js@4.0.2/dist/theme/simple.css" id="theme">
+<link rel="stylesheet" href="reveal.js/dist/reveal.css">
+<link rel="stylesheet" href="reveal.js/dist/theme/simple.css" id="theme">
 
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
@@ -14393,12 +14394,37 @@ div.jp-OutputPrompt {
 <h1 id="Statistical-Typing:-A-Runtime-Typing-System-for-Data-Science-and-Machine-Learning">Statistical Typing: A Runtime Typing System for Data Science and Machine Learning<a class="anchor-link" href="#Statistical-Typing:-A-Runtime-Typing-System-for-Data-Science-and-Machine-Learning">&#182;</a></h1><h3 id="Niels-Bantilan">Niels Bantilan<a class="anchor-link" href="#Niels-Bantilan">&#182;</a></h3><p>Pycon, May 15th 2021</p>
 
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Hey everyone, I'm Niels Bantilan, and I'm excited to get the chance to present
+to you at Pycon this year. Just to give you a little background about myself, I'm one
+of the core maintainers of Flyte, which is an open source ML orchestration
+tool that helps ML/DS practitioners scale their workflows. I'm also the
+author of a dataframe validation tool called <code>pandera</code>, which is something
+I'll return to a little later. I want to start my presentation by making the
+claim that...</p>
+
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h4 id="Type-systems-help-programmers-reason-about-code-and-can-make-programs-more-computationally-efficient.">Type systems help programmers reason about code and can make programs more computationally efficient.<a class="anchor-link" href="#Type-systems-help-programmers-reason-about-code-and-can-make-programs-more-computationally-efficient.">&#182;</a></h4>
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Type systems help programmers reason about code and can make programs more
+computationally efficient, depending on the programming language. In the
+case of Python, which takes a gradual typing approach, you can opt in to
+using type hints but it's not necessary.</p>
+
+</div>
+</div>
+</aside><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
@@ -14417,14 +14443,26 @@ div.jp-OutputPrompt {
 </div>
 </div>
 
-</div></div><div class="fragment">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To see the benefits of type hints, if you take a look at this code snippet,
+you can see that we're defining a function called <code>add_and_double</code> which takes
+two numbers, either an <code>int</code> or a <code>float</code>, and produces another number,
+presumably one that's the sum of the two numbers multiplied by 2 as the
+function name suggests.</p>
+
+</div>
+</div>
+</aside></div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><br>
 Can you predict the outcome of these function calls?</p>
 
 </div>
-</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
@@ -14440,7 +14478,19 @@ Can you predict the outcome of these function calls?</p>
 </div>
 </div>
 
-</div></div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Now I want you to take a few seconds to ask yourself: just with type
+hints and no actual implementation in the function body, can you predict the
+outcome of these function calls?</p>
+<p>We'll review this again later, but now I think we have enough context to
+get to the central question of my presentation, which is:</p>
+
+</div>
+</div>
+</aside></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="&#129300;-What-would-a-type-system-geared-towards-data-science-and-machine-learning-look-like?">&#129300; What would a type system geared towards data science and machine learning look like?<a class="anchor-link" href="#&#129300;-What-would-a-type-system-geared-towards-data-science-and-machine-learning-look-like?">&#182;</a></h2>
@@ -14450,7 +14500,15 @@ Can you predict the outcome of these function calls?</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h2>
 </div>
-</div><div class="fragment">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>And to address this question, I'm going to...</p>
+
+</div>
+</div>
+</aside><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
@@ -14463,14 +14521,6 @@ Can you predict the outcome of these function calls?</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
 <li>📊📈 define a specification for data types in the statistical domain</li>
-</ul>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>🤯 make you realize that you've been doing statistical typing all along</li>
 </ul>
 
 </div>
@@ -14495,12 +14545,49 @@ Can you predict the outcome of these function calls?</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="&#128030;&#128030;&#128030;-An-Introduction-to-Some-of-my-Problems">&#128030;&#128030;&#128030; An Introduction to Some of my Problems<a class="anchor-link" href="#&#128030;&#128030;&#128030;-An-Introduction-to-Some-of-my-Problems">&#182;</a></h2>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="The-worst-bugs-are-the-silent-ones,-especially-if-they're-in-ML-models-that-took-a-lot-of-&#9200;-to-train">The worst bugs are the silent ones, especially if they're in ML models that took a lot of &#9200; to train<a class="anchor-link" href="#The-worst-bugs-are-the-silent-ones,-especially-if-they're-in-ML-models-that-took-a-lot-of-&#9200;-to-train">&#182;</a></h3>
+<p>So first let me introduce you to some of my problems.</p>
+
 </div>
-</div><div class="fragment">
+</div>
+</aside></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="The-worst-bugs-are-the-silent-ones">The worst bugs are the silent ones<a class="anchor-link" href="#The-worst-bugs-are-the-silent-ones">&#182;</a></h3>
+</div>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The first one is that the worst bugs are the silent ones, especially if
+they're in ML models that took a lot of time to train.</p>
+
+</div>
+</div>
+</aside><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Especially if they're in ML models that took a lot of ⏰ to train</p>
+
+</div>
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="The-Model-is-the-Data,-the-Data-is-the-Model-&#129300;-&#129327;">The Model is the Data, the Data is the Model &#129300; &#129327;<a class="anchor-link" href="#The-Model-is-the-Data,-the-Data-is-the-Model-&#129300;-&#129327;">&#182;</a></h4>
+</div>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To see why, consider the notion that statistical models are some kind of compression,
+representation, or approximation of the data.</p>
+
+</div>
+</div>
+</aside><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><br></p>
@@ -14517,7 +14604,15 @@ Can you predict the outcome of these function calls?</p>
 </ul>
 
 </div>
-</div></div><div class="fragment">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>This implies that if the data changes, the model changes as well.</p>
+
+</div>
+</div>
+</aside></div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
@@ -14525,15 +14620,17 @@ Can you predict the outcome of these function calls?</p>
 </ul>
 
 </div>
-</div></div><div class="fragment">
+</div><aside class="notes">
+
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>Suppose I'm using <code>f</code> in an important business/scientific process</li>
-</ul>
+<p>So really, when I'm using a model for explanatory or predictive purposes,
+at a high level we're really using the model as a function that takes some
+input x and produces a result y.</p>
 
 </div>
-</div></div><div class="fragment">
+</div>
+</aside></div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
@@ -14541,13 +14638,35 @@ Can you predict the outcome of these function calls?</p>
 </ul>
 
 </div>
-</div></div></section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The question is, how do I know if <code>f</code> is working as intended?</p>
+<p>Now there're many answers to this question, but here I'd like to highlight
+two approaches that are well established in the software development world.</p>
+
+</div>
+</div>
+</aside></div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Static-Type-checking/Linting">Static Type-checking/Linting<a class="anchor-link" href="#Static-Type-checking/Linting">&#182;</a></h3><p>Catches certain type errors before running code</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The first approach is to catch certain type errors statically, even before
+running any code. So let's return to this example I should you in the beginning.
+Since Python 3.6 we've had type hints and tools like <code>mypy</code> can identify
+errors like the middle example which invokes <code>add_and_double</code> with an invalid
+type.</p>
+
+</div>
+</div>
+</aside><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
@@ -14581,7 +14700,18 @@ Can you predict the outcome of these function calls?</p>
 <h3 id="Static-Type-checking/Linting">Static Type-checking/Linting<a class="anchor-link" href="#Static-Type-checking/Linting">&#182;</a></h3><p><strong>Problem:</strong> What if the underlying implementation is wrong?</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>But what if the underlying implementation is wrong? Type hints can only
+get us so far because the first and third call to <code>add_and_double</code> are
+valid invocations but the actual output is incorrect because the function
+body implements the wrong logic.</p>
+
+</div>
+</div>
+</aside><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
@@ -14616,7 +14746,23 @@ Can you predict the outcome of these function calls?</p>
 let you know when changes cause breakages or regressions.</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>This is where unit tests come in. Unit tests verify the behavior of isolated
+pieces of functionality and let you know when changes cause breakages or regressions.
+As you can see, I've divided up my tests in terms of happy and sad path
+tests.</p>
+<p>In the happy path tests, I've manually written examples of valid inputs and
+test that the output is correct, whereas in the sad path tests, I've defined
+cases that should raise some sort of exception. Note that these tests
+right here are actualy redundant since the type linter should be able to
+catch TypeErrors.</p>
+
+</div>
+</div>
+</aside><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
@@ -14649,7 +14795,22 @@ let you know when changes cause breakages or regressions.</p>
 <h3 id="Property-based-Tests">Property-based Tests<a class="anchor-link" href="#Property-based-Tests">&#182;</a></h3><p>Property-based testing alleviates the burden of explicitly writing test cases</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>You might have noticed that it's burdensome to explicitly
+write test cases, so another thing we can do to be confident that a piece
+of functionality works as intended is to define property-based tests.</p>
+<p>Here I'm using the hypothesis library to define the interface of my function
+as typed strategies. When I run my test suite, under the hood hypothesis
+generates a bunch of data according to those types and attempts to falsify
+the assumption make in the test function body. If it does so, it then tries
+to find the smallest human-readable example that falsifies the test case.</p>
+
+</div>
+</div>
+</aside><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
@@ -14680,36 +14841,60 @@ let you know when changes cause breakages or regressions.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="&#128270;-&#9935;-Testing-code-is-hard,-testing-statistical-analysis-code-is-harder!">&#128270; &#9935; Testing code is hard, testing statistical analysis code is harder!<a class="anchor-link" href="#&#128270;-&#9935;-Testing-code-is-hard,-testing-statistical-analysis-code-is-harder!">&#182;</a></h3>
 </div>
-</div></section><section>
+</div><aside class="notes">
+
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="Toy-Example:-Training-a-&quot;Which-Disney-Character-Are-You?&quot;-Model">Toy Example: Training a "Which Disney Character Are You?" Model<a class="anchor-link" href="#Toy-Example:-Training-a-&quot;Which-Disney-Character-Are-You?&quot;-Model">&#182;</a></h4>
+<p>This brings me to my next problem, which is that testing code is hard, but
+testing statistical analysis code is harder!</p>
+
 </div>
-</div><div class="fragment"><br>
+</div>
+</aside></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Toy-Example:-Survey-Data-for-Modeling">Toy Example: Survey Data for Modeling<a class="anchor-link" href="#Toy-Example:-Survey-Data-for-Modeling">&#182;</a></h4>
+</div>
+</div><br>
 <div class="mermaid">
     graph LR
       U[User] --creates--> S([Survey Response])
       S --store data--> D[(Database)]
       D --create dataset--> X[(Dataset)]
       X --train model--> M([Model])
-</div></div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To see why, let's look at a toy example where we have a system that ingests
+survey data, stores responses in a database, creates a dataset, and trains
+a model to predict a target of interest.</p>
+
+</div>
+</div>
+</aside></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Toy-Pipeline">Toy Pipeline<a class="anchor-link" href="#Toy-Pipeline">&#182;</a></h4>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">TypedDict</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypedDict</span>
 
 <span class="n">Response</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;Response&quot;</span><span class="p">,</span> <span class="n">q1</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">q2</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">q3</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">Example</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<span class="n">Example</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">store_data</span><span class="p">(</span><span class="n">raw_response</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
     <span class="o">...</span>
 
-<span class="k">def</span> <span class="nf">create_dataset</span><span class="p">(</span><span class="n">raw_responses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Response</span><span class="p">],</span> <span class="n">other_features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Example</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Example</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">create_dataset</span><span class="p">(</span><span class="n">raw_responses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Response</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Example</span><span class="p">]:</span>
     <span class="o">...</span>
 
-<span class="k">def</span> <span class="nf">train_which_disney_character_are_you_model</span><span class="p">(</span><span class="n">survey_responses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Example</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">survey_responses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Example</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="o">...</span>
 </pre></div>
 
@@ -14718,7 +14903,21 @@ let you know when changes cause breakages or regressions.</p>
 </div>
 </div>
 
-</div><div class="fragment">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Now here's what your pipeline might look like. To help with readability,
+I've defined two types:</p>
+<ul>
+<li>one to represent the processed response</li>
+<li>and another to represent a training example, which consists of a list of floats
+for the features and a boolean value for the target.</li>
+</ul>
+
+</div>
+</div>
+</aside><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><br></p>
@@ -14732,7 +14931,9 @@ on a single data point 🧘⚛</li>
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Easy to write test cases</p>
+<p>If we just focus on the <code>store_data</code> and <code>create_dataset</code> functions, you
+may notice that <code>store_data</code>'s scope of concern is atomic, in that it
+only operates on a single data point.</p>
 
 </div>
 </div>
@@ -14740,12 +14941,22 @@ on a single data point 🧘⚛</li>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li><code>create_dataset</code> needs to worry about with the statistical patterns of a
+<li><code>create_dataset</code> needs to worry about the statistical patterns of a
 sample of data points 😓📊</li>
 </ul>
 
 </div>
-</div></div><div class="fragment">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>On the other hand, <code>create_dataset</code> needs to worry
+about the overall statistical distribution of a data sample when it creates
+a dataset for modeling.</p>
+
+</div>
+</div>
+</aside></div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
@@ -14757,7 +14968,10 @@ sample of data points 😓📊</li>
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Difficult to write test case</p>
+<p>Going back to the idea of unit testing to be confident that our model
+works as intended, I'd ideally want to test it with some data that looks
+reasonably close to what I'd see in the real world. So what if I want
+to test <code>create_dataset</code> on a plausible example data?</p>
 
 </div>
 </div>
@@ -14766,7 +14980,17 @@ sample of data points 😓📊</li>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="&#129330;-&#128192;-&#128444;-hand-crafting-example-dataframes-is-a-major-barrier-for-unit-testing.">&#129330; &#128192; &#128444; hand-crafting example dataframes is a major barrier for unit testing.<a class="anchor-link" href="#&#129330;-&#128192;-&#128444;-hand-crafting-example-dataframes-is-a-major-barrier-for-unit-testing.">&#182;</a></h3>
 </div>
-</div><div class="fragment">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Unfortunately the main answer here is you'd need to hand-craft example data,
+which often takes the form of pandas dataframes, and the most I'll say on
+this topic is that it's not fun...</p>
+
+</div>
+</div>
+</aside><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><br>
@@ -14778,24 +15002,110 @@ sample of data points 😓📊</li>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="What-if-I-could-do-something-like...">What if I could do something like...<a class="anchor-link" href="#What-if-I-could-do-something-like...">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs   celltag_hide_input">
+</div><aside class="notes">
 
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>What I'd like to be able to do is to specify the data types of my variables
+as a schema along with additional constraints.</p>
+
+</div>
+</div>
+</aside><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs   celltag_hide_input">
+
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandera</span> <span class="k">as</span> <span class="nn">pa</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">pandera</span> <span class="k">as</span> <span class="nn">pa</span>
 <span class="kn">from</span> <span class="nn">pandera.typing</span> <span class="kn">import</span> <span class="n">Series</span>
 
-<span class="k">class</span> <span class="nc">Schema</span><span class="p">(</span><span class="n">pa</span><span class="o">.</span><span class="n">SchemaModel</span><span class="p">):</span>
-    <span class="n">variable1</span><span class="p">:</span> <span class="n">Series</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">variable2</span><span class="p">:</span> <span class="n">Series</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">in_range</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;min_value&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;max_value&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
-    <span class="n">variable3</span><span class="p">:</span> <span class="n">Series</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">isin</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">))</span>
+<span class="k">class</span> <span class="nc">SurveySchema</span><span class="p">(</span><span class="n">pa</span><span class="o">.</span><span class="n">SchemaModel</span><span class="p">):</span>
+    <span class="n">q1</span><span class="p">:</span> <span class="n">Series</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">isin</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+    <span class="n">q2</span><span class="p">:</span> <span class="n">Series</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">isin</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+    <span class="n">q3</span><span class="p">:</span> <span class="n">Series</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">str_matches</span><span class="o">=</span><span class="s2">&quot;[a-zA-Z0-9 ]+&quot;</span><span class="p">)</span>
 
-<span class="n">sample_data</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="n">example</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">sample_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;q1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;q2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s2">&quot;q3&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;hello&quot;</span><span class="p">]})</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Here you can see that I'm importing pandera and I'm using it to I've defined a schema for
+the survey data in our toy example.</p>
+<p>I'm making sure that questions 1 and 2 have values between 1 and 5 and
+question 3 matches some regular expression.</p>
+
+</div>
+</div>
+</aside></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">SurveySchema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>&lt;Schema Column(name=q1, type=&lt;class &#39;int&#39;&gt;)&gt; failed element-wise validator 0:
+&lt;Check isin: isin({1, 2, 3, 4, 5})&gt;
+failure cases:
+   index  failure_case
+0      0            -1
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>I can then use this schema to both validate the properties of some data at
+runtime</p>
+
+</div>
+</div>
+</aside></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sample_data</span> <span class="o">=</span> <span class="n">SurveySchema</span><span class="o">.</span><span class="n">example</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14834,29 +15144,29 @@ sample of data points 😓📊</li>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>variable1</th>
-      <th>variable2</th>
-      <th>variable3</th>
+      <th>q1</th>
+      <th>q2</th>
+      <th>q3</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>367170051</td>
-      <td>0.243554</td>
-      <td>b</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>139</td>
-      <td>0.777239</td>
-      <td>a</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>80</td>
-      <td>0.665238</td>
-      <td>a</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -14869,59 +15179,11 @@ sample of data points 😓📊</li>
 
 </div>
 
-</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sample_data</span><span class="p">[</span><span class="s2">&quot;variable1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">[</span><span class="s2">&quot;variable1&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">Schema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>&lt;Schema Column(name=variable1, type=&lt;class &#39;int&#39;&gt;)&gt; failed element-wise validator 0:
-&lt;Check greater_than_or_equal_to: greater_than_or_equal_to(0)&gt;
-failure cases:
-   index  failure_case
-0      0    -367170051
-1      1          -139
-2      2           -80
-3      3        -26072
-4      4        -25521
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
 </div><aside class="notes">
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>I won't say much else here except for that I'm not a big fan. It's really
-tedious</p>
+<p>and also sample valid data under the schema's constraints for testing purposes.</p>
 
 </div>
 </div>
@@ -14930,20 +15192,58 @@ tedious</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="&#128202;&#128200;-Define-a-Specification-for-Data-Types-in-the-Statistical-Domain">&#128202;&#128200; Define a Specification for Data Types in the Statistical Domain<a class="anchor-link" href="#&#128202;&#128200;-Define-a-Specification-for-Data-Types-in-the-Statistical-Domain">&#182;</a></h2>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<blockquote><p>Statistical typing extends basic scalar data types with additional
+<p>Now the code that you saw in the previous slide is all valid pandera syntax,
+but actually before diving further into pandera I want to offer a specification
+for statistical typing more generally, with a few examples to illustrate what
+I mean.</p>
+
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<blockquote><p>Statistical typing extends primitive data types with additional
 semantics about the properties held by a collection of data points</p>
 </blockquote>
 
 </div>
-</div></section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>I see statistical typing as a type system that extends
+primitive data types like booleans, strings, and floats with additional semantics
+about the properties held by a collection of data points.</p>
+
+</div>
+</div>
+</aside></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Boolean-&#8594;-Bernoulli"><code>Boolean &#8594; Bernoulli</code><a class="anchor-link" href="#Boolean-&#8594;-Bernoulli">&#182;</a></h3>
 </div>
-</div><div class="fragment">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>So if we look at booleans, which really consists of two possible
+values: true and false. In statistics speak, we would call this the support of
+a particular data distribution.</p>
+<p>Now we can extend booleans to Bernoulli types, and to do that
+we'd need to supply one more piece of metadata, which is a probability
+mass function that maps values to probabilities, all of which sum to one.</p>
+<p>This is sufficient to specify a Bernoulli distribution that we can name, for example
+a <code>FairCoin</code> type, and you can imagine assigning a variable of this type
+to some data, and then performing statistical operations on it, for example
+getting the mean or mode of the data.</p>
+
+</div>
+</div>
+</aside><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="kc">True</span>
@@ -14966,7 +15266,7 @@ semantics about the properties held by a collection of data points</p>
 <div class="highlight"><pre><span></span><span class="n">data</span><span class="p">:</span> <span class="n">FairCoin</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
 <span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">chi_squared</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">mode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -14975,14 +15275,30 @@ semantics about the properties held by a collection of data points</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Enum-&#8594;-Categorical"><code>Enum &#8594; Categorical</code><a class="anchor-link" href="#Enum-&#8594;-Categorical">&#182;</a></h3>
 </div>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We can generalize booleans to enumerations, which gives us a way of expressing
+a type with a finite set of values, for example we can define a set of animals
+consisting of cats, dogs, and cows.</p>
+<p>Enums can be extended to Categorical types by providing a
+probability mass function as you saw in the previous slide, in addition
+to a flag that indicates whether the values are ordered or not. Here we
+define a FarmAnimals categorical type with a particular distribution of
+animals that you might find in a farm.</p>
+<p>You can imagine doing runtime type checks on data associated with the
+FarmAnimals type to make sure it follows the specified distribution.</p>
+
 </div>
+</div>
+</aside>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Animal</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="n">CAT</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">DOG</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">COW</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">OTHER</span> <span class="o">=</span> <span class="mi">4</span>
 </pre></div>
 
 </div>
@@ -14994,8 +15310,7 @@ semantics about the properties held by a collection of data points</p>
     <span class="n">probabilities</span><span class="o">=</span><span class="p">{</span>
         <span class="n">Animal</span><span class="o">.</span><span class="n">CAT</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
         <span class="n">Animal</span><span class="o">.</span><span class="n">DOG</span><span class="p">:</span> <span class="mf">0.04</span><span class="p">,</span>
-        <span class="n">Animal</span><span class="o">.</span><span class="n">COW</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">Animal</span><span class="o">.</span><span class="n">OTHER</span><span class="p">:</span> <span class="mf">0.45</span><span class="p">,</span>
+        <span class="n">Animal</span><span class="o">.</span><span class="n">COW</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span>
     <span class="p">},</span>
     <span class="n">ordered</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span>
@@ -15007,33 +15322,7 @@ semantics about the properties held by a collection of data points</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <div class="highlight"><pre><span></span><span class="n">data</span><span class="p">:</span> <span class="n">FarmAnimals</span> <span class="o">=</span> <span class="p">[</span><span class="n">Animal</span><span class="o">.</span><span class="n">CAT</span><span class="p">]</span> <span class="o">*</span> <span class="mi">50</span> <span class="o">+</span> <span class="p">[</span><span class="n">Animal</span><span class="o">.</span><span class="n">DOG</span><span class="p">]</span> <span class="o">*</span> <span class="mi">50</span>
 
-<span class="n">check_type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># raise a TypeError</span>
-</pre></div>
-
-</div>
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Int-&#8594;-Poisson"><code>Int &#8594; Poisson</code><a class="anchor-link" href="#Int-&#8594;-Poisson">&#182;</a></h3>
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span><span class="n">PatientsAdmitted</span> <span class="o">=</span> <span class="n">Poisson</span><span class="p">(</span><span class="n">expected_rate</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">PatientsAdmitted</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
+<span class="n">check_type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># raise a RuntimeError</span>
 </pre></div>
 
 </div>
@@ -15042,10 +15331,28 @@ semantics about the properties held by a collection of data points</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Float-&#8594;-Gaussian"><code>Float &#8594; Gaussian</code><a class="anchor-link" href="#Float-&#8594;-Gaussian">&#182;</a></h3>
 </div>
-</div>
+</div><aside class="notes">
+
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span><span class="n">TreeHeightMeters</span> <span class="o">=</span> <span class="n">Gaussian</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">standard_deviation</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<p>The last example I wanted to go through is to extend floats into Gaussian
+types. This is conceptually simple because gaussian distributions only
+have two parameters, which is the mean and standard deviation of the distribution.
+Here we've defined a <code>TreeHeight</code> type whose mean is 10 and standard deviation
+is 1.</p>
+<p>The cool thing about these types is that, just like the property-based
+testing example that I showed you earlier, I could potentially use them
+to sample data for the purpose of unit testing. So If I have a function that
+processes data drawn from the TreeHeight distribution, I should be able to
+draw samples from this type in my unit tests, pass is to my <code>process_data</code>
+function, and then make assertions about the result.</p>
+
+</div>
+</div>
+</aside>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="n">TreeHeight</span> <span class="o">=</span> <span class="n">Gaussian</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">standard_deviation</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -15053,46 +15360,10 @@ semantics about the properties held by a collection of data points</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_process_data</span><span class="p">():</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">TreeHeightMeters</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="mi">8</span> <span class="o">&lt;=</span> <span class="n">result</span>  <span class="o">&lt;=</span> <span class="mi">12</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">TreeHeight</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">process_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="o">...</span>
 </pre></div>
-
-</div>
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Statistical-Type-Specification:-Types-as-Schemas">Statistical Type Specification: Types as Schemas<a class="anchor-link" href="#Statistical-Type-Specification:-Types-as-Schemas">&#182;</a></h3>
-</div>
-</div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>For each variable in my dataset, define:</p>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>basic datatype</strong>: <code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code>, etc.</li>
-</ul>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>deterministic properties</strong>: domain of possible values, e.g. <code>x &gt;= 0</code></li>
-</ul>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>probabilistic properties</strong>: distributions that apply to the variable and
-their sufficient statistics, e.g. <code>mean</code> and <code>standard deviation</code></li>
-</ul>
 
 </div>
 </div></div></section></section><section><section>
@@ -15100,10 +15371,27 @@ their sufficient statistics, e.g. <code>mean</code> and <code>standard deviation
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Have-you-ever-done-something-like-this?">Have you ever done something like this?<a class="anchor-link" href="#Have-you-ever-done-something-like-this?">&#182;</a></h2>
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Now I'd like to make the point that statistical typing isn't really new...
+when I first thought of the term, I googled around for some time and to my
+surprise I could only find one or two blog posts that specifically used
+the term in the same way that I was thinking about it.</p>
+<p>And to prove this point, I want you to consider the following code snippet,
+and don't worry too much about what the function actually does, just take
+a look at the end. If you've ever written assert statements that
+do runtime validations to check whether the output fulfills certain assumptions
+like value ranges or other such properties, then congratulations, you've been doing
+statistical typing all along.</p>
+
+</div>
+</div>
+</aside><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
@@ -15134,9 +15422,69 @@ their sufficient statistics, e.g. <code>mean</code> and <code>standard deviation
 </div></div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Statistical-Type-Specification:-Types-as-Schemas">Statistical Type Specification: Types as Schemas<a class="anchor-link" href="#Statistical-Type-Specification:-Types-as-Schemas">&#182;</a></h3>
+</div>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>So to try and codify a few of these ideas, we can think of statistical
+types as potentially multivariate schemas where for each variable, I
+can define a few things:</p>
+<ul>
+<li>the primitive data type that each element in the distribution belongs to</li>
+<li>a set of deterministic properties that the type must adhere to</li>
+<li>a set of probabilistic properties, such as the distributions that apply
+to the variable along with their sufficient statistics.</li>
+</ul>
+
+</div>
+</div>
+</aside><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>For each variable in my dataset, define:</p>
+
+</div>
+</div></div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li><strong>primitive datatype</strong>: <code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code>, etc.</li>
+</ul>
+
+</div>
+</div></div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li><strong>deterministic properties</strong>: domain of possible values, e.g. <code>x &gt;= 0</code></li>
+</ul>
+
+</div>
+</div></div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li><strong>probabilistic properties</strong>: distributions that apply to the variable and
+their sufficient statistics, e.g. <code>mean</code> and <code>standard deviation</code></li>
+</ul>
+
+</div>
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Implications">Implications<a class="anchor-link" href="#Implications">&#182;</a></h2>
 </div>
-</div><div class="fragment">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The implications of a fully implemented statistical type system are that:</p>
+
+</div>
+</div>
+</aside><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><br>
@@ -15149,7 +15497,7 @@ Some statistical properties can be checked statically, e.g. the mean operation c
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><br>
-Others can only be checked at runtime, e.g. this sample of data is drawn from a Gaussian of particular parameters</p>
+Other properties can only be checked at runtime, e.g. this sample of data is drawn from a Gaussian</p>
 <div class="highlight"><pre><span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">normaltest</span><span class="p">(</span><span class="n">normalize</span><span class="p">(</span><span class="n">raw_data</span><span class="p">))</span>
 </pre></div>
 
@@ -15166,7 +15514,17 @@ Schemas can be implemented as generative data contracts that can be used for typ
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="&#128736;-Statistical-Typing-in-Practice-with-pandera">&#128736; Statistical Typing in Practice with <code>pandera</code><a class="anchor-link" href="#&#128736;-Statistical-Typing-in-Practice-with-pandera">&#182;</a></h2>
 </div>
-</div></section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To illustrate this last implication, it's time to look at a concrete example
+using pandera, which I'd say is a rough and incomplete implementation of statistical
+typing, but many of the ideas are there.</p>
+
+</div>
+</div>
+</aside></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Suppose we're building a predictive model of house prices given features about different houses:</p>
@@ -15175,7 +15533,7 @@ Schemas can be implemented as generative data contracts that can be used for typ
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">raw_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -15195,7 +15553,17 @@ Schemas can be implemented as generative data contracts that can be used for typ
 </div>
 </div>
 
-</div><div class="fragment">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Suppose we're building a predictive model of house prices given features
+about different houses. You can see from the raw data that we're working
+with four variables.</p>
+
+</div>
+</div>
+</aside><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><br></p>
@@ -15233,10 +15601,18 @@ Schemas can be implemented as generative data contracts that can be used for typ
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Pipeline">Pipeline<a class="anchor-link" href="#Pipeline">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>And we can think of our pipeline in two steps:</p>
+
+</div>
+</div>
+</aside><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">):</span>  <span class="c1"># step 1: prepare data for model training</span>
@@ -15256,10 +15632,25 @@ Schemas can be implemented as generative data contracts that can be used for typ
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Define-Schemas-with-pandera">Define Schemas with <code>pandera</code><a class="anchor-link" href="#Define-Schemas-with-pandera">&#182;</a></h3>
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Next we'll define schemas in pandera, which in practice requires a little bit of
+data exploration to get a sense of what the data look like.</p>
+<p>Here you can see we're defining a BaseSchema, which we'll use as the
+foundational type, and we'll have our raw and processed data inherit from it.</p>
+<p>From these schema definitions, you can immediately see which variables the
+raw and processed data have in common, but you can also see what the differences
+are. Namely, that the raw data has a <code>property_type</code> variable containing strings
+that need to be converted into a set of binary indicator variables.</p>
+
+</div>
+</div>
+</aside><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandera</span> <span class="k">as</span> <span class="nn">pa</span>
@@ -15298,15 +15689,27 @@ Schemas can be implemented as generative data contracts that can be used for typ
 <h3 id="Pipeline">Pipeline<a class="anchor-link" href="#Pipeline">&#182;</a></h3><p>With Type Annotations</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We can then add type annotations to our <code>process_data</code> and <code>train_model</code>
+functions to make sure that the inputs and outputs conform with the schema
+definition.</p>
+
+</div>
+</div>
+</aside><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">RawData</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">ProcessedData</span><span class="p">]:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pa</span><span class="o">.</span><span class="n">check_types</span>
+<span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">RawData</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">ProcessedData</span><span class="p">]:</span>
     <span class="o">...</span>
-    
+
+<span class="nd">@pa</span><span class="o">.</span><span class="n">check_types</span>
 <span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">processed_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">ProcessedData</span><span class="p">]):</span>
     <span class="o">...</span>
 </pre></div>
@@ -15322,10 +15725,19 @@ Schemas can be implemented as generative data contracts that can be used for typ
 <h3 id="Pipeline">Pipeline<a class="anchor-link" href="#Pipeline">&#182;</a></h3><p>With Implementation</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We can fill in our functions with actual implementations using pandas
+and sklearn, to process the data and train a model, respectively.</p>
+
+</div>
+</div>
+</aside><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -15360,10 +15772,19 @@ Schemas can be implemented as generative data contracts that can be used for typ
 run our pipeline.</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The cool thing about this is that our processing and training functions now
+inherently validate our raw and processed data every time we run our pipeline.</p>
+
+</div>
+</div>
+</aside><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
@@ -15410,10 +15831,19 @@ run our pipeline.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Fail-Early-and-with-Useful-Information">Fail Early and with Useful Information<a class="anchor-link" href="#Fail-Early-and-with-Useful-Information">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>And, if we happen to ingest invalid data, the pipeline fails early and we're
+provided useful information about what exactly went wrong.</p>
+
+</div>
+</div>
+</aside><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">invalid_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -15447,7 +15877,7 @@ run our pipeline.</p>
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>error in check_types decorator of function &#39;process_data&#39;: &lt;Schema Column(name=property_type, type=&lt;class &#39;str&#39;&gt;)&gt; failed element-wise validator 0:
-&lt;Check isin: isin({&#39;townhouse&#39;, &#39;house&#39;, &#39;condo&#39;})&gt;
+&lt;Check isin: isin({&#39;house&#39;, &#39;townhouse&#39;, &#39;condo&#39;})&gt;
 failure cases:
    index failure_case
 0      0      unknown
@@ -15465,10 +15895,20 @@ failure cases:
 <h3 id="Schemas-as-Generative-Contracts">Schemas as Generative Contracts<a class="anchor-link" href="#Schemas-as-Generative-Contracts">&#182;</a></h3><p>Define property-based unit tests with <code>hypothesis</code></p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To circle back to property-based testing, pandera exposes a <code>strategy</code>
+method that compiles the schema metadata into a hypothesis strategy that
+you can use in your unit tests.</p>
+
+</div>
+</div>
+</aside><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">given</span>
@@ -15477,34 +15917,14 @@ failure cases:
 <span class="nd">@given</span><span class="p">(</span><span class="n">RawData</span><span class="o">.</span><span class="n">strategy</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
 <span class="k">def</span> <span class="nf">test_process_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">):</span>
     <span class="n">process_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
-
     
 <span class="nd">@given</span><span class="p">(</span><span class="n">ProcessedData</span><span class="o">.</span><span class="n">strategy</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
 <span class="k">def</span> <span class="nf">test_train_model</span><span class="p">(</span><span class="n">processed_data</span><span class="p">):</span>
     <span class="n">estimator</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">processed_data</span><span class="p">)</span>
     <span class="n">predictions</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">processed_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span> <span class="o">==</span> <span class="n">processed_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
 
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><br>
-Run test suite</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">run_test_suite</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">run_test_suite</span><span class="p">():</span>
     <span class="n">test_process_data</span><span class="p">()</span>
     <span class="n">test_train_model</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ tests successful!&quot;</span><span class="p">)</span>    
@@ -15538,13 +15958,24 @@ Run test suite</p>
 
 </div>
 
-</div></div></section><section>
+</div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Catch-Errors-in-Data-Processing-Code">Catch Errors in Data Processing Code<a class="anchor-link" href="#Catch-Errors-in-Data-Processing-Code">&#182;</a></h3><p>Define property-based unit tests with <code>hypothesis</code></p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>This becomes useful because in the case that we've implemented something
+wrong, we'll also get a useful error message. Here pandera is complaining
+that the output of <code>process_data</code> doesn't contain the variable
+<code>property_type_condo</code>.</p>
+
+</div>
+</div>
+</aside><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
@@ -15603,7 +16034,18 @@ error in check_types decorator of function &#39;process_data&#39;: column &#39;p
 data and go from there:</p>
 
 </div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Finally, you can even bootstrap a schema from a sample of data because it
+can be tedious to write a schema from scratch. All you have to do is
+call the <code>infer_schema</code> function, which you can then write out in yaml format
+or as a python script to further edit and refine.</p>
+
+</div>
+</div>
+</aside><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
@@ -15750,23 +16192,68 @@ data and go from there:</p>
 </ul>
 
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To sum up the practical use cases of statistical typing and pandera in
+particular, you can use it in the context of continuous integration tests
+for your ETL or modeling pipelines, but you can also use it for alerting
+when detecting dataset shift, or monitoring the quality of your model's
+predictions in production.</p>
+
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="&#127950;-Where-Can-this-Idea-Go-Next?">&#127950; Where Can this Idea Go Next?<a class="anchor-link" href="#&#127950;-Where-Can-this-Idea-Go-Next?">&#182;</a></h2>
 </div>
-</div></section><section>
+</div><aside class="notes">
+
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Statically-analyze-code-that-performs-statistical-operations">Statically analyze code that performs statistical operations<a class="anchor-link" href="#Statically-analyze-code-that-performs-statistical-operations">&#182;</a></h3><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">:</span> <span class="n">FarmAnimals</span> <span class="o">=</span> <span class="p">[</span><span class="n">Animal</span><span class="o">.</span><span class="n">CAT</span><span class="p">]</span> <span class="o">*</span> <span class="mi">50</span> <span class="o">+</span> <span class="p">[</span><span class="n">Animal</span><span class="o">.</span><span class="n">DOG</span><span class="p">]</span> <span class="o">*</span> <span class="mi">50</span>
+<p>But to go from practical use cases into theoretical applications, I want
+to end with a few ideas that might be interesting to consider when thinking
+about the question of type systems for data science and machine learning.</p>
+
+</div>
+</div>
+</aside></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Statically-analyze-code-that-performs-statistical-operations">Statically analyze code that performs statistical operations<a class="anchor-link" href="#Statically-analyze-code-that-performs-statistical-operations">&#182;</a></h3><div class="highlight"><pre><span></span><span class="n">FarmAnimals</span> <span class="o">=</span> <span class="n">Categorical</span><span class="p">(</span>
+    <span class="n">Animal</span><span class="p">,</span>
+    <span class="n">probabilities</span><span class="o">=</span><span class="p">{</span>
+        <span class="n">Animal</span><span class="o">.</span><span class="n">CAT</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">Animal</span><span class="o">.</span><span class="n">DOG</span><span class="p">:</span> <span class="mf">0.04</span><span class="p">,</span>
+        <span class="n">Animal</span><span class="o">.</span><span class="n">COW</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">ordered</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">data</span><span class="p">:</span> <span class="n">FarmAnimals</span> <span class="o">=</span> <span class="p">[</span><span class="n">Animal</span><span class="o">.</span><span class="n">CAT</span><span class="p">]</span> <span class="o">*</span> <span class="mi">50</span> <span class="o">+</span> <span class="p">[</span><span class="n">Animal</span><span class="o">.</span><span class="n">DOG</span><span class="p">]</span> <span class="o">*</span> <span class="mi">50</span>
 <span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># ❌ cannot apply mean to Categorical</span>
 </pre></div>
 
 </div>
-</div></section><section>
+</div><aside class="notes">
+
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Infer-model-architecture-space-based-on-function-signatures">Infer model architecture space based on function signatures<a class="anchor-link" href="#Infer-model-architecture-space-based-on-function-signatures">&#182;</a></h3><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">input_data</span><span class="p">:</span> <span class="n">Normal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bernoulli</span><span class="p">:</span>
+<p>The first idea is that it would be really nice to be able to statically
+analyze code to call out cases where statistical operations don't make sense
+given some type.</p>
+<p>So returning to the FarmAnimal example for earlier, this would mean that
+even before running code, we could tell that computing the mean of a categorical
+distribution doesn't make sense and our type linter should be able to tell us that.</p>
+
+</div>
+</div>
+</aside></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Infer-model-architecture-space-based-on-function-signatures">Infer model architecture space based on function signatures<a class="anchor-link" href="#Infer-model-architecture-space-based-on-function-signatures">&#182;</a></h3><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">input_data</span><span class="p">:</span> <span class="n">Gaussian</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bernoulli</span><span class="p">:</span>
     <span class="o">...</span>
 
 <span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -15774,13 +16261,41 @@ data and go from there:</p>
 </pre></div>
 
 </div>
-</div></section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The second idea is that it would be possible to infer the model architecture
+space based on function signatures with statistical types. So in theory
+if I have a function that takes a Gaussian distribution as input and outputs
+a Bernoulli distribution, we should be able to infer the space of valid model
+architectures that could approximate this function.</p>
+
+</div>
+</div>
+</aside></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Infer-Statistical-Types-from-Data">Infer Statistical Types from Data<a class="anchor-link" href="#Infer-Statistical-Types-from-Data">&#182;</a></h3><p>Model-based statistical types</p>
 
 </div>
-</div><div class="fragment">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>And finally, maybe the whackiest idea is to infer statistical types from
+data. It's not always the case that my data can be neatly characterized
+by the theoretical statistical distributions we know about today. For example,
+image data or natural language data might be drawn from a very complex
+manifold that would be impossible to write down manually.</p>
+<p>In this case we'd want a schema inference routine that can be arbitrarily
+complex, to describe statistical types that can also be arbitrarily complex,
+using data that can be encoded as a statistical model, where the model
+artifacts can lend themselves as components in a schema.</p>
+
+</div>
+</div>
+</aside><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
@@ -15812,7 +16327,21 @@ used as components in a schema</li>
 real-world data and generate synthetic data</p>
 
 </div>
-</div><div class="mermaid">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To illustrate this final point, let's consider generative adversarial
+networks. In theory, a GAN can be used as a schema to validate real-world
+data but also generate synthetic data. During training you draw real samples
+from the real world and fake data from a generator whose objective is to fool the
+discriminator into thinking that the its synthetic data is real.
+Conversely, the discriminator's objective is to accurately tell when a data point
+is real or fake.</p>
+
+</div>
+</div>
+</aside><div class="mermaid">
 graph TB
   subgraph GAN Architecture
   G[generator]
@@ -15828,7 +16357,19 @@ graph TB
 real or upstream synthetic data.</p>
 
 </div>
-</div><div class="mermaid">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Typically, after training a GAN people only care about the generator and discard
+the discriminator. However, in our case we can actually use the discriminator
+to validate data by telling us whether a particular data point is real or
+fake. We can also use the generator for its primary purpose of synthesizing
+data for testing our model training functions.</p>
+
+</div>
+</div>
+</aside><div class="mermaid">
 graph LR
   subgraph GAN Schema
   G[generator]
@@ -15841,7 +16382,17 @@ graph LR
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Validation-and-Data-Synthesis-for-Complex-Statistical-Types">Validation and Data Synthesis for Complex Statistical Types<a class="anchor-link" href="#Validation-and-Data-Synthesis-for-Complex-Statistical-Types">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell    celltag_hide_input">
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>In effect, this would imply that we can implement validation and data
+synthesis modules for complex statistical types, for example, an image
+dataset with a particular set of categories describing those images.</p>
+
+</div>
+</div>
+</aside><div class="jp-Cell jp-CodeCell jp-Notebook-cell    celltag_hide_input">
 
 <div class="jp-Cell-outputWrapper">
 
@@ -15924,23 +16475,64 @@ graph LR
 </pre></div>
 
 </div>
-</div></div></section><section>
+</div><aside class="notes">
+
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Takeaway">Takeaway<a class="anchor-link" href="#Takeaway">&#182;</a></h2><p>Statistical typing extends basic data types into the statistical domain,
+<p>In theory, it would be possible to define a schema like this, where we have
+an Image type that points to a jpeg file. At validation time, that file is
+read into memory and passed into a GAN to verify that the image is drawn from
+a similar distribution as what we saw during training time. This might be
+useful in production to at least warn us when an image is out of distribution.</p>
+
+</div>
+</div>
+</aside></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Takeaway">Takeaway<a class="anchor-link" href="#Takeaway">&#182;</a></h2><p>Statistical typing extends primitive data types into the statistical domain,
 opening up a bunch of testing capabilities that make statistical code
 more robust and easier to reason about.</p>
 
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Thanks!">Thanks!<a class="anchor-link" href="#Thanks!">&#182;</a></h2>
+<p>So I'm hoping that in this last section I've given you some food for thought,
+and really the main takeaway I want to leave you with is that statistical
+typing extends primitive data types by enforcing a set of deterministic and
+probabilistic properties about a collection of data points.</p>
+<p>This opens up a bunch of testing capabilities that make the code that we write as
+data scientists and ML practitioners more robust and easier to reason about.</p>
+
 </div>
-</div></section></section>
+</div>
+</aside></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Thanks!">Thanks!<a class="anchor-link" href="#Thanks!">&#182;</a></h2><p><i class="fa fa-envelope" aria-hidden="true"></i> niels.bantilan@gmail.com
+<br>
+<i class="fa fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/cosmicBboy">@cosmicbboy</a>
+<br>
+<i class="fa fa-github" aria-hidden="true"></i> <a href="https://github.com/cosmicBboy">cosmicBboy</a></p>
+
+</div>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>And with that I'd like to thank you for your time and attention.</p>
+<p>Please feel free to reach out to me via email or on twitter or github</p>
+<p>I hope you got something out of this talk, and I hope you enjoy the rest of the conference!</p>
+
+</div>
+</div>
+</aside></section></section>
 </div>
 </div>
 </body>
+
 
 
 <script>
@@ -15951,26 +16543,34 @@ require(
       waitSeconds: 15
     },
     [
-      "https://unpkg.com/reveal.js@4.0.2/dist/reveal.js"
+      "reveal.js/dist/reveal.js",
+      "reveal.js/plugin/notes/notes.js"
     ],
-
-    function(Reveal){
+    function(Reveal, RevealNotes){
         // Full list of configuration options available here: https://github.com/hakimel/reveal.js#configuration
         Reveal.initialize({
             controls: true,
             progress: true,
             history: true,
             transition: "none",
+            plugins: [RevealNotes]
         });
-
         var update = function(event){
-          if(MathJax.Hub.getAllJax(Reveal.getCurrentSlide())){
-            MathJax.Hub.Rerender(Reveal.getCurrentSlide());
+          // re-render mathjax
+          var currentSlide = Reveal.getCurrentSlide();
+          if(MathJax.Hub.getAllJax(currentSlide)){
+            MathJax.Hub.Rerender(currentSlide);
+          }
+
+          // render mermaid chart when next slide contains mermaid chart
+          var nextSlide = currentSlide.nextSibling;
+          mermaidNode = $(nextSlide).children(".mermaid");
+          console.log(mermaidNode);
+          if (mermaidNode.length !== 0) {
+            mermaid.init(undefined, mermaidNode);
           }
         };
-
         Reveal.addEventListener('slidechanged', update);
-
         function setScrollingSlide() {
             var scroll = true
             if (scroll === true) {
@@ -15984,11 +16584,11 @@ require(
                 .css('margin-top', '20px');
             }
         }
-
         // check and set the scrolling slide every time the slide change
         Reveal.addEventListener('slidechanged', setScrollingSlide);
     }
 );
 </script>
+
 
 </html>
