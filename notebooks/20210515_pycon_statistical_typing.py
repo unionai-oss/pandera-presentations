@@ -21,7 +21,7 @@
 # Pycon, May 15th 2021
 
 # %% [markdown] slideshow={"slide_type": "notes"}
-# Hey everyone, I'm Niels Bantilan, and I'm excited to get the chance to present
+# Hey everyone, I'm Niels Bantilan, and I'm excited to present
 # to you at Pycon this year. Just to give you a little background about myself, I'm one
 # of the core maintainers of Flyte, which is an open source ML orchestration
 # tool that helps ML/DS practitioners scale their workflows. I'm also the
@@ -30,13 +30,13 @@
 # claim that...
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# #### Type systems help programmers reason about code and can make programs more computationally efficient.
+# #### Type systems help programmers reason about and write more robust code.
 
 # %% [markdown] slideshow={"slide_type": "notes"}
-# Type systems help programmers reason about code and can make programs more
-# computationally efficient, depending on the programming language. In the
-# case of Python, which takes a gradual typing approach, you can opt in to
-# using type hints but it's not necessary.
+# Type systems help programmers reason about and write more robust code. Since
+# Python takes a gradual typing approach, you can opt in to using type hints
+# and I've found that they improve readability and help me build a better
+# mental model of what my code is doing.
 
 # %% slideshow={"slide_type": "fragment"}
 from typing import Union
@@ -50,8 +50,7 @@ def add_and_double(x: Number, y: Number) -> Number:
 # To see the benefits of type hints, if you take a look at this code snippet,
 # you can see that we're defining a function called `add_and_double` which takes
 # two numbers, either an `int` or a `float`, and produces another number,
-# presumably one that's the sum of the two numbers multiplied by 2 as the
-# function name suggests.
+# which is presumably the sum of the two numbers multiplied by two.
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # <br>

@@ -14398,7 +14398,7 @@ div.jp-OutputPrompt {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Hey everyone, I'm Niels Bantilan, and I'm excited to get the chance to present
+<p>Hey everyone, I'm Niels Bantilan, and I'm excited to present
 to you at Pycon this year. Just to give you a little background about myself, I'm one
 of the core maintainers of Flyte, which is an open source ML orchestration
 tool that helps ML/DS practitioners scale their workflows. I'm also the
@@ -14411,16 +14411,16 @@ claim that...</p>
 </aside></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="Type-systems-help-programmers-reason-about-code-and-can-make-programs-more-computationally-efficient.">Type systems help programmers reason about code and can make programs more computationally efficient.<a class="anchor-link" href="#Type-systems-help-programmers-reason-about-code-and-can-make-programs-more-computationally-efficient.">&#182;</a></h4>
+<h4 id="Type-systems-help-programmers-reason-about-and-write-more-robust-code.">Type systems help programmers reason about and write more robust code.<a class="anchor-link" href="#Type-systems-help-programmers-reason-about-and-write-more-robust-code.">&#182;</a></h4>
 </div>
 </div><aside class="notes">
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Type systems help programmers reason about code and can make programs more
-computationally efficient, depending on the programming language. In the
-case of Python, which takes a gradual typing approach, you can opt in to
-using type hints but it's not necessary.</p>
+<p>Type systems help programmers reason about and write more robust code. Since
+Python takes a gradual typing approach, you can opt in to using type hints
+and I've found that they improve readability and help me build a better
+mental model of what my code is doing.</p>
 
 </div>
 </div>
@@ -14450,8 +14450,7 @@ using type hints but it's not necessary.</p>
 <p>To see the benefits of type hints, if you take a look at this code snippet,
 you can see that we're defining a function called <code>add_and_double</code> which takes
 two numbers, either an <code>int</code> or a <code>float</code>, and produces another number,
-presumably one that's the sum of the two numbers multiplied by 2 as the
-function name suggests.</p>
+which is presumably the sum of the two numbers multiplied by two.</p>
 
 </div>
 </div>
@@ -15154,7 +15153,7 @@ runtime</p>
       <th>0</th>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>N</td>
     </tr>
     <tr>
       <th>1</th>
@@ -15197,9 +15196,9 @@ runtime</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Now the code that you saw in the previous slide is all valid pandera syntax,
-but actually before diving further into pandera I want to offer a specification
-for statistical typing more generally, with a few examples to illustrate what
-I mean.</p>
+but actually before diving further into pandera as a specific implementation,
+I want to define statistical typing more generally, with a
+few examples to illustrate what I mean.</p>
 
 </div>
 </div>
@@ -15230,7 +15229,7 @@ about the properties held by a collection of data points.</p>
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>So if we look at booleans, which really consists of two possible
+<p>So for instance, the boolean data type consists of two possible
 values: true and false. In statistics speak, we would call this the support of
 a particular data distribution.</p>
 <p>Now we can extend booleans to Bernoulli types, and to do that
@@ -15877,7 +15876,7 @@ provided useful information about what exactly went wrong.</p>
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>error in check_types decorator of function &#39;process_data&#39;: &lt;Schema Column(name=property_type, type=&lt;class &#39;str&#39;&gt;)&gt; failed element-wise validator 0:
-&lt;Check isin: isin({&#39;house&#39;, &#39;townhouse&#39;, &#39;condo&#39;})&gt;
+&lt;Check isin: isin({&#39;condo&#39;, &#39;house&#39;, &#39;townhouse&#39;})&gt;
 failure cases:
    index failure_case
 0      0      unknown
