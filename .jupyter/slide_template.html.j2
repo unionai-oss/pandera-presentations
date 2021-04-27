@@ -1,0 +1,74 @@
+{%- extends 'reveal/index.html.j2' -%}
+
+{%- block header -%}
+
+<script src="https://use.fontawesome.com/cedd3d2b55.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:false});</script>
+
+{{ super() }}
+
+<link rel="stylesheet" href="custom.css">
+
+{%- endblock header -%}
+
+// taken from https://github.com/jupyter/nbconvert/issues/1423#issuecomment-814054594
+// to show speaker notes
+{% block footer_js %}
+
+<script>
+require(
+    {
+      // it makes sense to wait a little bit when you are loading
+      // reveal from a cdn in a slow connection environment
+      waitSeconds: 15
+    },
+    [
+      "{{ reveal_url_prefix }}/dist/reveal.js",
+      "{{ reveal_url_prefix }}/plugin/notes/notes.js"
+    ],
+    function(Reveal, RevealNotes){
+        // Full list of configuration options available here: https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            transition: "{{reveal_transition}}",
+            plugins: [RevealNotes]
+        });
+        var update = function(event){
+          // re-render mathjax
+          var currentSlide = Reveal.getCurrentSlide();
+          if(MathJax.Hub.getAllJax(currentSlide)){
+            MathJax.Hub.Rerender(currentSlide);
+          }
+
+          // render mermaid chart when next slide contains mermaid chart
+          var nextSlide = currentSlide.nextSibling;
+          mermaidNode = $(nextSlide).children(".mermaid");
+          console.log(mermaidNode);
+          if (mermaidNode.length !== 0) {
+            mermaid.init(undefined, mermaidNode);
+          }
+        };
+        Reveal.addEventListener('slidechanged', update);
+        function setScrollingSlide() {
+            var scroll = {{ reveal_scroll }}
+            if (scroll === true) {
+              var h = $('.reveal').height() * 0.95;
+              $('section.present').find('section')
+                .filter(function() {
+                  return $(this).height() > h;
+                })
+                .css('height', 'calc(95vh)')
+                .css('overflow-y', 'scroll')
+                .css('margin-top', '20px');
+            }
+        }
+        // check and set the scrolling slide every time the slide change
+        Reveal.addEventListener('slidechanged', setScrollingSlide);
+    }
+);
+</script>
+
+{% endblock footer_js %}

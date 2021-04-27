@@ -10,8 +10,20 @@ div.input_area {
     padding: 0.5em;
 }
 
-div.prompt {
+div.prompt, div.jp-InputPrompt, div.jp-OutputPrompt {
     display: none;
+}
+
+.jp-OutputArea-child .jp-OutputArea-output {
+    font-size: 75%
+}
+
+.reveal blockquote p:first-child, .reveal blockquote p:last-child {
+    margin-top: 1em;
+}
+
+.jp-RenderedHTMLCommon blockquote {
+    border-left: 5px solid rgb(105, 105, 105)
 }
 
 div.text_cell_render {
@@ -38,6 +50,10 @@ div.output_html th {
     padding: 6px 14px;
 }
 
+.reveal table th, .reveal table td {
+    padding: 6px 14px;
+}
+
 .reveal blockquote {
     width: 85%;
 }
@@ -48,4 +64,8 @@ div.output_html iframe {
 
 div.output_widget_view {
     display: none;
+}
+
+.reveal pre {
+    font-size: 70%;
 }

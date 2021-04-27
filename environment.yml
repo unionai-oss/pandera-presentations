@@ -2,13 +2,14 @@ name: pandera-presentations
 channels:
   - conda-forge
 dependencies:
+  - hypothesis
   - matplotlib
   - pandas
   - pandas-profiling
-  - pandera==0.4.3
+  - pandera==0.6.3
   - pyjanitor
+  - pytest
   - requests
   - seaborn
   - scikit-learn==0.23.0
-  - shap
   - statsmodels

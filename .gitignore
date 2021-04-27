@@ -1,2 +1,4 @@
 .mypy_cache
 .ipynb_checkpoints
+.hypothesis
+reveal.js
