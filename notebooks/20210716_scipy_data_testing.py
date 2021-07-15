@@ -537,15 +537,14 @@ graph LR
 #
 # # Where to Learn More
 #
-# - **Pycon 2021** - Statistical Typing: A Runtime TypingSystem for Data Science and Machine Learning
+# - **Pycon [2021]** - Statistical Typing: A Runtime TypingSystem for Data Science and Machine Learning
 #   - video: https://youtu.be/PI5UmKi14cM
-# - **Scipy 2020** - Statistical Data Validation of Pandas Dataframes
+# - **Scipy [2020]** - Statistical Data Validation of Pandas Dataframes
 #   - video: https://youtu.be/PxTLD-ueNd4
 #   - talk: https://conference.scipy.org/proceedings/scipy2020/pdfs/niels_bantilan.pdf
-# - **Blogs**:
-#   - Pandera Blog [2020]: https://blog.pandera.ci/statistical%20typing/unit%20testing/2020/12/26/statistical-typing.html
-#   - PyOpenSci Blog [2019]: https://www.pyopensci.org/blog/pandera-python-pandas-dataframe-validation
-#   - Personal Blog [2018]: https://cosmicbboy.github.io/2018/12/28/validating-pandas-dataframes.html
+# - **Pandera Blog [2020]**: https://blog.pandera.ci/statistical%20typing/unit%20testing/2020/12/26/statistical-typing.html
+# - **PyOpenSci Blog [2019]**: https://www.pyopensci.org/blog/pandera-python-pandas-dataframe-validation
+# - **Personal Blog [2018]**: https://cosmicbboy.github.io/2018/12/28/validating-pandas-dataframes.html
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
