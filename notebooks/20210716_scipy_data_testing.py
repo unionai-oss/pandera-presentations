@@ -554,8 +554,8 @@ graph LR
 # [![badge](https://pepy.tech/badge/pandera/month)](https://pepy.tech/project/pandera)
 # [![badge](https://pepy.tech/badge/pandera)](https://pepy.tech/project/pandera)
 #
-# **Repo**: https://github.com/pandera-dev/pandera
+# - **Repo**: https://github.com/pandera-dev/pandera
+# - **Docs**: https://pandera.readthedocs.io
+# - **Contributing Guide**: https://pandera.readthedocs.io/en/stable/CONTRIBUTING.html
 #
-# **Docs**: https://pandera.readthedocs.io
-#
-# **Contributing Guide**: https://pandera.readthedocs.io/en/stable/CONTRIBUTING.html
+# <img src="https://raw.githubusercontent.com/pandera-dev/pandera-presentations/master/static/pandera-growth-july-2021.png" width="450px"/>
