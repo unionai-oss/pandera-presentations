@@ -4,6 +4,33 @@ body, h1, h2, h3, h4 {
     font-family: "Roboto" !important;
 }
 
+div.highlight {
+    margin: 0 !important;
+}
+
+div.jp-InputArea-editor {
+    padding: 0 !important;
+    border: none;
+}
+
+.reveal pre {
+    padding: 1.0em;
+    background: none;
+}
+
+.reveal img[alt="github-issue"] {
+    margin: 0 10px;
+}
+
+.reveal img[alt="badge"] {
+    margin: 0;
+    margin-right: 5px;
+}
+
+.jp-Notebook .jp-Cell {
+    margin: 20px;
+}
+
 div.input_area {
     font-size: 80%;
     border: none;

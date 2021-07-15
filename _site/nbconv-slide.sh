@@ -11,3 +11,5 @@ jupyter nbconvert $notebook_path \
     --template-file .jupyter/slide_template.html.j2 \
     --output-dir=slides \
     --TagRemovePreprocessor.remove_input_tags=hide_input \
+    --CSSHTMLHeaderPreprocessor.enabled=True \
+    --CSSHTMLHeaderPreprocessor.style=native

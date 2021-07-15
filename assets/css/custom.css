@@ -1,3 +1,13 @@
 a {
     color: #0366d6;
 }
+
+a:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+html, body, div#container, div.inner {
+    background: none;
+    background-color: #fff;
+}
