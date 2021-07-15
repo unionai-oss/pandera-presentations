@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/assets/css/custom.css">
+<link rel="stylesheet" href="assets/css/custom.css">
 
 ## [Pycon 2021 - Statistical Typing: A Runtime Typing System for Data Science and Machine Learning](slides/20210515_pycon_statistical_typing.slides.html)
 
