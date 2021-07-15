@@ -542,6 +542,10 @@ graph LR
 # - **Scipy 2020** - Statistical Data Validation of Pandas Dataframes
 #   - video: https://youtu.be/PxTLD-ueNd4
 #   - talk: https://conference.scipy.org/proceedings/scipy2020/pdfs/niels_bantilan.pdf
+# - **Blogs**:
+#   - Pandera Blog [2020]: https://blog.pandera.ci/statistical%20typing/unit%20testing/2020/12/26/statistical-typing.html
+#   - PyOpenSci Blog [2019]: https://www.pyopensci.org/blog/pandera-python-pandas-dataframe-validation
+#   - Personal Blog [2018]: https://cosmicbboy.github.io/2018/12/28/validating-pandas-dataframes.html
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
@@ -557,5 +561,9 @@ graph LR
 # - **Repo**: https://github.com/pandera-dev/pandera
 # - **Docs**: https://pandera.readthedocs.io
 # - **Contributing Guide**: https://pandera.readthedocs.io/en/stable/CONTRIBUTING.html
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
 #
-# <img src="https://raw.githubusercontent.com/pandera-dev/pandera-presentations/master/static/pandera-growth-july-2021.png" width="450px"/>
+# # <img src="https://raw.githubusercontent.com/pandera-dev/pandera-presentations/master/static/pandera-growth-july-2021.png" width="400px" style="margin: auto;"/>
+#
+# ##### 🎉🎉 Shoutout to all the pandera contributors! 🎉🎉
