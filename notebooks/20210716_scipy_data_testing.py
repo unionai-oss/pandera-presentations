@@ -39,9 +39,6 @@
 # - Roadmap: Guiding Principles
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# - Where to Learn More
-
-# %% [markdown] slideshow={"slide_type": "fragment"}
 # - How to Contribute
 
 # %% [markdown] slideshow={"slide_type": "slide"}
