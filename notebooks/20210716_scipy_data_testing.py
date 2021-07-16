@@ -46,12 +46,14 @@
 # # Introduction to Data Testing
 #
 # > "Data Testing" is the colloquial term [for] "schema validation" or "data validation"...
-# > What do we mean by schema/data validation? It's merely a fancy way of [saying],
-# > "are my data as I expect them to be?" - [Eric Ma](https://ericmjl.github.io/blog/2020/8/30/pandera-data-validation-and-statistics/)
+# > It's merely a fancy way of [saying], "are my data as I expect them to be?" - [Eric Ma](https://ericmjl.github.io/blog/2020/8/30/pandera-data-validation-and-statistics/)
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # > **Addendum**: "Data Testing" can also be thought of as testing the transformation code
 # > that produces the data.
+
+# %% [markdown] slideshow={"slide_type": "notes"}
+# To give you a simple example...
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## A Simple Example: Life Before Pandera
@@ -137,6 +139,9 @@ class Schema(pa.SchemaModel):
 # %% tags=["hide_input"]
 from IPython.display import display, Markdown
 
+# %% [markdown] slideshow={"slide_type": "notes"}
+# Pandera comes in two flavors
+
 # %% [markdown] slideshow={"slide_type": "slide"}
 # #### Pandera Parses and Validates Data
 #
@@ -154,9 +159,19 @@ try:
 except pa.errors.SchemaErrors as exc:
     display(exc.failure_cases)
 
+# %% [markdown] slideshow={"slide_type": "notes"}
+# The core API of pandera
+#
+# As a meta-point, this presentation is built with jupyter, so almost all
+# the code in this presentation is validated and tested with pandera
+
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
 # # 🛣 Roadmap: Guiding Principles
+
+# %% [markdown] slideshow={"slide_type": "notes"}
+# I'll outline pandera's roadmap by describing to you four guiding principles
+# that guides the project's development.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
@@ -167,11 +182,12 @@ except pa.errors.SchemaErrors as exc:
 #
 # ```python
 # raw_data = ...
-# clean_data = parse(raw_data)
-# validate(clean_data)  # raise Exception if constraints are not met
+# valid_data = validate(parse(raw_data))  # raise Exception if constraints are not met
 # ```
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
+# Pandera guarantees that input and output dataframes fulfill the types and
+# constraints as defined by type annotations.
 
 # %%
 raw_data = pd.DataFrame({
@@ -195,10 +211,6 @@ def summarize_data(clean_data: DataFrame[Schema]):
     return clean_data.groupby("categorical")["continuous"].mean()
 
 display(summarize_data(raw_data).rename("mean_continuous").to_frame())
-
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# Pandera schemas guarantee that `Schema` types and constraints are met within
-# the function body of `summarize_data`!
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
 # ### 🛣 Roadmap Item
@@ -230,7 +242,7 @@ display(summarize_data(raw_data).rename("mean_continuous").to_frame())
 # ### Principle 2: Make Schemas Reuseable, Adaptable, and Portable
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# Use schemas in source code
+# Once you've defined a schema, you can use it in your source code
 
 # %%
 # data_cleaning.py
@@ -238,15 +250,14 @@ from pandera.typing import DataFrame
 
 @pa.check_types
 def clean_data(raw_data) -> DataFrame[Schema]:
-    clean_data = (
+    return (
         raw_data
         # do some cleaning
     )
-    return clean_data
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # <br>
-# Or test suite (or anywhere you want, really!)
+# ... and your test suite (or anywhere you want, really!)
 
 # %%
 # test_data_cleaning.py
@@ -286,6 +297,13 @@ def featurize_data(clean_data: DataFrame[InputSchema]) -> DataFrame[OutputSchema
     return pd.concat([clean_data, one_hot], axis="columns")
 
 display(featurize_data(raw_data).head(3))
+
+# %% [markdown] slideshow={"slide_type": "notes"}
+#
+# Since, dataframes are complex objects, pandera focuses on making the process
+# of defining schemas as concise as possible, offloading the concerns around
+# column types and allowable values so you can focus more on the
+# analysis/modeling logic.
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
 #
@@ -337,6 +355,7 @@ display(InputSchema.example(size=3))
 
 # %% slideshow={"slide_type": "fragment"}
 input_schema_strategy = InputSchema.strategy(size=5)
+print(input_schema_strategy)
 print(type(input_schema_strategy))
 
 # %% slideshow={"slide_type": "fragment"}
@@ -353,13 +372,34 @@ test_featurize_data()
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
 #
-# Generate schemas as multi-purpose artifacts
+# #### Generate schemas as multi-purpose artifacts
 
 # %% [raw]
+
+<p>At run-time<p/>
+
 <div class="mermaid">
 graph LR
-    R[(raw data)] -- input schema --> P[data processor]
-    P -- output schema --> C[(clean data)]
+    R[(raw data)] -- raw schema --> P[data processor]
+    P -- clean schema --> C[(clean data)]
+    C -- clean schema --> F[featurizer]
+    F -- feature schema --> X[(feature data)]
+</div>
+
+<p>At test-time<p/>
+
+<div class="mermaid">
+graph LR
+    S(raw schema) --> R[(mock raw data)]
+    R --> P[data processor]
+    P -- clean schema --> O[output]
+</div>
+
+<div class="mermaid">
+graph LR
+    S(clean schema) --> R[(mock clean data)]
+    R --> F[featurizer]
+    F -- feature schema --> O[output]
 </div>
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
@@ -398,7 +438,7 @@ f"""
 )
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
-# Write it out into a yaml file with `bootstrapped_schema.to_yaml()`
+# Write it out into a yaml file with `bootstrapped_schema.to_yaml("schema.yaml")`
 
 # %% tags=["hide_input"]
 Markdown(
@@ -539,10 +579,14 @@ graph LR
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 #
-# ### Join the Scipy Mentored Sprints! 👟👟 
+# ##### Join the Scipy Mentored Sprints! 👟👟 
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+#
+# ##### Toss a coin to your maintainer 👍🪙 https://github.com/sponsors/cosmicBboy
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
-# ### 🎉🎉 Shoutout to all the pandera contributors! 🎉🎉
+# ### 🎉 Shoutouts to [pyopensci](https://www.pyopensci.org/) all the pandera contributors! 🎉
 #
 # # <img src="https://raw.githubusercontent.com/pandera-dev/pandera-presentations/master/static/pandera-growth-july-2021.png" width="400px" style="margin: auto;"/>

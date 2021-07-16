@@ -14194,8 +14194,7 @@ machine learning</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Introduction-to-Data-Testing">Introduction to Data Testing<a class="anchor-link" href="#Introduction-to-Data-Testing">&#182;</a></h1><blockquote><p>"Data Testing" is the colloquial term [for] "schema validation" or "data validation"...
-What do we mean by schema/data validation? It's merely a fancy way of [saying],
-"are my data as I expect them to be?" - <a href="https://ericmjl.github.io/blog/2020/8/30/pandera-data-validation-and-statistics/">Eric Ma</a></p>
+It's merely a fancy way of [saying], "are my data as I expect them to be?" - <a href="https://ericmjl.github.io/blog/2020/8/30/pandera-data-validation-and-statistics/">Eric Ma</a></p>
 </blockquote>
 
 </div>
@@ -14207,7 +14206,15 @@ that produces the data.</p>
 </blockquote>
 
 </div>
-</div></div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To give you a simple example...</p>
+
+</div>
+</div>
+</aside></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="A-Simple-Example:-Life-Before-Pandera">A Simple Example: Life Before Pandera<a class="anchor-link" href="#A-Simple-Example:-Life-Before-Pandera">&#182;</a></h2><p><code>data_cleaner.py</code></p>
@@ -14354,7 +14361,15 @@ that produces the data.</p>
 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs   celltag_hide_input">
 
-</div></div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Pandera comes in two flavors</p>
+
+</div>
+</div>
+</aside></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h4 id="Pandera-Parses-and-Validates-Data">Pandera Parses and Validates Data<a class="anchor-link" href="#Pandera-Parses-and-Validates-Data">&#182;</a></h4><p>With <code>coerce=True</code> pandera first performs type coercion on the columns before
@@ -14445,7 +14460,7 @@ validating them.</p>
       <th>2</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'C', 'B', 'A'})</td>
+      <td>isin({'A', 'C', 'B'})</td>
       <td>0</td>
       <td>Z</td>
       <td>3</td>
@@ -14454,7 +14469,7 @@ validating them.</p>
       <th>3</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'C', 'B', 'A'})</td>
+      <td>isin({'A', 'C', 'B'})</td>
       <td>0</td>
       <td>X</td>
       <td>4</td>
@@ -14470,26 +14485,46 @@ validating them.</p>
 
 </div>
 
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The core API of pandera</p>
+<p>As a meta-point, this presentation is built with jupyter, so almost all
+the code in this presentation is validated and tested with pandera</p>
+
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="%F0%9F%9B%A3-Roadmap:-Guiding-Principles">&#128739; Roadmap: Guiding Principles<a class="anchor-link" href="#%F0%9F%9B%A3-Roadmap:-Guiding-Principles">&#182;</a></h1>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>I'll outline pandera's roadmap by describing to you four guiding principles
+that guides the project's development.</p>
+
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Principle-1:-Parse,-then-Validate">Principle 1: Parse, then Validate<a class="anchor-link" href="#Principle-1:-Parse,-then-Validate">&#182;</a></h3><blockquote><p>pydantic [and pandera guarantee] the types and constraints of the output
 [data], not the input data. -<a href="https://pydantic-docs.helpmanual.io/usage/models/">Pydantic Docs</a></p>
 </blockquote>
 <div class="highlight"><pre><span></span><span class="n">raw_data</span> <span class="o">=</span> <span class="o">...</span>
-<span class="n">clean_data</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
-<span class="n">validate</span><span class="p">(</span><span class="n">clean_data</span><span class="p">)</span>  <span class="c1"># raise Exception if constraints are not met</span>
+<span class="n">valid_data</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="n">parse</span><span class="p">(</span><span class="n">raw_data</span><span class="p">))</span>  <span class="c1"># raise Exception if constraints are not met</span>
 </pre></div>
 
 </div>
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Pandera guarantees that input and output dataframes fulfill the types and
+constraints as defined by type annotations.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14610,13 +14645,6 @@ validating them.</p>
 
 </div>
 
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Pandera schemas guarantee that <code>Schema</code> types and constraints are met within
-the function body of <code>summarize_data</code>!</p>
-
-</div>
 </div></div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -14653,7 +14681,7 @@ the function body of <code>summarize_data</code>!</p>
 </div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Use schemas in source code</p>
+<p>Once you've defined a schema, you can use it in your source code</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14667,11 +14695,10 @@ the function body of <code>summarize_data</code>!</p>
 
 <span class="nd">@pa</span><span class="o">.</span><span class="n">check_types</span>
 <span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">Schema</span><span class="p">]:</span>
-    <span class="n">clean_data</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="k">return</span> <span class="p">(</span>
         <span class="n">raw_data</span>
         <span class="c1"># do some cleaning</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">clean_data</span>
 </pre></div>
 
      </div>
@@ -14683,7 +14710,7 @@ the function body of <code>summarize_data</code>!</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><br>
-Or test suite (or anywhere you want, really!)</p>
+... and your test suite (or anywhere you want, really!)</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14848,7 +14875,18 @@ so our test reduces to an execution test!</p>
 
 </div>
 
-</div></div></section><section>
+</div><aside class="notes">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Since, dataframes are complex objects, pandera focuses on making the process
+of defining schemas as concise as possible, offloading the concerns around
+column types and allowable values so you can focus more on the
+analysis/modeling logic.</p>
+
+</div>
+</div>
+</aside></div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Portability:-Support-Other-Dataframe-Libraries-and-Schema-Specifications-in-the-Ecosystem">Portability: Support Other Dataframe Libraries and Schema Specifications in the Ecosystem<a class="anchor-link" href="#Portability:-Support-Other-Dataframe-Libraries-and-Schema-Specifications-in-the-Ecosystem">&#182;</a></h3><p><a href="https://github.com/pandera-dev/pandera/issues/420"><img src="https://img.shields.io/badge/github_issue-420-blue?style=for-the-badge&amp;logo=github" alt="github-issue"></a></p>
@@ -14994,6 +15032,7 @@ data for testing?</p>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">input_schema_strategy</span> <span class="o">=</span> <span class="n">InputSchema</span><span class="o">.</span><span class="n">strategy</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">input_schema_strategy</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">input_schema_strategy</span><span class="p">))</span>
 </pre></div>
 
@@ -15014,7 +15053,8 @@ data for testing?</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>&lt;class &#39;hypothesis.strategies._internal.lazy.LazyStrategy&#39;&gt;
+<pre>_dataframe_strategy()
+&lt;class &#39;hypothesis.strategies._internal.lazy.LazyStrategy&#39;&gt;
 </pre>
 </div>
 </div>
@@ -15052,13 +15092,33 @@ data for testing?</p>
 </div></div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Generate schemas as multi-purpose artifacts</p>
-
+<h4 id="Generate-schemas-as-multi-purpose-artifacts">Generate schemas as multi-purpose artifacts<a class="anchor-link" href="#Generate-schemas-as-multi-purpose-artifacts">&#182;</a></h4>
 </div>
-</div><div class="mermaid">
+</div>
+<p>At run-time<p/>
+
+<div class="mermaid">
 graph LR
-    R[(raw data)] -- input schema --> P[data processor]
-    P -- output schema --> C[(clean data)]
+    R[(raw data)] -- raw schema --> P[data processor]
+    P -- clean schema --> C[(clean data)]
+    C -- clean schema --> F[featurizer]
+    F -- feature schema --> X[(feature data)]
+</div>
+
+<p>At test-time<p/>
+
+<div class="mermaid">
+graph LR
+    S(raw schema) --> R[(mock raw data)]
+    R --> P[data processor]
+    P -- clean schema --> O[output]
+</div>
+
+<div class="mermaid">
+graph LR
+    S(clean schema) --> R[(mock clean data)]
+    R --> F[featurizer]
+    F -- feature schema --> O[output]
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -15214,7 +15274,7 @@ graph LR
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Write it out into a yaml file with <code>bootstrapped_schema.to_yaml()</code></p>
+<p>Write it out into a yaml file with <code>bootstrapped_schema.to_yaml("schema.yaml")</code></p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell    celltag_hide_input">
@@ -15519,12 +15579,17 @@ points in the pipeline that lack dataframe type coverage</p>
 </div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Join-the-Scipy-Mentored-Sprints!-%F0%9F%91%9F%F0%9F%91%9F">Join the Scipy Mentored Sprints! &#128095;&#128095;<a class="anchor-link" href="#Join-the-Scipy-Mentored-Sprints!-%F0%9F%91%9F%F0%9F%91%9F">&#182;</a></h3>
+<h5 id="Join-the-Scipy-Mentored-Sprints!-%F0%9F%91%9F%F0%9F%91%9F">Join the Scipy Mentored Sprints! &#128095;&#128095;<a class="anchor-link" href="#Join-the-Scipy-Mentored-Sprints!-%F0%9F%91%9F%F0%9F%91%9F">&#182;</a></h5>
+</div>
+</div></div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h5 id="Toss-a-coin-to-your-maintainer-%F0%9F%91%8D%F0%9F%AA%99-https://github.com/sponsors/cosmicBboy">Toss a coin to your maintainer &#128077;&#129689; <a href="https://github.com/sponsors/cosmicBboy">https://github.com/sponsors/cosmicBboy</a><a class="anchor-link" href="#Toss-a-coin-to-your-maintainer-%F0%9F%91%8D%F0%9F%AA%99-https://github.com/sponsors/cosmicBboy">&#182;</a></h5>
 </div>
 </div></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%F0%9F%8E%89%F0%9F%8E%89-Shoutout-to-all-the-pandera-contributors!-%F0%9F%8E%89%F0%9F%8E%89">&#127881;&#127881; Shoutout to all the pandera contributors! &#127881;&#127881;<a class="anchor-link" href="#%F0%9F%8E%89%F0%9F%8E%89-Shoutout-to-all-the-pandera-contributors!-%F0%9F%8E%89%F0%9F%8E%89">&#182;</a></h3><h1 id=""><img src="https://raw.githubusercontent.com/pandera-dev/pandera-presentations/master/static/pandera-growth-july-2021.png" width="400px" style="margin: auto;" /><a class="anchor-link" href="#">&#182;</a></h1>
+<h3 id="%F0%9F%8E%89-Shoutouts-to-pyopensci-all-the-pandera-contributors!-%F0%9F%8E%89">&#127881; Shoutouts to <a href="https://www.pyopensci.org/">pyopensci</a> all the pandera contributors! &#127881;<a class="anchor-link" href="#%F0%9F%8E%89-Shoutouts-to-pyopensci-all-the-pandera-contributors!-%F0%9F%8E%89">&#182;</a></h3><h1 id=""><img src="https://raw.githubusercontent.com/pandera-dev/pandera-presentations/master/static/pandera-growth-july-2021.png" width="400px" style="margin: auto;" /><a class="anchor-link" href="#">&#182;</a></h1>
 </div>
 </div></section></section>
 </div>
