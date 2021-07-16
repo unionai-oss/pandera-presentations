@@ -119,7 +119,7 @@ schema = pa.DataFrameSchema(
     coerce=True,
 )
 
-# %% [markdown] slideshow={"slide_type": "slide"}
+# %% [markdown] slideshow={"slide_type": "fragment"}
 # #### Class-based API
 #
 # Inspired by [pydantic](https://pydantic-docs.helpmanual.io/)
