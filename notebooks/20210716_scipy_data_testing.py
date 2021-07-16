@@ -171,7 +171,8 @@ except pa.errors.SchemaErrors as exc:
 
 # %% [markdown] slideshow={"slide_type": "notes"}
 # I'll outline pandera's roadmap by describing to you four principles
-# that guide the project's development.
+# that guide the project's development. Along the way I'll highlight a few of
+# pandera's features and specific roadmap items that are it the repo's issues page.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
