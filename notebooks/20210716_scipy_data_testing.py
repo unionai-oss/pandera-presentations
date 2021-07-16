@@ -160,7 +160,7 @@ except pa.errors.SchemaErrors as exc:
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
-# # Principle 1: Parse, then Validate
+# ### Principle 1: Parse, then Validate
 #
 # > pydantic [and pandera guarantee] the types and constraints of the output
 # > [data], not the input data. -[Pydantic Docs](https://pydantic-docs.helpmanual.io/usage/models/)
@@ -198,7 +198,7 @@ display(summarize_data(raw_data).rename("mean_continuous").to_frame())
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # Pandera schemas guarantee that `Schema` types and constraints are met within
-# the function body of `analyze_data`!
+# the function body of `summarize_data`!
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
 # ### 🛣 Roadmap Item
@@ -227,12 +227,13 @@ display(summarize_data(raw_data).rename("mean_continuous").to_frame())
 
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ## Principle 2: Make Schemas Reuseable, Adaptable, and Portable
+# ### Principle 2: Make Schemas Reuseable, Adaptable, and Portable
 
-# %% [markdown]
-# `data_cleaner.py`
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# Use schemas in source code
 
 # %%
+# data_cleaning.py
 from pandera.typing import DataFrame
 
 @pa.check_types
@@ -245,9 +246,10 @@ def clean_data(raw_data) -> DataFrame[Schema]:
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # <br>
-# `test_data_cleaner.py`
+# Or test suite (or anywhere you want, really!)
 
 # %%
+# test_data_cleaning.py
 def test_clean_data():
     raw_data = ...
     clean_data(raw_data)
@@ -269,43 +271,29 @@ class InputSchema(pa.SchemaModel):
     class Config:
         coerce = True
 
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# Inheritence Semantics Apply to `SchemaModel`s
-
-# %%
-class FeaturizedSchema(InputSchema):
+# %% slideshow={"slide_type": "fragment"}
+class OutputSchema(InputSchema):
     categorical_one_hot: Series[int] = pa.Field(alias="one_hot_", regex=True)
 
     @pa.check("one_hot_")
     def categorical_one_hot_check(cls, series):
         return series.name[-1] in cls._categories
 
-# %% [markdown] slideshow={"slide_type": "subslide"}
-# ### Pandera schemas provide type safety around user functions
-
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# Allowing the programmer to focus on more complex processing logic.
-
-# %%
+# %% slideshow={"slide_type": "fragment"}
 @pa.check_types
-def featurize_data(clean_data: DataFrame[InputSchema]) -> DataFrame[FeaturizedSchema]:
-    return pd.concat(
-        [
-            clean_data,
-            pd.get_dummies(clean_data["categorical"], prefix="one_hot")
-        ],
-        axis="columns",
-    )
+def featurize_data(clean_data: DataFrame[InputSchema]) -> DataFrame[OutputSchema]:
+    one_hot = pd.get_dummies(clean_data["categorical"], prefix="one_hot")
+    return pd.concat([clean_data, one_hot], axis="columns")
 
-display(featurize_data(raw_data))
+display(featurize_data(raw_data).head(3))
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
 #
-# ### Support Other Schema Specifications in the Ecosystem
+# ### Portability: Support Other Dataframe Libraries and Schema Specifications in the Ecosystem
 #
 # [![github-issue](https://img.shields.io/badge/github_issue-420-blue?style=for-the-badge&logo=github)](https://github.com/pandera-dev/pandera/issues/420)
 #
-# Support frictionless data table schemas ✨✨ Coming out in the `0.7.0` release ✨✨
+# Support frictionless data table schemas (✨ coming out in the `0.7.0` release ✨)
 
 # %% [markdown]
 # ```python
@@ -339,7 +327,7 @@ display(featurize_data(raw_data))
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
-# ## Principle 3: Generative Schemas Facilitate Property-based Testing
+# ### Principle 3: Generative Schemas Facilitate Property-based Testing
 #
 # You have a schema with a bunch of metadata about it... why not generate
 # data for testing?
@@ -364,6 +352,17 @@ test_featurize_data()
 # Automate the tedium of hand-writing mock dataframes for testing!
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
+#
+# Generate schemas as multi-purpose artifacts
+
+# %% [raw]
+<div class="mermaid">
+graph LR
+    R[(raw data)] -- input schema --> P[data processor]
+    P -- output schema --> C[(clean data)]
+</div>
+
+# %% [markdown] slideshow={"slide_type": "subslide"}
 # ### 🛣 Roadmap Items
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
@@ -377,7 +376,7 @@ test_featurize_data()
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
-# ## Principle 4: Profile __Data__ _and_ Data Pipelines
+# ### Principle 4: Profile __Data__ _and_ Data Pipelines
 #
 # Pandera uses basic data profiling to infer a schema from realistic data
 

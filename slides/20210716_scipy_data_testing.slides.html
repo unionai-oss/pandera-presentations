@@ -14445,7 +14445,7 @@ validating them.</p>
       <th>2</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'A', 'B', 'C'})</td>
+      <td>isin({'C', 'B', 'A'})</td>
       <td>0</td>
       <td>Z</td>
       <td>3</td>
@@ -14454,7 +14454,7 @@ validating them.</p>
       <th>3</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'A', 'B', 'C'})</td>
+      <td>isin({'C', 'B', 'A'})</td>
       <td>0</td>
       <td>X</td>
       <td>4</td>
@@ -14478,7 +14478,7 @@ validating them.</p>
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Principle-1:-Parse,-then-Validate">Principle 1: Parse, then Validate<a class="anchor-link" href="#Principle-1:-Parse,-then-Validate">&#182;</a></h1><blockquote><p>pydantic [and pandera guarantee] the types and constraints of the output
+<h3 id="Principle-1:-Parse,-then-Validate">Principle 1: Parse, then Validate<a class="anchor-link" href="#Principle-1:-Parse,-then-Validate">&#182;</a></h3><blockquote><p>pydantic [and pandera guarantee] the types and constraints of the output
 [data], not the input data. -<a href="https://pydantic-docs.helpmanual.io/usage/models/">Pydantic Docs</a></p>
 </blockquote>
 <div class="highlight"><pre><span></span><span class="n">raw_data</span> <span class="o">=</span> <span class="o">...</span>
@@ -14614,7 +14614,7 @@ validating them.</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Pandera schemas guarantee that <code>Schema</code> types and constraints are met within
-the function body of <code>analyze_data</code>!</p>
+the function body of <code>summarize_data</code>!</p>
 
 </div>
 </div></div></section><section>
@@ -14648,12 +14648,12 @@ the function body of <code>analyze_data</code>!</p>
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Principle-2:-Make-Schemas-Reuseable,-Adaptable,-and-Portable">Principle 2: Make Schemas Reuseable, Adaptable, and Portable<a class="anchor-link" href="#Principle-2:-Make-Schemas-Reuseable,-Adaptable,-and-Portable">&#182;</a></h2>
+<h3 id="Principle-2:-Make-Schemas-Reuseable,-Adaptable,-and-Portable">Principle 2: Make Schemas Reuseable, Adaptable, and Portable<a class="anchor-link" href="#Principle-2:-Make-Schemas-Reuseable,-Adaptable,-and-Portable">&#182;</a></h3>
 </div>
-</div>
+</div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><code>data_cleaner.py</code></p>
+<p>Use schemas in source code</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14662,7 +14662,8 @@ the function body of <code>analyze_data</code>!</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pandera.typing</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># data_cleaning.py</span>
+<span class="kn">from</span> <span class="nn">pandera.typing</span> <span class="kn">import</span> <span class="n">DataFrame</span>
 
 <span class="nd">@pa</span><span class="o">.</span><span class="n">check_types</span>
 <span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">Schema</span><span class="p">]:</span>
@@ -14678,11 +14679,11 @@ the function body of <code>analyze_data</code>!</p>
 </div>
 </div>
 
-</div><div class="fragment">
+</div></div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><br>
-<code>test_data_cleaner.py</code></p>
+Or test suite (or anywhere you want, really!)</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14691,7 +14692,8 @@ the function body of <code>analyze_data</code>!</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_clean_data</span><span class="p">():</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test_data_cleaning.py</span>
+<span class="k">def</span> <span class="nf">test_clean_data</span><span class="p">():</span>
     <span class="n">raw_data</span> <span class="o">=</span> <span class="o">...</span>
     <span class="n">clean_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
 </pre></div>
@@ -14734,19 +14736,13 @@ so our test reduces to an execution test!</p>
 </div>
 </div>
 
-</div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Inheritence Semantics Apply to <code>SchemaModel</code>s</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">FeaturizedSchema</span><span class="p">(</span><span class="n">InputSchema</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">OutputSchema</span><span class="p">(</span><span class="n">InputSchema</span><span class="p">):</span>
     <span class="n">categorical_one_hot</span><span class="p">:</span> <span class="n">Series</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;one_hot_&quot;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="nd">@pa</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="s2">&quot;one_hot_&quot;</span><span class="p">)</span>
@@ -14759,34 +14755,18 @@ so our test reduces to an execution test!</p>
 </div>
 </div>
 
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Pandera-schemas-provide-type-safety-around-user-functions">Pandera schemas provide type safety around user functions<a class="anchor-link" href="#Pandera-schemas-provide-type-safety-around-user-functions">&#182;</a></h3>
-</div>
-</div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Allowing the programmer to focus on more complex processing logic.</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pa</span><span class="o">.</span><span class="n">check_types</span>
-<span class="k">def</span> <span class="nf">featurize_data</span><span class="p">(</span><span class="n">clean_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">InputSchema</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">FeaturizedSchema</span><span class="p">]:</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="n">clean_data</span><span class="p">,</span>
-            <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">clean_data</span><span class="p">[</span><span class="s2">&quot;categorical&quot;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;one_hot&quot;</span><span class="p">)</span>
-        <span class="p">],</span>
-        <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
+<span class="k">def</span> <span class="nf">featurize_data</span><span class="p">(</span><span class="n">clean_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">InputSchema</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">OutputSchema</span><span class="p">]:</span>
+    <span class="n">one_hot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">clean_data</span><span class="p">[</span><span class="s2">&quot;categorical&quot;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;one_hot&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">clean_data</span><span class="p">,</span> <span class="n">one_hot</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
 
-<span class="n">display</span><span class="p">(</span><span class="n">featurize_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">featurize_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 </pre></div>
 
      </div>
@@ -14857,30 +14837,6 @@ so our test reduces to an execution test!</p>
       <td>1</td>
       <td>0</td>
     </tr>
-    <tr>
-      <th>3</th>
-      <td>4.0</td>
-      <td>B</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5.0</td>
-      <td>C</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>6.0</td>
-      <td>C</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
   </tbody>
 </table>
 </div>
@@ -14895,8 +14851,8 @@ so our test reduces to an execution test!</p>
 </div></div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Support-Other-Schema-Specifications-in-the-Ecosystem">Support Other Schema Specifications in the Ecosystem<a class="anchor-link" href="#Support-Other-Schema-Specifications-in-the-Ecosystem">&#182;</a></h3><p><a href="https://github.com/pandera-dev/pandera/issues/420"><img src="https://img.shields.io/badge/github_issue-420-blue?style=for-the-badge&amp;logo=github" alt="github-issue"></a></p>
-<p>Support frictionless data table schemas ✨✨ Coming out in the <code>0.7.0</code> release ✨✨</p>
+<h3 id="Portability:-Support-Other-Dataframe-Libraries-and-Schema-Specifications-in-the-Ecosystem">Portability: Support Other Dataframe Libraries and Schema Specifications in the Ecosystem<a class="anchor-link" href="#Portability:-Support-Other-Dataframe-Libraries-and-Schema-Specifications-in-the-Ecosystem">&#182;</a></h3><p><a href="https://github.com/pandera-dev/pandera/issues/420"><img src="https://img.shields.io/badge/github_issue-420-blue?style=for-the-badge&amp;logo=github" alt="github-issue"></a></p>
+<p>Support frictionless data table schemas (✨ coming out in the <code>0.7.0</code> release ✨)</p>
 
 </div>
 </div>
@@ -14951,7 +14907,7 @@ so our test reduces to an execution test!</p>
 </div></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Principle-3:-Generative-Schemas-Facilitate-Property-based-Testing">Principle 3: Generative Schemas Facilitate Property-based Testing<a class="anchor-link" href="#Principle-3:-Generative-Schemas-Facilitate-Property-based-Testing">&#182;</a></h2><p>You have a schema with a bunch of metadata about it... why not generate
+<h3 id="Principle-3:-Generative-Schemas-Facilitate-Property-based-Testing">Principle 3: Generative Schemas Facilitate Property-based Testing<a class="anchor-link" href="#Principle-3:-Generative-Schemas-Facilitate-Property-based-Testing">&#182;</a></h3><p>You have a schema with a bunch of metadata about it... why not generate
 data for testing?</p>
 
 </div>
@@ -15096,6 +15052,16 @@ data for testing?</p>
 </div></div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Generate schemas as multi-purpose artifacts</p>
+
+</div>
+</div><div class="mermaid">
+graph LR
+    R[(raw data)] -- input schema --> P[data processor]
+    P -- output schema --> C[(clean data)]
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="%F0%9F%9B%A3-Roadmap-Items">&#128739; Roadmap Items<a class="anchor-link" href="#%F0%9F%9B%A3-Roadmap-Items">&#182;</a></h3>
 </div>
 </div><div class="fragment">
@@ -15125,7 +15091,7 @@ data for testing?</p>
 </div></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Principle-4:-Profile-Data-and-Data-Pipelines">Principle 4: Profile <strong>Data</strong> <em>and</em> Data Pipelines<a class="anchor-link" href="#Principle-4:-Profile-Data-and-Data-Pipelines">&#182;</a></h2><p>Pandera uses basic data profiling to infer a schema from realistic data</p>
+<h3 id="Principle-4:-Profile-Data-and-Data-Pipelines">Principle 4: Profile <strong>Data</strong> <em>and</em> Data Pipelines<a class="anchor-link" href="#Principle-4:-Profile-Data-and-Data-Pipelines">&#182;</a></h3><p>Pandera uses basic data profiling to infer a schema from realistic data</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
