@@ -170,8 +170,8 @@ except pa.errors.SchemaErrors as exc:
 # # 🛣 Roadmap: Guiding Principles
 
 # %% [markdown] slideshow={"slide_type": "notes"}
-# I'll outline pandera's roadmap by describing to you four guiding principles
-# that guides the project's development.
+# I'll outline pandera's roadmap by describing to you four principles
+# that guide the project's development.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
