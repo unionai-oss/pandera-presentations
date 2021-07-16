@@ -62,11 +62,10 @@
 import pandas as pd
 
 def clean(raw_data):
-    clean_data = (
+    return (
         raw_data
         # do some cleaning 🧹✨
     )
-    return clean_data
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # <br>
