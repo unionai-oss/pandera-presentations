@@ -61,6 +61,11 @@
 # %%
 import pandas as pd
 
+raw_data = pd.DataFrame({
+    "continuous": ["-1.1", "4.0", "10.25", "-0.1", "5.2"],
+    "categorical": ["A", "B", "C", "Z", "X"],
+})
+
 def clean(raw_data):
     return (
         raw_data
