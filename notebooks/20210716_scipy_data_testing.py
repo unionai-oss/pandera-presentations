@@ -158,21 +158,9 @@ except pa.errors.SchemaErrors as exc:
 #
 # # 🛣 Roadmap: Guiding Principles
 
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# - Parse, then Validate
-
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# - Make Schemas Reuseable, Adaptable, and Portable
-
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# - Generative Schemas Facilitate Property-based Testing
-
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# - Profile Data _and_ Data Pipelines
-
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
-# # Parse, then Validate
+# # Principle 1: Parse, then Validate
 #
 # > pydantic [and pandera guarantee] the types and constraints of the output
 # > [data], not the input data. -[Pydantic Docs](https://pydantic-docs.helpmanual.io/usage/models/)
@@ -239,7 +227,7 @@ display(summarize_data(raw_data).rename("mean_continuous").to_frame())
 
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ## Make Schemas Reuseable, Adaptable, and Portable
+# ## Principle 2: Make Schemas Reuseable, Adaptable, and Portable
 
 # %% [markdown]
 # `data_cleaner.py`
@@ -351,7 +339,7 @@ display(featurize_data(raw_data))
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
-# ## Generative Schemas Facilitate Property-based Testing
+# ## Principle 3: Generative Schemas Facilitate Property-based Testing
 #
 # You have a schema with a bunch of metadata about it... why not generate
 # data for testing?
@@ -389,7 +377,7 @@ test_featurize_data()
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
-# ## Profile __Data__ _and_ Data Pipelines
+# ## Principle 4: Profile __Data__ _and_ Data Pipelines
 #
 # Pandera uses basic data profiling to infer a schema from realistic data
 

@@ -14445,7 +14445,7 @@ validating them.</p>
       <th>2</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'C', 'A', 'B'})</td>
+      <td>isin({'A', 'B', 'C'})</td>
       <td>0</td>
       <td>Z</td>
       <td>3</td>
@@ -14454,7 +14454,7 @@ validating them.</p>
       <th>3</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'C', 'A', 'B'})</td>
+      <td>isin({'A', 'B', 'C'})</td>
       <td>0</td>
       <td>X</td>
       <td>4</td>
@@ -14475,42 +14475,10 @@ validating them.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="%F0%9F%9B%A3-Roadmap:-Guiding-Principles">&#128739; Roadmap: Guiding Principles<a class="anchor-link" href="#%F0%9F%9B%A3-Roadmap:-Guiding-Principles">&#182;</a></h1>
 </div>
-</div><div class="fragment">
+</div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>Parse, then Validate</li>
-</ul>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>Make Schemas Reuseable, Adaptable, and Portable</li>
-</ul>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>Generative Schemas Facilitate Property-based Testing</li>
-</ul>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>Profile Data <em>and</em> Data Pipelines</li>
-</ul>
-
-</div>
-</div></div></section></section><section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Parse,-then-Validate">Parse, then Validate<a class="anchor-link" href="#Parse,-then-Validate">&#182;</a></h1><blockquote><p>pydantic [and pandera guarantee] the types and constraints of the output
+<h1 id="Principle-1:-Parse,-then-Validate">Principle 1: Parse, then Validate<a class="anchor-link" href="#Principle-1:-Parse,-then-Validate">&#182;</a></h1><blockquote><p>pydantic [and pandera guarantee] the types and constraints of the output
 [data], not the input data. -<a href="https://pydantic-docs.helpmanual.io/usage/models/">Pydantic Docs</a></p>
 </blockquote>
 <div class="highlight"><pre><span></span><span class="n">raw_data</span> <span class="o">=</span> <span class="o">...</span>
@@ -14680,7 +14648,7 @@ the function body of <code>analyze_data</code>!</p>
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Make-Schemas-Reuseable,-Adaptable,-and-Portable">Make Schemas Reuseable, Adaptable, and Portable<a class="anchor-link" href="#Make-Schemas-Reuseable,-Adaptable,-and-Portable">&#182;</a></h2>
+<h2 id="Principle-2:-Make-Schemas-Reuseable,-Adaptable,-and-Portable">Principle 2: Make Schemas Reuseable, Adaptable, and Portable<a class="anchor-link" href="#Principle-2:-Make-Schemas-Reuseable,-Adaptable,-and-Portable">&#182;</a></h2>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14983,7 +14951,7 @@ so our test reduces to an execution test!</p>
 </div></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Generative-Schemas-Facilitate-Property-based-Testing">Generative Schemas Facilitate Property-based Testing<a class="anchor-link" href="#Generative-Schemas-Facilitate-Property-based-Testing">&#182;</a></h2><p>You have a schema with a bunch of metadata about it... why not generate
+<h2 id="Principle-3:-Generative-Schemas-Facilitate-Property-based-Testing">Principle 3: Generative Schemas Facilitate Property-based Testing<a class="anchor-link" href="#Principle-3:-Generative-Schemas-Facilitate-Property-based-Testing">&#182;</a></h2><p>You have a schema with a bunch of metadata about it... why not generate
 data for testing?</p>
 
 </div>
@@ -15157,7 +15125,7 @@ data for testing?</p>
 </div></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Profile-Data-and-Data-Pipelines">Profile <strong>Data</strong> <em>and</em> Data Pipelines<a class="anchor-link" href="#Profile-Data-and-Data-Pipelines">&#182;</a></h2><p>Pandera uses basic data profiling to infer a schema from realistic data</p>
+<h2 id="Principle-4:-Profile-Data-and-Data-Pipelines">Principle 4: Profile <strong>Data</strong> <em>and</em> Data Pipelines<a class="anchor-link" href="#Principle-4:-Profile-Data-and-Data-Pipelines">&#182;</a></h2><p>Pandera uses basic data profiling to infer a schema from realistic data</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
