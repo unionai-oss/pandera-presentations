@@ -51,7 +51,7 @@
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # > **Addendum**: "Data Testing" can also be thought of as testing the transformation code
-# > that produces the data. - Also Eric Ma
+# > that produces the data.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## A Simple Example: Life Before Pandera
