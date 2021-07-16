@@ -540,7 +540,7 @@ graph LR
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 #
-# ### Scipy Mentored Sprints! 👟👟 
+# ### Join the Scipy Mentored Sprints! 👟👟 
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 #
