@@ -23,8 +23,8 @@
 # Scipy, July 16th 2021
 
 # %% [markdown] slideshow={"slide_type": "notes"}
-# Hey everyone, I'm Niels Bantilan...
-# My talk today is about the road to better data testing tools
+# This talk about the road to better data testing tools for data science and
+# machine learning
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # Outline 📝
@@ -140,13 +140,13 @@ from IPython.display import display, Markdown
 # validating them.
 
 # %%
-cleaned_data = pd.DataFrame({
-    "continuous": [-1.1, 4.0, 10.25, -0.1, 5.2],
+raw_data = pd.DataFrame({
+    "continuous": ["-1.1", "4.0", "10.25", "-0.1", "5.2"],
     "categorical": ["A", "B", "C", "Z", "X"],
 })
 
 try:
-    Schema.validate(cleaned_data, lazy=True)
+    Schema.validate(raw_data, lazy=True)
 except pa.errors.SchemaErrors as exc:
     display(exc.failure_cases)
 
@@ -182,6 +182,12 @@ except pa.errors.SchemaErrors as exc:
 # %% [markdown] slideshow={"slide_type": "subslide"}
 
 # %%
+raw_data = pd.DataFrame({
+    "continuous": list("123456"),
+    "categorical": list("AABBCC"),
+})
+
+# %% slideshow={"slide_type": "fragment"}
 class Schema(pa.SchemaModel):
     continuous: Series[float] = pa.Field(ge=0)
     categorical: Series[str] = pa.Field(isin=["A", "B", "C"])
@@ -189,17 +195,13 @@ class Schema(pa.SchemaModel):
     class Config:
         coerce = True
 
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# Now let's get some summary statistics!
-
-# %%
+# %% slideshow={"slide_type": "fragment"}
 from pandera.typing import DataFrame
 
 @pa.check_types
 def summarize_data(clean_data: DataFrame[Schema]):
     return clean_data.groupby("categorical")["continuous"].mean()
 
-raw_data = pd.DataFrame({"continuous": list("123456"), "categorical": list("AABBCC")})
 display(summarize_data(raw_data).rename("mean_continuous").to_frame())
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
@@ -335,10 +337,10 @@ display(featurize_data(raw_data))
 # ### 🛣 Roadmap Items
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# - Decouple pandera and pandas type systems [![github-issue](https://img.shields.io/badge/github_issue-369-blue?style=for-the-badge&logo=github)](https://github.com/pandera-dev/pandera/issues/369)
+# - ✅ Decouple pandera and pandas type systems [![github-issue](https://img.shields.io/badge/github_issue-369-blue?style=for-the-badge&logo=github)](https://github.com/pandera-dev/pandera/issues/369)
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# - Abstract out parsing/validation logic to support non-pandas dataframes [![github-issue](https://img.shields.io/badge/github_issue-381-blue?style=for-the-badge&logo=github)](https://github.com/pandera-dev/pandera/issues/381)
+# -  Abstract out parsing/validation logic to support non-pandas dataframes [![github-issue](https://img.shields.io/badge/github_issue-381-blue?style=for-the-badge&logo=github)](https://github.com/pandera-dev/pandera/issues/381)
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # - Add Titles and Descriptions for SchemaModels [![github-issue](https://img.shields.io/badge/github_issue-331-blue?style=for-the-badge&logo=github)](https://github.com/pandera-dev/pandera/issues/331)
@@ -353,11 +355,14 @@ display(featurize_data(raw_data))
 # %% slideshow={"slide_type": "fragment"}
 display(InputSchema.example(size=3))
 
+# %% slideshow={"slide_type": "fragment"}
+input_schema_strategy = InputSchema.strategy(size=5)
+print(type(input_schema_strategy))
 
 # %% slideshow={"slide_type": "fragment"}
 from hypothesis import given
 
-@given(InputSchema.strategy(size=5))
+@given(input_schema_strategy)
 def test_featurize_data(clean_data):
     featurize_data(clean_data)
 
@@ -390,7 +395,7 @@ bootstrapped_schema = pa.infer_schema(realistic_data)
 print(bootstrapped_schema)
 
 # %% [markdown] slideshow={"slide_type": "subslide"}
-# Write it out into a python file with `bootstrapped_schema.to_script()`
+# Write it out into a python file with `bootstrapped_schema.to_script("schemas.py")`
 
 # %% tags=["hide_input"]
 Markdown(
@@ -495,24 +500,7 @@ graph LR
 # - Create `pytest-pandera` plugin for profiling data pipelines in your test suite [![github-issue](https://img.shields.io/badge/github-repo-blue?style=for-the-badge&logo=github)](https://github.com/pandera-dev/pytest-pandera)
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-#
-# # 🛣 Roadmap Summary
-
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# - **Parse, then Validate**: Improve core functionality of schemas
-
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# - **Make Schemas Reuseable, Adaptable, and Portable**: Integrate with other tools in the ecosystem
-
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# - **Generative Schemas Facilitate Property-based Testing**: Improve performance of data synthesis
-
-# %% [markdown] slideshow={"slide_type": "fragment"}
-# - **Profile Data _and_ Data Pipelines**: Improve debugging, reporting, and inspection Tools
-
-# %% [markdown] slideshow={"slide_type": "subslide"}
-#
-# # 🛣 Full Roadmap
+# # 🛣 Roadmap
 #
 # | Guiding Principle | Description | Issue |
 # | ----------------- | ----------- | ----- |
@@ -560,6 +548,10 @@ graph LR
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 #
-# # <img src="https://raw.githubusercontent.com/pandera-dev/pandera-presentations/master/static/pandera-growth-july-2021.png" width="400px" style="margin: auto;"/>
+# ### Scipy Mentored Sprints! 👟👟 
+
+# %% [markdown] slideshow={"slide_type": "slide"}
 #
-# ##### 🎉🎉 Shoutout to all the pandera contributors! 🎉🎉
+# ### 🎉🎉 Shoutout to all the pandera contributors! 🎉🎉
+#
+# # <img src="https://raw.githubusercontent.com/pandera-dev/pandera-presentations/master/static/pandera-growth-july-2021.png" width="400px" style="margin: auto;"/>

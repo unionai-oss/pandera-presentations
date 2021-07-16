@@ -26,3 +26,9 @@ To present with speaker notes and timer:
 ```bash
 ./nbconv-present.sh notebooks/<my_notebook>.ipynb
 ```
+
+## Run Locally
+
+```
+bundle exec jekyll serve
+```

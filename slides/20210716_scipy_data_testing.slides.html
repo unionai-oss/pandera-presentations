@@ -14148,8 +14148,8 @@ div.jp-OutputPrompt {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Hey everyone, I'm Niels Bantilan...
-My talk today is about the road to better data testing tools</p>
+<p>This talk about the road to better data testing tools for data science and
+machine learning</p>
 
 </div>
 </div>
@@ -14363,13 +14363,13 @@ validating them.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cleaned_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;continuous&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">10.25</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">5.2</span><span class="p">],</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;continuous&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;-1.1&quot;</span><span class="p">,</span> <span class="s2">&quot;4.0&quot;</span><span class="p">,</span> <span class="s2">&quot;10.25&quot;</span><span class="p">,</span> <span class="s2">&quot;-0.1&quot;</span><span class="p">,</span> <span class="s2">&quot;5.2&quot;</span><span class="p">],</span>
     <span class="s2">&quot;categorical&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">],</span>
 <span class="p">})</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">Schema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Schema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">except</span> <span class="n">pa</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">SchemaErrors</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
     <span class="n">display</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">failure_cases</span><span class="p">)</span>
 </pre></div>
@@ -14441,7 +14441,7 @@ validating them.</p>
       <th>2</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'C', 'B', 'A'})</td>
+      <td>isin({'C', 'A', 'B'})</td>
       <td>0</td>
       <td>Z</td>
       <td>3</td>
@@ -14450,7 +14450,7 @@ validating them.</p>
       <th>3</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'C', 'B', 'A'})</td>
+      <td>isin({'C', 'A', 'B'})</td>
       <td>0</td>
       <td>X</td>
       <td>4</td>
@@ -14526,6 +14526,23 @@ validating them.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;continuous&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;123456&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;categorical&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;AABBCC&quot;</span><span class="p">),</span>
+<span class="p">})</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Schema</span><span class="p">(</span><span class="n">pa</span><span class="o">.</span><span class="n">SchemaModel</span><span class="p">):</span>
     <span class="n">continuous</span><span class="p">:</span> <span class="n">Series</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">categorical</span><span class="p">:</span> <span class="n">Series</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">isin</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>
@@ -14539,16 +14556,10 @@ validating them.</p>
 </div>
 </div>
 
-</div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Now let's get some summary statistics!</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pandera.typing</span> <span class="kn">import</span> <span class="n">DataFrame</span>
@@ -14557,7 +14568,6 @@ validating them.</p>
 <span class="k">def</span> <span class="nf">summarize_data</span><span class="p">(</span><span class="n">clean_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">Schema</span><span class="p">]):</span>
     <span class="k">return</span> <span class="n">clean_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;categorical&quot;</span><span class="p">)[</span><span class="s2">&quot;continuous&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
-<span class="n">raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;continuous&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;123456&quot;</span><span class="p">),</span> <span class="s2">&quot;categorical&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;AABBCC&quot;</span><span class="p">)})</span>
 <span class="n">display</span><span class="p">(</span><span class="n">summarize_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;mean_continuous&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">())</span>
 </pre></div>
 
@@ -14677,7 +14687,7 @@ the function body of <code>analyze_data</code>!</p>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pandera.typing</span> <span class="kn">import</span> <span class="n">DataFrame</span>
@@ -14706,7 +14716,7 @@ the function body of <code>analyze_data</code>!</p>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_clean_data</span><span class="p">():</span>
@@ -14735,7 +14745,7 @@ so our test reduces to an execution test!</p>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">InputSchema</span><span class="p">(</span><span class="n">pa</span><span class="o">.</span><span class="n">SchemaModel</span><span class="p">):</span>
@@ -14761,7 +14771,7 @@ so our test reduces to an execution test!</p>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">FeaturizedSchema</span><span class="p">(</span><span class="n">InputSchema</span><span class="p">):</span>
@@ -14791,7 +14801,7 @@ so our test reduces to an execution test!</p>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pa</span><span class="o">.</span><span class="n">check_types</span>
@@ -14946,7 +14956,7 @@ so our test reduces to an execution test!</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>Decouple pandera and pandas type systems <a href="https://github.com/pandera-dev/pandera/issues/369"><img src="https://img.shields.io/badge/github_issue-369-blue?style=for-the-badge&amp;logo=github" alt="github-issue"></a></li>
+<li>✅ Decouple pandera and pandas type systems <a href="https://github.com/pandera-dev/pandera/issues/369"><img src="https://img.shields.io/badge/github_issue-369-blue?style=for-the-badge&amp;logo=github" alt="github-issue"></a></li>
 </ul>
 
 </div>
@@ -14976,7 +14986,7 @@ data for testing?</p>
 </div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">InputSchema</span><span class="o">.</span><span class="n">example</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
@@ -15049,15 +15059,51 @@ data for testing?</p>
 
 </div>
 
+</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">input_schema_strategy</span> <span class="o">=</span> <span class="n">InputSchema</span><span class="o">.</span><span class="n">strategy</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">input_schema_strategy</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>&lt;class &#39;hypothesis.strategies._internal.lazy.LazyStrategy&#39;&gt;
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
 </div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">given</span>
 
-<span class="nd">@given</span><span class="p">(</span><span class="n">InputSchema</span><span class="o">.</span><span class="n">strategy</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="nd">@given</span><span class="p">(</span><span class="n">input_schema_strategy</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">test_featurize_data</span><span class="p">(</span><span class="n">clean_data</span><span class="p">):</span>
     <span class="n">featurize_data</span><span class="p">(</span><span class="n">clean_data</span><span class="p">)</span>
 
@@ -15113,7 +15159,7 @@ data for testing?</p>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">realistic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;continuous&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]})</span>
@@ -15161,7 +15207,7 @@ data for testing?</p>
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Write it out into a python file with <code>bootstrapped_schema.to_script()</code></p>
+<p>Write it out into a python file with <code>bootstrapped_schema.to_script("schemas.py")</code></p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell    celltag_hide_input">
@@ -15174,7 +15220,7 @@ data for testing?</p>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[19]:</div>
 
 
 
@@ -15243,7 +15289,7 @@ data for testing?</p>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[20]:</div>
 
 
 
@@ -15420,44 +15466,7 @@ points in the pipeline that lack dataframe type coverage</p>
 </div></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%F0%9F%9B%A3-Roadmap-Summary">&#128739; Roadmap Summary<a class="anchor-link" href="#%F0%9F%9B%A3-Roadmap-Summary">&#182;</a></h1>
-</div>
-</div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>Parse, then Validate</strong>: Improve core functionality of schemas</li>
-</ul>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>Make Schemas Reuseable, Adaptable, and Portable</strong>: Integrate with other tools in the ecosystem</li>
-</ul>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>Generative Schemas Facilitate Property-based Testing</strong>: Improve performance of data synthesis</li>
-</ul>
-
-</div>
-</div></div><div class="fragment">
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>Profile Data <em>and</em> Data Pipelines</strong>: Improve debugging, reporting, and inspection Tools</li>
-</ul>
-
-</div>
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%F0%9F%9B%A3-Full-Roadmap">&#128739; Full Roadmap<a class="anchor-link" href="#%F0%9F%9B%A3-Full-Roadmap">&#182;</a></h1><table>
+<h1 id="%F0%9F%9B%A3-Roadmap">&#128739; Roadmap<a class="anchor-link" href="#%F0%9F%9B%A3-Roadmap">&#182;</a></h1><table>
 <thead><tr>
 <th>Guiding Principle</th>
 <th>Description</th>
@@ -15572,9 +15581,14 @@ points in the pipeline that lack dataframe type coverage</p>
 </div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id=""><img src="https://raw.githubusercontent.com/pandera-dev/pandera-presentations/master/static/pandera-growth-july-2021.png" width="400px" style="margin: auto;" /><a class="anchor-link" href="#">&#182;</a></h1><h5 id="%F0%9F%8E%89%F0%9F%8E%89-Shoutout-to-all-the-pandera-contributors!-%F0%9F%8E%89%F0%9F%8E%89">&#127881;&#127881; Shoutout to all the pandera contributors! &#127881;&#127881;<a class="anchor-link" href="#%F0%9F%8E%89%F0%9F%8E%89-Shoutout-to-all-the-pandera-contributors!-%F0%9F%8E%89%F0%9F%8E%89">&#182;</a></h5>
+<h3 id="Scipy-Mentored-Sprints!-%F0%9F%91%9F%F0%9F%91%9F">Scipy Mentored Sprints! &#128095;&#128095;<a class="anchor-link" href="#Scipy-Mentored-Sprints!-%F0%9F%91%9F%F0%9F%91%9F">&#182;</a></h3>
 </div>
-</div></div></section></section>
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%F0%9F%8E%89%F0%9F%8E%89-Shoutout-to-all-the-pandera-contributors!-%F0%9F%8E%89%F0%9F%8E%89">&#127881;&#127881; Shoutout to all the pandera contributors! &#127881;&#127881;<a class="anchor-link" href="#%F0%9F%8E%89%F0%9F%8E%89-Shoutout-to-all-the-pandera-contributors!-%F0%9F%8E%89%F0%9F%8E%89">&#182;</a></h3><h1 id=""><img src="https://raw.githubusercontent.com/pandera-dev/pandera-presentations/master/static/pandera-growth-july-2021.png" width="400px" style="margin: auto;" /><a class="anchor-link" href="#">&#182;</a></h1>
+</div>
+</div></section></section>
 </div>
 </div>
 </body>
