@@ -6,7 +6,7 @@ dependencies:
   - matplotlib
   - pandas
   - pandas-profiling
-  - pandera==0.6.3
+  - pandera
   - pyjanitor
   - pytest
   - requests

@@ -45,6 +45,10 @@ div.prompt, div.jp-InputPrompt, div.jp-OutputPrompt {
     font-size: 75%
 }
 
+.celltag_hide_output {
+    display: none;
+}
+
 .reveal blockquote p:first-child, .reveal blockquote p:last-child {
     margin-top: 1em;
 }

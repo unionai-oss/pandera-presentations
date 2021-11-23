@@ -10,6 +10,9 @@ jupyter nbconvert $notebook_path \
     --SlidesExporter.reveal_scroll=True \
     --template-file .jupyter/slide_template.html.j2 \
     --output-dir=slides \
+    --TagRemovePreprocessor.enabled=True \
     --TagRemovePreprocessor.remove_input_tags=hide_input \
+    --TagRemovePreprocessor.remove_single_output_tags=hide_output \
+    --TagRemovePreprocessor.remove_all_outputs_tags=hide_output \
     --CSSHTMLHeaderPreprocessor.enabled=True \
     --CSSHTMLHeaderPreprocessor.style=native
