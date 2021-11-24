@@ -20,7 +20,7 @@
 #
 # ### Niels Bantilan
 #
-# Pycon Blackrock, November 22nd 2021
+# Pycon Blackrock, November 23rd 2021
 
 # %% tags=["hide_input", "hide_output"] jupyter={"source_hidden": true}
 import warnings
@@ -36,7 +36,7 @@ import pandera as pa
 # - 📜 M.P.H. in Sociomedical Science and Public Health Informatics
 # - 🤖 Machine Learning Engineer @ Union.ai
 # - 🛩 Flytekit OSS Maintainer
-# - ✅ Auther and Maintainer of Pandera
+# - ✅ Author and Maintainer of Pandera
 # - 🛠 Make DS/ML practitioners more productive
 
 # %% [markdown] slideshow={"slide_type": "slide"}
@@ -63,7 +63,7 @@ import pandera as pa
 #
 # `data_cleaner.py`
 
-# %%
+# %% tags=[]
 import pandas as pd
 
 raw_data = pd.DataFrame({
@@ -148,8 +148,8 @@ import pandera as pa
 
 clean_data_schema = pa.DataFrameSchema(
     columns={
-        "continuous": pa.Column(float, pa.Check.ge(0)),
-        "categorical": pa.Column(str, pa.Check.isin(["A", "B", "C"])),
+        "continuous": pa.Column(float, pa.Check.ge(0), nullable=True),
+        "categorical": pa.Column(str, pa.Check.isin(["A", "B", "C"]), nullable=True),
     },
     coerce=True,
 )
@@ -316,7 +316,7 @@ JoinedData(clean_data.join(supplementary_data))
 #
 # ##### Infer a schema definition from reference data
 
-# %% tags=[] jupyter={"outputs_hidden": true}
+# %% tags=[]
 clean_data = pd.DataFrame({
     "continuous": range(100),
     "categorical": [*"ABCAB" * 20]
