@@ -45,10 +45,13 @@ require(
 
           // render mermaid chart when next slide contains mermaid chart
           var nextSlide = currentSlide.nextSibling;
-          mermaidNode = $(nextSlide).children(".mermaid");
-          console.log(mermaidNode);
-          if (mermaidNode.length !== 0) {
-            mermaid.init(undefined, mermaidNode);
+          currentMermaidNode = $(currentSlide).children(".mermaid");
+          nextMermaidNode = $(nextSlide).children(".mermaid");
+          if (currentMermaidNode.length !== 0) {
+            mermaid.init(undefined, currentMermaidNode);
+          }
+          if (nextMermaidNode.length !== 0) {
+            mermaid.init(undefined, nextMermaidNode);
           }
         };
         Reveal.addEventListener('slidechanged', update);

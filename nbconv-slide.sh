@@ -15,4 +15,4 @@ jupyter nbconvert $notebook_path \
     --TagRemovePreprocessor.remove_single_output_tags=hide_output \
     --TagRemovePreprocessor.remove_all_outputs_tags=hide_output \
     --CSSHTMLHeaderPreprocessor.enabled=True \
-    --CSSHTMLHeaderPreprocessor.style=native
+    --CSSHTMLHeaderPreprocessor.style=friendly
