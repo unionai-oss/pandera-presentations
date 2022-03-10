@@ -599,17 +599,15 @@ data_points = [
 import pandas as pd
 import pandera as pa
 
-from pandera import Column, DataFrameSchema, Hypothesis
-
 df = pd.DataFrame({
     "height_in_feet": [6.5, 7, 7.1, 6.1, 5.1, 4],
     "group": ["A", "A", "A", "B", "B", "B"]
 })
 
-schema = DataFrameSchema({
-    "height_in_feet": Column(
+schema = pa.DataFrameSchema({
+    "height_in_feet": pa.Column(
         float, [
-            Hypothesis.two_sample_ttest(
+            pa.Hypothesis.two_sample_ttest(
                 sample1="A",
                 relationship="greater_than",
                 sample2="B",
@@ -619,9 +617,8 @@ schema = DataFrameSchema({
             ),
         ]
     ),
-    "group": Column(str, pa.Check.isin(["A", "B"])),
+    "group": pa.Column(str, pa.Check.isin(["A", "B"])),
 })
-
 display(schema(df))
 
 # %% [markdown] slideshow={"slide_type": "slide"}
@@ -636,10 +633,10 @@ def two_sample_ttest(array1, array2):
 def greater_than(stat, pvalue, alpha=0.01):
     return stat > 0 and pvalue / 2 < alpha
 
-schema = DataFrameSchema({
-    "height_in_feet": Column(
+schema = pa.DataFrameSchema({
+    "height_in_feet": pa.Column(
         float, [
-            Hypothesis(
+            pa.Hypothesis(
                 name="two_sample_test[A > B; alpha=0.05]",
                 test=two_sample_ttest,
                 samples=["A", "B"],
@@ -648,7 +645,7 @@ schema = DataFrameSchema({
                 relationship_kwargs={"alpha": 0.05}
             )
     ]),
-    "group": Column(str, checks=pa.Check.isin(["A", "B"]))
+    "group": pa.Column(str, checks=pa.Check.isin(["A", "B"]))
 })
 
 
