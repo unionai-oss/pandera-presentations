@@ -14317,8 +14317,8 @@ graph LR
         <span class="n">raw_data</span>
         <span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s2">&quot;continuous&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;categorical&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">})</span>
         <span class="o">.</span><span class="n">assign</span><span class="p">(</span>
-            <span class="n">continuous</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">continuous</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">continuous</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">),</span>
-            <span class="n">categorical</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="o">~</span><span class="n">_</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]))</span>
+            <span class="n">continuous</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">continuous</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">continuous</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">categorical</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]))</span>
         <span class="p">)</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">clean_data</span>
@@ -14603,7 +14603,7 @@ graph LR
       <th>2</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'A', 'B', 'C'})</td>
+      <td>isin({'A', 'C', 'B'})</td>
       <td>0</td>
       <td>Z</td>
       <td>3</td>
@@ -14612,7 +14612,7 @@ graph LR
       <th>3</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'A', 'B', 'C'})</td>
+      <td>isin({'A', 'C', 'B'})</td>
       <td>0</td>
       <td>X</td>
       <td>4</td>
@@ -14872,8 +14872,8 @@ base, like your test suite!</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># data_cleaner.py</span>
 <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">RawData</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">CleanData</span><span class="p">]:</span>
     <span class="k">return</span> <span class="n">raw_data</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
-        <span class="n">continuous</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">continuous</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">continuous</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">),</span>
-        <span class="n">categorical</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="o">~</span><span class="n">_</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]))</span>
+        <span class="n">continuous</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">continuous</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">continuous</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">categorical</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]))</span>
     <span class="p">)</span>
 
 <span class="c1"># test_data_cleaner.py</span>
@@ -15386,17 +15386,17 @@ unique: null
   <tbody>
     <tr>
       <th>0</th>
-      <td>7.105805e+140</td>
-      <td>¼Ó</td>
+      <td>0.0</td>
+      <td></td>
     </tr>
     <tr>
       <th>1</th>
-      <td>-1.500000e+00</td>
-      <td>B</td>
+      <td>0.0</td>
+      <td></td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-9.999900e-01</td>
+      <td>0.0</td>
       <td></td>
     </tr>
   </tbody>
@@ -15498,8 +15498,8 @@ unique: null
 <span class="nd">@pa</span><span class="o">.</span><span class="n">check_types</span>
 <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">RawData</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">[</span><span class="n">CleanData</span><span class="p">]:</span>
     <span class="k">return</span> <span class="n">raw_data</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
-        <span class="n">continuous</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">continuous</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">continuous</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">),</span>
-        <span class="n">categorical</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="o">~</span><span class="n">_</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]))</span>
+        <span class="n">continuous</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">continuous</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">continuous</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">categorical</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">categorical</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]))</span>
     <span class="p">)</span>
 
 
@@ -15737,7 +15737,7 @@ data validation to big data.</p>
       <th>2</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'A', 'B', 'C'})</td>
+      <td>isin({'A', 'C', 'B'})</td>
       <td>0</td>
       <td>Z</td>
       <td>3</td>
@@ -15746,7 +15746,7 @@ data validation to big data.</p>
       <th>3</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'A', 'B', 'C'})</td>
+      <td>isin({'A', 'C', 'B'})</td>
       <td>0</td>
       <td>X</td>
       <td>4</td>
@@ -15850,7 +15850,7 @@ data validation to big data.</p>
       <th>2</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'A', 'B', 'C'})</td>
+      <td>isin({'A', 'C', 'B'})</td>
       <td>0</td>
       <td>Z</td>
       <td>3</td>
@@ -15859,7 +15859,7 @@ data validation to big data.</p>
       <th>3</th>
       <td>Column</td>
       <td>categorical</td>
-      <td>isin({'A', 'B', 'C'})</td>
+      <td>isin({'A', 'C', 'B'})</td>
       <td>0</td>
       <td>X</td>
       <td>4</td>
@@ -15969,7 +15969,7 @@ data validation to big data.</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="%F0%9F%A4%94-What's-Statistical-Typing?">&#129300; What's Statistical Typing?<a class="anchor-link" href="#%F0%9F%A4%94-What's-Statistical-Typing?">&#182;</a></h3><blockquote><p><strong>Statistical typing</strong> extends primitive data types with additional semantics
-about the <em>properties held by a collection of data points</em>.</p>
+about the _properties held by a collection of data pointsdf.</p>
 </blockquote>
 
 </div>

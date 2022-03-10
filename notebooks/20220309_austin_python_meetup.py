@@ -154,8 +154,8 @@ def clean(raw_data):
         raw_data
         .astype({"continuous": float, "categorical": str})
         .assign(
-            continuous=lambda _: _.continuous.mask(_.continuous < 0),
-            categorical=lambda _: _.categorical.mask(~_.categorical.isin(["A", "B", "C"]))
+            continuous=lambda df: df.continuous.mask(df.continuous < 0),
+            categorical=lambda df: df.categorical.mask(~df.categorical.isin(["A", "B", "C"]))
         )
     )
     return clean_data
@@ -310,8 +310,8 @@ test_clean()
 # data_cleaner.py
 def clean(raw_data: DataFrame[RawData]) -> DataFrame[CleanData]:
     return raw_data.assign(
-        continuous=lambda _: _.continuous.mask(_.continuous < 0),
-        categorical=lambda _: _.categorical.mask(~_.categorical.isin(["A", "B", "C"]))
+        continuous=lambda df: df.continuous.mask(df.continuous < 0),
+        categorical=lambda df: df.categorical.mask(~df.categorical.isin(["A", "B", "C"]))
     )
 
 # test_data_cleaner.py
@@ -430,8 +430,8 @@ CleanData.example(size=3)
 @pa.check_types
 def clean(raw_data: DataFrame[RawData]) -> DataFrame[CleanData]:
     return raw_data.assign(
-        continuous=lambda _: _.continuous.mask(_.continuous < 0),
-        categorical=lambda _: _.categorical.mask(~_.categorical.isin(["A", "B", "C"]))
+        continuous=lambda df: df.continuous.mask(df.continuous < 0),
+        categorical=lambda df: df.categorical.mask(~df.categorical.isin(["A", "B", "C"]))
     )
 
 
@@ -550,7 +550,7 @@ def add_and_double(raw_data: DataFrame[Inputs]) -> DataFrame[Outputs]:
 # ### 🤔 What's Statistical Typing?
 #
 # > **Statistical typing** extends primitive data types with additional semantics
-# > about the _properties held by a collection of data points_.
+# > about the _properties held by a collection of data pointsdf.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # #### Consider a single data point
