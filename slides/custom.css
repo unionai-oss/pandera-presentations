@@ -42,7 +42,7 @@ div.prompt, div.jp-InputPrompt, div.jp-OutputPrompt {
 }
 
 .jp-OutputArea-child .jp-OutputArea-output {
-    font-size: 70%;
+    font-size: 75%;
 }
 
 .celltag_hide_output {
@@ -98,5 +98,5 @@ div.output_widget_view {
 }
 
 .reveal pre {
-    font-size: 60%;
+    font-size: 65%;
 }
