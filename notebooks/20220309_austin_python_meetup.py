@@ -594,11 +594,10 @@ data_points = [
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Hypothesis Testing with Pandera
+#
+# "The height of **group A** is greater than that of **group B**"
 
 # %%
-import pandas as pd
-import pandera as pa
-
 df = pd.DataFrame({
     "height_in_feet": [6.5, 7, 7.1, 6.1, 5.1, 4],
     "group": ["A", "A", "A", "B", "B", "B"]
