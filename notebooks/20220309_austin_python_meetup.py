@@ -704,4 +704,4 @@ except pa.errors.SchemaErrors as exc:
 # - **Repo**: https://github.com/pandera-dev/pandera
 # - **Docs**: https://pandera.readthedocs.io
 # - **Contributing Guide**: https://pandera.readthedocs.io/en/stable/CONTRIBUTING.html
-# - **Sponsor the Project**: https://github.com/sponsors/cosmicBboy
+# - **Become a Sponsor**: https://github.com/sponsors/cosmicBboy
