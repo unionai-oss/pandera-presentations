@@ -4,8 +4,8 @@ This repository contains presentations about `pandera`.
 
 ## Setup
 
-Install [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) and [mamba](https://github.com/mamba-org/mamba), then install
-the dev environment:
+Install [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) and
+[mamba](https://github.com/mamba-org/mamba), then install the dev environment:
 
 ```
 $ ./setup-dev-env.sh
