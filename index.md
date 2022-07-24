@@ -14,3 +14,12 @@
 ---
 
 ## [Pycon 2021 - Statistical Typing: A Runtime Typing System for Data Science and Machine Learning](slides/20210515_pycon_statistical_typing.slides.html)
+
+---
+
+## [Scipy 2020 - Pandera: Statistical Data Validation of Pandas](slides/20200505_scipy_conference.slides.html)
+
+
+---
+
+## [Python NYC Lightning Talk 2020 - Validating Pandas DataFrames with Pandera](slides/20200505_scipy_conference.slides.html)
