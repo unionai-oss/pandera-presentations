@@ -5,6 +5,7 @@ jupytext --sync $notebook_path
 jupyter nbconvert $notebook_path \
     --execute \
     --to=slides \
+    --NotebookClient.kernel_name=pandera-presentations \
     --SlidesExporter.reveal_theme=simple \
     --SlidesExporter.reveal_transition=none \
     --SlidesExporter.reveal_scroll=True \

@@ -12,4 +12,5 @@ dependencies:
   - requests
   - seaborn
   - scikit-learn
+  - scipy
   - statsmodels

@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="assets/css/custom.css">
 
 
+## [Python Live Webinar [Amicus] July 2022 - Pandera: Statistical Types for Pandas DataFrames and Friends](slides/20220728_python_live_webinar_amicus.slides.html)
+
+---
+
 ## [Austin Python Meetup March 2021 - Pandera: A Statistical Typing and Data Testing Toolkit for Dataframe-like Objects](slides/20220309_austin_python_meetup.slides.html)
 
 ---
