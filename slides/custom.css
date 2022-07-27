@@ -111,7 +111,7 @@ div.output_widget_view {
 
 /* code cell font size */
 .reveal pre {
-    font-size: 55% !important;
+    font-size: 60% !important;
 }
 
 .reveal div.mermaid {
@@ -129,4 +129,12 @@ div.output_widget_view {
 
 .reveal ul {
     padding-left: 0 !important;
+}
+
+.back-button {
+    position: absolute;
+    left: 20;
+    top: 20;
+    z-index: 10000;
+    color: rgb(122, 122, 122)
 }

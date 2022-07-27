@@ -75,3 +75,11 @@ require(
 </script>
 
 {% endblock footer_js %}
+
+{%- block body -%}
+
+<div class="back-button"><a href="/">back</a></div>
+
+{{ super() }}
+
+{%- endblock body -%}
