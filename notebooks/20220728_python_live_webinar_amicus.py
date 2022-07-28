@@ -260,13 +260,13 @@ def process_data(df: DataFrame[RawData]) -> DataFrame[ProcessedData]:
 # ## Moral of the Story
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# #### The better you can reason about the contents of a dataframe, the faster you can debug.
+# > #### The better you can reason about the contents of a dataframe, the faster you can debug.
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# #### The faster you can debug, the sooner you can focus on downstream tasks that you care about.
+# > #### The faster you can debug, the sooner you can focus on downstream tasks that you care about.
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
-# #### By validating data through explicit contracts, you're also creating documentation for the rest of your team.
+# > #### By validating data through explicit contracts, you also create data documentation for the rest of your team.
 
 
 # %% [markdown] slideshow={"slide_type": "slide"}
