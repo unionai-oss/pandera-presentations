@@ -24,13 +24,6 @@
 #
 # *Python Live Webinars - Amicus, July 28th 2022*
 
-# %% tags=["hide_input", "hide_output"] jupyter={"source_hidden": true}
-import warnings
-
-warnings.simplefilter("ignore")
-
-import pandera as pa
-
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # Background 🏞
 #
@@ -52,15 +45,15 @@ import pandera as pa
 # - 🤖 Example 2: Validate your Machine Learning Pipeline
 # - ⭐️ Conclusion: How can I start using Pandera in my work?
 
+# %% slideshow={"slide_type": "skip"}
+# %%capture
+# !pip install pandas 'pandera[all]'
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # 🤷‍♂️ Why Should I Validate Data?
 
-# %% slideshow={"slide_type": "skip"}
+# %% tags=["hide_input", "hide_output"] jupyter={"source_hidden": true}
 import warnings
-
-import numpy as np
-import pandas as pd
 
 from IPython.display import display, Markdown
 
@@ -71,6 +64,9 @@ warnings.simplefilter("ignore")
 
 # %% slideshow={"slide_type": "skip"}
 import uuid
+
+import numpy as np
+import pandas as pd
 
 dataframe = pd.DataFrame({
     "person_id": [str(uuid.uuid4())[:7] for _ in range(6)],
