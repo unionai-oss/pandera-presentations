@@ -45,19 +45,24 @@
 # - 🤖 Example 2: Validate your Machine Learning Pipeline
 # - ⭐️ Conclusion: How can I start using Pandera in my work?
 
-# %% slideshow={"slide_type": "skip"}
-# %%capture
-# !pip install pandas 'pandera[all]'
-
 # %% [markdown] slideshow={"slide_type": "slide"}
-# # 🤷‍♂️ Why Should I Validate Data?
+# ### Where's the Code?
+#
+# 🖼 **Slides**: https://pandera-dev.github.io/pandera-presentations/slides/20220728_python_live_webinar_amicus.slides.html
+#
+# 📓 **Notebook**: https://github.com/pandera-dev/pandera-presentations/blob/master/notebooks/20220728_python_live_webinar_amicus.ipynb
 
 # %% tags=["hide_input", "hide_output"] jupyter={"source_hidden": true}
 import warnings
+import pyspark
 
 from IPython.display import display, Markdown
 
 warnings.simplefilter("ignore")
+pyspark.SparkContext().setLogLevel("OFF")
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# # 🤷‍♂️ Why Should I Validate Data?
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## What's a `DataFrame`?
@@ -260,6 +265,9 @@ def process_data(df: DataFrame[RawData]) -> DataFrame[ProcessedData]:
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # #### The faster you can debug, the sooner you can focus on downstream tasks that you care about.
 
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# #### By validating data through explicit contracts, you're also creating documentation for the rest of your team.
+
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # 🤔 What's Data Testing
@@ -332,7 +340,7 @@ def process_data(df: DataFrame[RawData]) -> DataFrame[ProcessedData]:
 #     subgraph Development Process
 #         E[Explore Data]
 #         S[Define Schema and Tests]
-#         I[Implement Data Transform]
+#         I[Implement Data Transforms]
 #         V[Verify Data]
 #     end
 #
@@ -362,7 +370,7 @@ def process_data(df: DataFrame[RawData]) -> DataFrame[ProcessedData]:
 #
 # <h2 style="margin-top: 0;">Pandera</h2>
 #
-# #### An expressive and light-weight statistical typing tool for dataframes
+# #### An expressive and light-weight statistical typing tool for dataframe-like containers
 #
 # - Check the types and properties of dataframes
 # - Easily integrate with existing data pipelines via function decorators
@@ -387,7 +395,7 @@ clean_data_schema = pa.DataFrameSchema(
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # #### Class-based API
 #
-# Complex Types with Modern Python, Inspired by [pydantic](https://pydantic-docs.helpmanual.io/) and `dataclasses`
+# Define complex types with modern Python, inspired by [pydantic](https://pydantic-docs.helpmanual.io/) and `dataclasses`
 
 # %%
 from pandera.typing import DataFrame, Series
@@ -549,11 +557,6 @@ except pa.errors.SchemaErrors as exc:
 #
 # #### `pyspark.pandas`
 
-# %% slideshow={"slide_type": "skip"}
-import pyspark
-
-pyspark.SparkContext().setLogLevel("OFF")
-
 # %%
 import pyspark.pandas as ps
 
@@ -577,7 +580,7 @@ except pa.errors.SchemaErrors as exc:
 # ## ⌨️ Statistical Typing
 
 # %% [markdown]
-# #### Type systems help programmers (and machines!) reason about and write more robust code
+# #### Type systems help programmers reason about and write more robust code
 
 # %% slideshow={"slide_type": "fragment"}
 from typing import Union
@@ -888,10 +891,15 @@ model
 # %%
 from hypothesis import settings
 
-prediction_schema = pa.SeriesSchema(float, nullable=False)
+prediction_schema = pa.SeriesSchema(
+    float,
+    # in-line custom checks
+    pa.Check(lambda s: (s >= 0).mean() > 0.05, name="predictions are mostly positive"),
+    nullable=False,
+)
 
 
-@given(HousingData.strategy(size=10))
+@given(HousingData.strategy(size=20))
 @settings(max_examples=3)
 def test_run_training_pipeline(data):
     target = "MedHouseVal"
