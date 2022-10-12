@@ -20,6 +20,13 @@
 # *Global DevSlam x Pycon MEA 2022*
 
 # %% [markdown] slideshow={"slide_type": "slide"}
+# ### Where's the Code?
+#
+# 📓 **Notebook**: https://github.com/pandera-dev/pandera-presentations/blob/master/notebooks/20221012_pycon_mea_workshop.ipynb
+#
+# ⛓ Shortlink: https://bit.ly/pandera-pycon-mea-2022
+
+# %% [markdown] slideshow={"slide_type": "slide"}
 # # Outline 📝
 #
 # - 🤷‍♂️ Why Should I Validate Data?
@@ -45,11 +52,6 @@ from IPython.display import display, Markdown
 
 warnings.filterwarnings("ignore", category=HypothesisWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
-
-# %% [markdown] slideshow={"slide_type": "slide"}
-# ### Where's the Code?
-#
-# 📓 **Notebook**: https://github.com/pandera-dev/pandera-presentations/blob/master/notebooks/20221012_pycon_mea_workshop.ipynb
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # 🤷‍♂️ Why Should I Validate Data?
