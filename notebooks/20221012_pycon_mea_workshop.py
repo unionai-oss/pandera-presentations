@@ -17,8 +17,6 @@
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # Pandera Workshop: Making Data Processing Pipelines more Readable and Robust
 #
-# **Niels Bantilan**, Chief ML Engineer @ Union.ai
-#
 # *Global DevSlam x Pycon MEA 2022*
 
 # %% [markdown] slideshow={"slide_type": "slide"}
