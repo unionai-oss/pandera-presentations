@@ -15,8 +15,7 @@
 # ---
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-#
-# # Pandera: Making Data Processing Pipelines more Readable and Robust
+# # Pandera Workshop: Making Data Processing Pipelines more Readable and Robust
 #
 # **Niels Bantilan**, Chief ML Engineer @ Union.ai
 #
@@ -40,52 +39,35 @@
 # %%capture
 # !pip install 'pandera[all]'
 
+# %%
+import warnings
+from hypothesis.errors import HypothesisWarning
+
+from IPython.display import display, Markdown
+
+warnings.filterwarnings("ignore", category=HypothesisWarning)
+
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ### Where's the Code?
 #
 # 📓 **Notebook**: https://github.com/pandera-dev/pandera-presentations/blob/master/notebooks/20221012_pycon_mea_workshop.ipynb
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# # 🤷‍♂️ Why Should I Validate Data?
+# # What's Data Validation?
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ## What's a `DataFrame`?
-
-# %% slideshow={"slide_type": "skip"}
-import uuid
-
-import numpy as np
-import pandas as pd
-
-dataframe = pd.DataFrame({
-    "person_id": [str(uuid.uuid4())[:7] for _ in range(6)],
-    "hours_worked": [38.5, 41.25, "35.0", 27.75, 22.25, -20.5],
-    "wage_per_hour": [15.1, 15, 21.30, 17.5, 19.50, 25.50],
-}).set_index("person_id")
-
-df = dataframe
-
-# %%
-dataframe.head()
-
-
-# %% [markdown] slideshow={"slide_type": "slide"}
-# ## What's Data Validation?
-#
 # Data validation is the act of _falsifying_ data against explicit assumptions
 # for some downstream purpose, like analysis, modeling, and visualization.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ## Why Do I Need it?
+# # 🤷‍♂️ Why Should I Validate Data?
 #
 # - 🐞 It can be difficult to reason about and debug data processing pipelines.
 # - ⚠️ It's critical to ensuring data quality in many contexts especially when the end product informs business decisions, supports scientific findings, or generates predictions in a production setting.
-# - Everyone has a personal relationship with their dataframes.
+# - 📊 Everyone has a personal relationship with their dataframes.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # 🤔 What's Data Testing
-#
-# ### And How Can I Put it Into Practice?
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # > **Data validation:** The act of falsifying data against explicit assumptions for some downstream purpose, like
@@ -94,14 +76,7 @@ dataframe.head()
 # > **Data Testing:** Validating not only real data, but also the functions that produce them.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# # ✅ Pandera Quickstart
-#
-# ### Create statistical types for your DataFrames
-
-# %% [markdown] slideshow={"slide_type": "slide"}
-# <img src="https://raw.githubusercontent.com/pandera-dev/pandera/master/docs/source/_static/pandera-logo.png" width="125px" style="margin: 0;"/>
-#
-# <h2 style="margin-top: 0;">Pandera</h2>
+# # ✅ Pandera
 #
 # #### A data testing and statistical typing library for DS/ML-oriented data containers
 #
@@ -456,9 +431,6 @@ except pa.errors.SchemaErrors as exc:
 
 # %%
 schema = pa.infer_schema(valid_data)
-
-# %% [markdown]
-# Then call the `.to_script()` method to dump the inferred schema to a string or file for further editing.
 
 # %%
 print(schema.to_script())
