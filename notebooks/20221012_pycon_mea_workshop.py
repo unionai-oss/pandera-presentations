@@ -51,13 +51,6 @@ warnings.filterwarnings("ignore", category=HypothesisWarning)
 # 📓 **Notebook**: https://github.com/pandera-dev/pandera-presentations/blob/master/notebooks/20221012_pycon_mea_workshop.ipynb
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# # What's Data Validation?
-
-# %% [markdown] slideshow={"slide_type": "slide"}
-# Data validation is the act of _falsifying_ data against explicit assumptions
-# for some downstream purpose, like analysis, modeling, and visualization.
-
-# %% [markdown] slideshow={"slide_type": "slide"}
 # # 🤷‍♂️ Why Should I Validate Data?
 #
 # - 🐞 It can be difficult to reason about and debug data processing pipelines.
