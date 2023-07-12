@@ -120,7 +120,7 @@ dataframe.head()
 # #### ⚠️ It's critical to ensuring data quality in many contexts especially when the end product informs business decisions, supports scientific findings, or generates predictions in a production setting.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ## Everyone has a personal relationship with their dataframes
+# ## Everyone has a personal relationship with their data
 
 # %% [markdown] slideshow={"slide_type": "fragment"}
 # ### Story Time 📖
@@ -275,32 +275,115 @@ def process_data(df: DataFrame[RawData]) -> DataFrame[ProcessedData]:
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Pandera Design Principles
 #
-# ![pandera design principles](../static/pandera_design_principles.png)
+# From [scipy 2020 - pandera: Statistical Data Validation of Pandas Dataframes](https://conference.scipy.org/proceedings/scipy2020/niels_bantilan.html) 
+#
+# <image src="../static/pandera_design_principles.png" width="550px">
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Pandera Programming Model
+#
+# The pandera programming model is an iterative loop of building
+# statistical domain knowledge, implementing data transforms and schemas,
+# and verifying data.
+#
+# <br>
+#
+# <image src="../static/pandera_programming_model.png" width="700px">
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # 🐓 Evolution
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Major Events
+#
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# > ##### 📖 Documentation Improvements
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# > ##### 🔤 Class-based API
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# > ##### 📊 Data Synthesis Strategies
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# > ##### ⌨️ Pandera Type System
+
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ## Expanding Scope
+# ## Expanding scope
+#
+# Adding `geopandas`, `dask`, `modin`, and `pyspark.pandas` was relatively
+# straight forward.
+
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# **Problem:** What about all the other non-pandas-compliant dataframes?
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ### 😩 Design weaknesses
+#
+# - Schemas and checks were strongly coupled with pandas
+# - Error reporting and eager validation assumed in-memory data
+# - Leaky pandas abstractions
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ### 💪 Design strengths
+#
+# - Generic schema interface
+# - Flexible check abstraction
+# - Flexible type system
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # 🦩 Revolution
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ## Rewriting Pandera Internals
+# ## Rewriting pandera internals
+#
+# High-level approach: decoupling schema specification from backend
+#
+# - A pandera.api subpackage, which contains the schema specification that
+#   defines the properties of an underlying data structure.
+# - A pandera.backends subpackage, which leverages the schema specification and
+#   implements the actual validation logic.
+# - A backend registry, which maps a particular API specification to a backend
+#   based on the DataFrame type being validated.
+# - A common type-aware Check namespace and registry, which registers
+#   type-specific implementations of built-in checks and allows contributors to
+#   easily add new built-in checks.
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ### Writing your own schema
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ### Pandera now supports `pyspark.sql.DataFrame` in `0.16.0b`!
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ## Organizational and Development Challenges
+#
+# - Multi-tasking the rewrite with PR reviews
+# - Centralized knowledge
+# - Informal governance
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Retrospective
+#
+# Things in place that reduced the risk of regressions
+#
+# - Unit tests.
+# - Localized pandas coupling.
+# - Lessons learned from pandas-compliant integrations.
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ## Retrospective
+#
+# Additional approaches to put into practice in the future:
+#
+# - Thoughtful design work.
+# - Library-independent error reporting.
+# - Decoupling metadata from data.
+# - Investing in governance and community.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Updated Principles
-
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # 🤔 What's Data Testing
