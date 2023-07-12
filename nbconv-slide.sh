@@ -1,9 +1,11 @@
 #!/bin/bash
 
 notebook_path=$1
+args="${@:2}"
+
 jupytext --sync $notebook_path
 jupyter nbconvert $notebook_path \
-    --execute \
+    ${args} \
     --to=slides \
     --NotebookClient.kernel_name=pandera-presentations \
     --SlidesExporter.reveal_theme=simple \

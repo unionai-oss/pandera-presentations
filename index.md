@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="assets/css/custom.css">
 
 
+## [Scipy 2023 - Pandera: Beyond Pandas Data Validation](slides/20230712_scipy_beyond_pandas.slides.html)
+
+---
+
 ## [Python Live Webinar [Amicus] July 2022 - Pandera: Statistical Types for Pandas DataFrames and Friends](slides/20220728_python_live_webinar_amicus.slides.html)
 
 ---
