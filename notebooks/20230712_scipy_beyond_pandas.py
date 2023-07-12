@@ -384,6 +384,12 @@ def process_data(df: DataFrame[RawData]) -> DataFrame[ProcessedData]:
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Updated Principles
+#
+# <image src="../static/pandera_updated_principles.png" width="600px">
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ## Roadmap
+
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # 🤔 What's Data Testing

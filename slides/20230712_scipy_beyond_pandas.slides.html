@@ -15505,7 +15505,7 @@ for some downstream purpose, like analysis, modeling, and visualization.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Everyone-has-a-personal-relationship-with-their-dataframes">Everyone has a personal relationship with their dataframes<a class="anchor-link" href="#Everyone-has-a-personal-relationship-with-their-dataframes">&#182;</a></h2>
+<h2 id="Everyone-has-a-personal-relationship-with-their-data">Everyone has a personal relationship with their data<a class="anchor-link" href="#Everyone-has-a-personal-relationship-with-their-data">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -16171,18 +16171,7 @@ and verifying data.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Expanding-Scope">Expanding Scope<a class="anchor-link" href="#Expanding-Scope">&#182;</a></h2>
-</div>
-</div>
-</div>
-</div></section></section><section ><section >
-<div id="cell-id=3c8224ec" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Expanding-Scope">Expanding Scope<a class="anchor-link" href="#Expanding-Scope">&#182;</a></h2><p>Adding <code>geopandas</code>, <code>dask</code>, <code>modin</code>, and <code>pyspark.pandas</code> was relatively
+<h2 id="Expanding-scope">Expanding scope<a class="anchor-link" href="#Expanding-scope">&#182;</a></h2><p>Adding <code>geopandas</code>, <code>dask</code>, <code>modin</code>, and <code>pyspark.pandas</code> was relatively
 straight forward.</p>
 
 </div>
@@ -16201,6 +16190,38 @@ straight forward.</p>
 </div>
 </div>
 </div></div></section></section><section ><section >
+<div id="cell-id=0af055bc" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%F0%9F%98%A9-Design-weaknesses">&#128553; Design weaknesses<a class="anchor-link" href="#%F0%9F%98%A9-Design-weaknesses">&#182;</a></h3><ul>
+<li>Schemas and checks were strongly coupled with pandas</li>
+<li>Error reporting and eager validation assumed in-memory data</li>
+<li>Leaky pandas abstractions</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section ><section >
+<div id="cell-id=5ab8580b" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%F0%9F%92%AA-Design-strengths">&#128170; Design strengths<a class="anchor-link" href="#%F0%9F%92%AA-Design-strengths">&#182;</a></h3><ul>
+<li>Generic schema interface</li>
+<li>Flexible check abstraction</li>
+<li>Flexible type system</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section ><section >
 <div id="cell-id=0fb1f690" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -16218,7 +16239,19 @@ straight forward.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Rewriting-Pandera-Internals">Rewriting Pandera Internals<a class="anchor-link" href="#Rewriting-Pandera-Internals">&#182;</a></h2>
+<h2 id="Rewriting-pandera-internals">Rewriting pandera internals<a class="anchor-link" href="#Rewriting-pandera-internals">&#182;</a></h2><p>High-level approach: decoupling schema specification from backend</p>
+<ul>
+<li>A pandera.api subpackage, which contains the schema specification that
+defines the properties of an underlying data structure.</li>
+<li>A pandera.backends subpackage, which leverages the schema specification and
+implements the actual validation logic.</li>
+<li>A backend registry, which maps a particular API specification to a backend
+based on the DataFrame type being validated.</li>
+<li>A common type-aware Check namespace and registry, which registers
+type-specific implementations of built-in checks and allows contributors to
+easily add new built-in checks.</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -16229,7 +16262,7 @@ straight forward.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Retrospective">Retrospective<a class="anchor-link" href="#Retrospective">&#182;</a></h2>
+<h3 id="Writing-your-own-schema">Writing your own schema<a class="anchor-link" href="#Writing-your-own-schema">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -16240,7 +16273,82 @@ straight forward.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Updated-Principles">Updated Principles<a class="anchor-link" href="#Updated-Principles">&#182;</a></h2>
+<h3 id="Pandera-now-supports-pyspark.sql.DataFrame-in-0.16.0b!">Pandera now supports <code>pyspark.sql.DataFrame</code> in <code>0.16.0b</code>!<a class="anchor-link" href="#Pandera-now-supports-pyspark.sql.DataFrame-in-0.16.0b!">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div></section></section><section ><section >
+<div id="cell-id=55955d47" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Organizational-and-Development-Challenges">Organizational and Development Challenges<a class="anchor-link" href="#Organizational-and-Development-Challenges">&#182;</a></h2><ul>
+<li>Multi-tasking the rewrite with PR reviews</li>
+<li>Centralized knowledge</li>
+<li>Informal governance</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section ><section >
+<div id="cell-id=ec16e13d" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Retrospective">Retrospective<a class="anchor-link" href="#Retrospective">&#182;</a></h2><p>Things in place that reduced the risk of regressions</p>
+<ul>
+<li>Unit tests.</li>
+<li>Localized pandas coupling.</li>
+<li>Lessons learned from pandas-compliant integrations.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section ><section >
+<div id="cell-id=7a94246a" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Retrospective">Retrospective<a class="anchor-link" href="#Retrospective">&#182;</a></h2><p>Additional approaches to put into practice in the future:</p>
+<ul>
+<li>Thoughtful design work.</li>
+<li>Library-independent error reporting.</li>
+<li>Decoupling metadata from data.</li>
+<li>Investing in governance and community.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section ><section >
+<div id="cell-id=e5e08908" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Updated-Principles">Updated Principles<a class="anchor-link" href="#Updated-Principles">&#182;</a></h2><image src="../static/pandera_updated_principles.png" width="600px">
+
+
+</div>
+</div>
+</div>
+</div></section></section><section ><section >
+<div id="cell-id=8b74be27" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Roadmap">Roadmap<a class="anchor-link" href="#Roadmap">&#182;</a></h2>
 </div>
 </div>
 </div>
