@@ -275,7 +275,7 @@ def process_data(df: DataFrame[RawData]) -> DataFrame[ProcessedData]:
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Pandera Design Principles
 #
-# ![pandera design principles](../static/pandera-design-principles.png)
+# ![pandera design principles](../static/pandera_design_principles.png)
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Pandera Programming Model
