@@ -366,21 +366,19 @@ def process_data(df: DataFrame[RawData]) -> DataFrame[ProcessedData]:
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Retrospective
 #
-# Things in place that reduced the risk of regressions
-#
-# - Unit tests.
-# - Localized pandas coupling.
-# - Lessons learned from pandas-compliant integrations.
+# > #### Things in place that reduced the risk of regressions
+# > 
+# > - Unit tests.
+# > - Localized pandas coupling.
+# > - Lessons learned from pandas-compliant integrations.
 
-# %% [markdown] slideshow={"slide_type": "slide"}
-# ## Retrospective
-#
-# Additional approaches to put into practice in the future:
-#
-# - Thoughtful design work.
-# - Library-independent error reporting.
-# - Decoupling metadata from data.
-# - Investing in governance and community.
+# %% [markdown] slideshow={"slide_type": "fragment"}
+# > #### Additional approaches to put into practice in the future:
+# > 
+# > - Thoughtful design work.
+# > - Library-independent error reporting.
+# > - Decoupling metadata from data.
+# > - Investing in governance and community.
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Updated Principles
@@ -388,8 +386,63 @@ def process_data(df: DataFrame[RawData]) -> DataFrame[ProcessedData]:
 # <image src="../static/pandera_updated_principles.png" width="600px">
 
 # %% [markdown] slideshow={"slide_type": "slide"}
-# ## Roadmap
+# ## Announcement
+#
+# ### 🎉 Pandera has joined Union.ai 🎉
 
+# %% [markdown] slideshow={"slide_type": "fragment"}
+#
+# What does this mean?
+#
+# - It will continue to be open source.
+# - It will have more resources to maintain and govern it.
+# - We can learn from enterprise users.
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# ## 🛣️ Roadmap
+#
+# - 🤝 **Integrations**: support more data manipulation libraries:
+#   - Polars support: https://github.com/unionai-oss/pandera/issues/1064
+#   - Ibis support: https://github.com/unionai-oss/pandera/issues/1105
+#   - Open an issue! https://github.com/unionai-oss/pandera/issues
+# - 💻 **User Experience:** polish the API:
+#   - better error-reporting
+#   - more built-in checks
+#   - conditional validation
+# - 🤝 **Interoperability:** tighter integrations with the python ecosystem:
+#   - `pydantic v2`
+#   - `pytest`: collect data coverage statistics
+#   - `hypothesis`: faster data synthesis
+# - 🏆 **Innovations:** new capabilities:
+#   - stateful data validation
+#   - model-based types
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# # Join the Community!
+#
+# ![badge](https://img.shields.io/github/stars/pandera-dev/pandera?style=social)
+# [![badge](https://img.shields.io/pypi/pyversions/pandera.svg)](https://pypi.python.org/pypi/pandera/)
+# [![badge](https://img.shields.io/pypi/v/pandera.svg)](https://pypi.org/project/pandera/)
+# ![badge](https://img.shields.io/github/contributors/pandera-dev/pandera)
+# [![badge](https://pepy.tech/badge/pandera)](https://pepy.tech/project/pandera)
+# [![badge](https://pepy.tech/badge/pandera/month)](https://pepy.tech/project/pandera)
+# [![badge](https://img.shields.io/badge/discord-chat-purple?color=%235765F2&label=discord&logo=discord)](https://discord.gg/vyanhWuaKB)
+#
+#
+# - **Twitter**: [@cosmicbboy](https://twitter.com/cosmicBboy)
+# - **Discord**: https://discord.gg/vyanhWuaKB
+# - **Email**: [niels@union.ai](mailto:niels@union.ai)
+# - **Repo**: https://github.com/unionai-oss/pandera
+# - **Docs**: https://pandera.readthedocs.io
+# - **Contributing Guide**: https://pandera.readthedocs.io/en/stable/CONTRIBUTING.html
+# - **Become a Sponsor**: https://github.com/sponsors/cosmicBboy
+
+# %% [markdown] slideshow={"slide_type": "slide"}
+# # Join me at the sprints!
+#
+# Contribute to the `Flyte` project: https://www.flyte.org
+#
+# <image src="../static/flyte_sprint.png" width="600px">
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # 🤔 What's Data Testing

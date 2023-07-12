@@ -16300,35 +16300,37 @@ easily add new built-in checks.</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Retrospective">Retrospective<a class="anchor-link" href="#Retrospective">&#182;</a></h2><p>Things in place that reduced the risk of regressions</p>
-<ul>
+<h2 id="Retrospective">Retrospective<a class="anchor-link" href="#Retrospective">&#182;</a></h2><blockquote>
+<h4 id="Things-in-place-that-reduced-the-risk-of-regressions">Things in place that reduced the risk of regressions<a class="anchor-link" href="#Things-in-place-that-reduced-the-risk-of-regressions">&#182;</a></h4><ul>
 <li>Unit tests.</li>
 <li>Localized pandas coupling.</li>
 <li>Lessons learned from pandas-compliant integrations.</li>
 </ul>
+</blockquote>
 
 </div>
 </div>
 </div>
-</div></section></section><section ><section >
+</div><div class="fragment" >
 <div id="cell-id=7a94246a" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Retrospective">Retrospective<a class="anchor-link" href="#Retrospective">&#182;</a></h2><p>Additional approaches to put into practice in the future:</p>
-<ul>
+<blockquote>
+<h4 id="Additional-approaches-to-put-into-practice-in-the-future:">Additional approaches to put into practice in the future:<a class="anchor-link" href="#Additional-approaches-to-put-into-practice-in-the-future:">&#182;</a></h4><ul>
 <li>Thoughtful design work.</li>
 <li>Library-independent error reporting.</li>
 <li>Decoupling metadata from data.</li>
 <li>Investing in governance and community.</li>
 </ul>
+</blockquote>
 
 </div>
 </div>
 </div>
-</div></section></section><section ><section >
+</div></div></section></section><section ><section >
 <div id="cell-id=e5e08908" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -16348,7 +16350,101 @@ easily add new built-in checks.</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Roadmap">Roadmap<a class="anchor-link" href="#Roadmap">&#182;</a></h2>
+<h2 id="Announcement">Announcement<a class="anchor-link" href="#Announcement">&#182;</a></h2><h3 id="%F0%9F%8E%89-Pandera-has-joined-Union.ai-%F0%9F%8E%89">&#127881; Pandera has joined Union.ai &#127881;<a class="anchor-link" href="#%F0%9F%8E%89-Pandera-has-joined-Union.ai-%F0%9F%8E%89">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div><div class="fragment" >
+<div id="cell-id=cbc363ba" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>What does this mean?</p>
+<ul>
+<li>It will continue to be open source.</li>
+<li>It will have more resources to maintain and govern it.</li>
+<li>We can learn from enterprise users.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></div></section></section><section ><section >
+<div id="cell-id=f88bc9e2" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%F0%9F%9B%A3%EF%B8%8F-Roadmap">&#128739;&#65039; Roadmap<a class="anchor-link" href="#%F0%9F%9B%A3%EF%B8%8F-Roadmap">&#182;</a></h2><ul>
+<li>🤝 <strong>Integrations</strong>: support more data manipulation libraries:<ul>
+<li>Polars support: <a href="https://github.com/unionai-oss/pandera/issues/1064">https://github.com/unionai-oss/pandera/issues/1064</a></li>
+<li>Ibis support: <a href="https://github.com/unionai-oss/pandera/issues/1105">https://github.com/unionai-oss/pandera/issues/1105</a></li>
+<li>Open an issue! <a href="https://github.com/unionai-oss/pandera/issues">https://github.com/unionai-oss/pandera/issues</a></li>
+</ul>
+</li>
+<li>💻 <strong>User Experience:</strong> polish the API:<ul>
+<li>better error-reporting</li>
+<li>more built-in checks</li>
+<li>conditional validation</li>
+</ul>
+</li>
+<li>🤝 <strong>Interoperability:</strong> tighter integrations with the python ecosystem:<ul>
+<li><code>pydantic v2</code></li>
+<li><code>pytest</code>: collect data coverage statistics</li>
+<li><code>hypothesis</code>: faster data synthesis</li>
+</ul>
+</li>
+<li>🏆 <strong>Innovations:</strong> new capabilities:<ul>
+<li>stateful data validation</li>
+<li>model-based types</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section ><section >
+<div id="cell-id=99531f44" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Join-the-Community!">Join the Community!<a class="anchor-link" href="#Join-the-Community!">&#182;</a></h1><p><img src="https://img.shields.io/github/stars/pandera-dev/pandera?style=social" alt="badge" />
+<a href="https://pypi.python.org/pypi/pandera/"><img src="https://img.shields.io/pypi/pyversions/pandera.svg" alt="badge" /></a>
+<a href="https://pypi.org/project/pandera/"><img src="https://img.shields.io/pypi/v/pandera.svg" alt="badge" /></a>
+<img src="https://img.shields.io/github/contributors/pandera-dev/pandera" alt="badge" />
+<a href="https://pepy.tech/project/pandera"><img src="https://pepy.tech/badge/pandera" alt="badge" /></a>
+<a href="https://pepy.tech/project/pandera"><img src="https://pepy.tech/badge/pandera/month" alt="badge" /></a>
+<a href="https://discord.gg/vyanhWuaKB"><img src="https://img.shields.io/badge/discord-chat-purple?color=%235765F2&amp;label=discord&amp;logo=discord" alt="badge" /></a></p>
+<ul>
+<li><strong>Twitter</strong>: <a href="https://twitter.com/cosmicBboy">@cosmicbboy</a></li>
+<li><strong>Discord</strong>: <a href="https://discord.gg/vyanhWuaKB">https://discord.gg/vyanhWuaKB</a></li>
+<li><strong>Email</strong>: <a href="mailto:niels@union.ai">niels@union.ai</a></li>
+<li><strong>Repo</strong>: <a href="https://github.com/unionai-oss/pandera">https://github.com/unionai-oss/pandera</a></li>
+<li><strong>Docs</strong>: <a href="https://pandera.readthedocs.io">https://pandera.readthedocs.io</a></li>
+<li><strong>Contributing Guide</strong>: <a href="https://pandera.readthedocs.io/en/stable/CONTRIBUTING.html">https://pandera.readthedocs.io/en/stable/CONTRIBUTING.html</a></li>
+<li><strong>Become a Sponsor</strong>: <a href="https://github.com/sponsors/cosmicBboy">https://github.com/sponsors/cosmicBboy</a></li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section ><section >
+<div id="cell-id=856d735e" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Join-me-at-the-sprints!">Join me at the sprints!<a class="anchor-link" href="#Join-me-at-the-sprints!">&#182;</a></h1><p>Contribute to the <code>Flyte</code> project: <a href="https://www.flyte.org">https://www.flyte.org</a></p>
+<image src="../static/flyte_sprint.png" width="600px">
+
+
 </div>
 </div>
 </div>
@@ -18897,7 +18993,7 @@ via <code>@pandera.extensions.register_check_method</code>.</p>
 </div>
 </div>
 </div></section></section><section ><section >
-<div id="cell-id=99531f44" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div id="cell-id=92574062" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
