@@ -502,6 +502,8 @@ run_test_suite()
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # # 🐓 Evolution
+#
+# <iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=#unionai-oss/pandera&Date" frameBorder="0"></iframe>
 
 # %% [markdown] slideshow={"slide_type": "slide"}
 # ## Major Events
